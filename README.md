@@ -1,3 +1,4 @@
 ## Используемые компоненты
 
-Base UI https://ui.shadcn.com/
+Base UI - [ShadCN](https://ui.shadcn.com/)
+3D Graphics
