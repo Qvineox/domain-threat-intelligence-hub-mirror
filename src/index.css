@@ -1,20 +1,34 @@
 * {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 html, body, #root, #container {
-  height: 100%;
+    height: 100%;
 }
 
-.aim {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  transform: translate3d(-50%, -50%, 0);
-  border: 2px solid white;
-  z-index: 2;
+.speed-selector {
+    position: sticky;
+    left: 77vw;
+    bottom: 30px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    width: 20vw;
+
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 10px 0 10px 15px;
+
+    h2, p, input {
+        font-family: "Bahnschrift", sans-serif;
+        font-weight: 300;
+    }
+
+    input {
+        padding: 2px;
+        width: 40%;
+    }
 }
