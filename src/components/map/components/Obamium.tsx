@@ -4,6 +4,8 @@ import {GLTF} from "three-stdlib";
 import {useRef, useState} from "react";
 import {useFrame} from "@react-three/fiber";
 
+import obamiumGLB from '/models/obamium.glb'
+
 type ObamiumProps = {
     rotationSpeed: number
 }
@@ -18,16 +20,16 @@ type GLTFResult = GLTF & {
 };
 
 export function ObamiumModel(props: ObamiumProps) {
-    const {nodes, materials} = useGLTF("/models/obamium.glb") as GLTFResult;
+    const {nodes, materials} = useGLTF(obamiumGLB) as GLTFResult;
     const ref = useRef(null!)
 
     const [isHovered, setIsHovered] = useState<boolean>(false)
 
     useFrame(() => {
         if (isHovered) {
-            ref.current.rotation.y -= props.rotationSpeed
+            ref.current.rotation!.y -= props.rotationSpeed
         } else {
-            ref.current.rotation.y += props.rotationSpeed
+            ref.current.rotation!.y += props.rotationSpeed
         }
     })
 
@@ -44,4 +46,4 @@ export function ObamiumModel(props: ObamiumProps) {
     );
 }
 
-useGLTF.preload("/models/obamium.glb");
+useGLTF.preload(obamiumGLB);

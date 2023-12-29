@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import './index.css'
-import {WebMap} from "@/webMap/components/webMap.tsx";
+import './styles/index.scss'
+import {Map} from "@/components/map/map.tsx";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-        <WebMap/>
+        <Map/>
     </React.StrictMode>,
 )
