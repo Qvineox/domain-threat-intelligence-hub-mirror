@@ -1,0 +1,12 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+#fps-meter {
+  display: flex;
+  position: absolute;
+
+  top: 10vh;
+  left: 100vw;
+}

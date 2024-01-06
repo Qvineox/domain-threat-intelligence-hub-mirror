@@ -1,0 +1,125 @@
+body {
+  //background: rgb(2,0,36);
+  //background: linear-gradient(141deg, rgba(2,0,36,1) 0%, rgba(36,75,108,1) 59%, rgba(51,135,152,1) 100%);
+}
+
+#web-map-canvas {
+  z-index: 1;
+
+  height: 100vh;
+  //padding-left: 30vw;
+  width: 100vw;
+
+  background: #111c2a;
+  //background: rgb(2,0,36);
+  //background: linear-gradient(141deg, rgba(2,0,36,1) 0%, rgba(36,75,108,1) 59%, rgba(51,135,152,1) 100%);
+}
+
+.host-name {
+  position: absolute;
+  width: 100%;
+
+  top: 3vh;
+
+  text-align: center;
+  opacity: 0.65;
+  transition: all .5s ease-in-out;
+
+  h4 {
+    font-family: "Bahnschrift", sans-serif;
+    color: #778da9;
+  }
+}
+
+.controls-legend {
+  position: absolute;
+  top: 3vh;
+  right: 5vw;
+
+  p {
+    font-family: "Bahnschrift", sans-serif;
+    color: #778da9;
+    opacity: 0.65;
+  }
+}
+
+.host-name.hidden {
+  opacity: 0;
+}
+
+.info {
+  position: absolute;
+
+  z-index: 2;
+
+  height: 96vh;
+  width: 35vw;
+
+  padding: 2vh 1vw;
+
+  background: #1b263b;
+
+  &_node-info {
+    z-index: 3;
+    padding-bottom: 1vh;
+  }
+
+  &_node-data {
+    z-index: 3;
+
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #778da9;
+    border-radius: 7px;
+
+    padding: 0.5rem 1rem;
+  }
+
+  h4, h5, h6, p {
+    color: #b4d1fa;
+  }
+
+  opacity: 1;
+  transition: all .5s ease-in-out;
+  //transition: opacity 0.6s linear;
+}
+
+.info.hidden {
+  transform: translate(-37vw);
+  transition: all .5s ease-in-out;
+}
+
+#monitor {
+  z-index: 9999;
+
+  position: fixed;
+
+  padding: 1rem;
+
+  color: #e0e1dd;
+  background-color: #778da9;
+
+  border: 2px solid #1b263b;
+  border-radius: 7px;
+}
+
+#monitor {
+  bottom: 2vh;
+  left: 2vw;
+}
+
+#node-info {
+  top: 2vh;
+  left: 2vw;
+}
+
+#map-navigation {
+  position: absolute;
+  right: 2vw;
+  bottom: 2vh;
+
+  padding: 2px 0;
+
+  border: 2px solid #778da9;
+  border-radius: 7px;
+}
