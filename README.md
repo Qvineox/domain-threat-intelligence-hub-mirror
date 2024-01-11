@@ -1,4 +1,11 @@
-## Используемые компоненты
+# Domain Threat Intelligence HUB
 
-Base UI - [ShadCN](https://ui.shadcn.com/)
-3D Graphics
+Masters thesis in cyber security on malicious domains detection. Operations Hub.
+Provides Web UI and user interface to interact with core API.
+
+This projecr is mirrored from GitLab.
+
+Links:
+
+- [Main project on GitLab](https://gitlab.qvineox.ru/masters/domain-threat-intelligence-hub)
+- [Mirror on GitHub](https://github.com/Qvineox/domain-threat-intelligence-hub-mirror)
