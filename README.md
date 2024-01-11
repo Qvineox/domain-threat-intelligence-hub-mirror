@@ -9,3 +9,11 @@ Links:
 
 - [Main project on GitLab](https://gitlab.qvineox.ru/masters/domain-threat-intelligence-hub)
 - [Mirror on GitHub](https://github.com/Qvineox/domain-threat-intelligence-hub-mirror)
+
+## Setup
+
+> TODO: coming soon...
+
+## Demo
+
+> TODO: coming soon...
