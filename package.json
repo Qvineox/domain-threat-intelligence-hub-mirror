@@ -12,6 +12,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.5",
     "@mui/material": "^5.15.2",
     "@radix-ui/react-checkbox": "^1.0.4",
     "@react-three/drei": "^9.92.7",
@@ -19,8 +20,10 @@
     "@react-three/rapier": "^1.2.1",
     "@tweenjs/tween.js": "^21.0.0",
     "@types/three": "^0.160.0",
+    "axios": "^1.6.5",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "dayjs": "^1.11.10",
     "localforage": "^1.10.0",
     "lucide-react": "^0.303.0",
     "match-sorter": "^6.3.1",
