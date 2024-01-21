@@ -1,17 +1,127 @@
-import {Fragment, useEffect} from "react";
-import BlacklistService from "@/services/blacklistService.ts";
+import {useEffect, useState} from "react";
+import BlacklistService, {IBlacklistedFilter} from "@/services/blacklistService.ts";
+import dayjs from "dayjs";
+import BlacklistsViewerFilter from "@/components/blacklists/filter/blacklistFilter.tsx";
+import {IBlacklistedHost} from "@/entities/blacklists/host.ts";
+import BlacklistTable from "@/components/blacklists/view/blacklistTable.tsx";
+import {toast} from "react-toastify";
 
+
+const defaultFilter: IBlacklistedFilter = {
+    IsActive: true,
+    Limit: 100,
+    Offset: 0,
+    SourceIDs: [],
+    SearchString: "",
+    CreatedBefore: dayjs().add(1, "day"),
+    CreatedAfter: dayjs().subtract(3, "months")
+}
 
 export default function BlacklistsViewer() {
+    const [filter, setFilter] = useState<IBlacklistedFilter>(defaultFilter)
+    const [rows, setRows] = useState<Array<IBlacklistedHost>>([])
+    const [isLoading, setIsLoading] = useState<boolean>(true)
+
     useEffect(() => {
-        console.info('requested blacklisted URLs')
+        handleSearch()
+    }, []);
 
-        BlacklistService.getURLsByFilter().then((response) => {
-            console.info(response.data)
+
+    const handlePaginationChange = (size: number, page: number) => {
+        console.info(size * (page))
+
+        if (filter.Offset < size * (page)) {
+            setFilter(prevState => ({
+                ...prevState,
+                Offset: prevState.Offset + size * (page)
+            }))
+
+            handleSearch()
+        }
+    }
+
+    const handleSearch = () => {
+        setIsLoading(true)
+
+        BlacklistService.getHostsByFilter(filter).then((response) => {
+            if (response.data) {
+                setRows(response.data)
+            } else {
+                setRows([])
+            }
+        }).catch((response) => {
+            console.error(response)
+            toast.error("Ошибка получения данных!")
+        }).finally(() => {
+            setIsLoading(false)
         })
-    }, [])
+    }
 
-    return <Fragment>
+    const handleDelete = (type: "url" | "domain" | "ip", uuid: string) => {
+        switch (type) {
+            case "ip":
+                BlacklistService.deleteIP(uuid).then((response) => {
+                    if (response) {
+                        console.info("ip deleted!")
+                        toast.info("IP адрес удален.")
 
-    </Fragment>
+                        handleSearch()
+                    }
+                }).catch((response) => {
+                    console.error(response)
+                    toast.error("Ошибка удаления!")
+                })
+                break
+            case "url":
+                BlacklistService.deleteURL(uuid).then((response) => {
+                    if (response) {
+                        console.info("url deleted!")
+                        toast.info("URL удален.")
+
+                        handleSearch()
+                    }
+                }).catch((response) => {
+                    console.error(response)
+                    toast.error("Ошибка удаления!")
+                })
+                break
+            case "domain":
+                BlacklistService.deleteDomain(uuid).then((response) => {
+                    if (response) {
+                        console.info("domain deleted!")
+                        toast.info("Доменное имя удалено.")
+
+                        handleSearch()
+                    }
+                }).catch((response) => {
+                    console.error(response)
+                    toast.error("Ошибка удаления!")
+                })
+        }
+
+    }
+
+    return <div className={"blacklists_viewer"}>
+        <BlacklistsViewerFilter filter={filter}
+                                setFilter={setFilter}
+                                onSearch={handleSearch}
+        />
+        <div className={"blacklists_viewer_content"}>
+            <pre>
+                {JSON.stringify(filter)}
+            </pre>
+            <BlacklistTable rows={rows}
+                            onDelete={handleDelete}
+                            isLoading={isLoading}
+                            onPaginationChange={handlePaginationChange}
+            />
+        </div>
+    </div>
 }
+
+export interface IBlacklistedHostsTableProps {
+    filter: IBlacklistedFilter
+    show: boolean
+}
+
+

@@ -1,7 +1,7 @@
 import {Group, Mesh, Vector3} from "three";
 import {NodeDataType, PlanetData} from "@/components/web_map/models/planetData.ts";
-import React, {useRef, useState} from "react";
-import {Box, Circle, Octahedron, Ring, RoundedBox, Sphere, Tetrahedron, Wireframe} from "@react-three/drei";
+import {useRef, useState} from "react";
+import {Box, Octahedron, Ring, Sphere, Tetrahedron} from "@react-three/drei";
 import {useFrame} from "@react-three/fiber";
 
 type OrbitProps = {

@@ -1,20 +1,19 @@
-import React, {Fragment, useState} from "react";
+import {Fragment, useState} from "react";
 import {PlanetData, NodeDataType} from "@/components/web_map/models/planetData.ts";
-import {Vector3} from "three";
+import {Object3D, Vector3} from "three";
 import {Orbit} from "@/components/web_map/components/orbit.tsx";
-import {Sphere} from "@react-three/drei";
 
 export type SolarNodeProps = {
     central: PlanetData
     rotate: boolean
     hoverNode: (id: number) => void
-    clickNode: (id: number, position: Vector3) => void
+    clickNode: (id: number, position: Vector3, object?: Object3D) => void
 }
 
 const centerPosition = new Vector3(0, 0, 0)
 
-export function SolarNode(props: SolarNodeProps) {
-    const [byOrbit, setByOrbit] = useState<MoonsByOrbit>({
+export function SolarSystem(props: SolarNodeProps) {
+    const [byOrbit] = useState<MoonsByOrbit>({
         infoMoons: props.central.moons?.filter((value) => {
             return value.type == NodeDataType.Safe
         }),

@@ -2,3 +2,18 @@ a {
   text-decoration: none;
   color: #1b263b;
 }
+
+#root-content-outlet {
+  margin-top: 4vh;
+  height: 96vh;
+
+  overflow-y: scroll;
+}
+
+* {
+  font-family: "Bahnschrift", sans-serif;
+}
+
+pre {
+  font-family: "Courier New", "Bahnschrift", sans-serif;
+}

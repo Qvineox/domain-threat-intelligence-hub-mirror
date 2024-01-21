@@ -20,6 +20,8 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import "@/styles/root.scss"
 import "@/styles/navigation.scss"
+import {ToastContainer, Slide} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Root() {
     const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -27,7 +29,22 @@ export default function Root() {
     return <Fragment>
         <RootNavigationDrawer isOpen={isOpen} setIsOpen={setIsOpen}/>
         <RootNavigationBar setIsOpen={setIsOpen}/>
-        <Outlet/>
+        <div id={"root-content-outlet"}>
+            <Outlet/>
+        </div>
+        <ToastContainer
+            position="bottom-left"
+            autoClose={1300}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+            transition={Slide}
+        />
     </Fragment>
 }
 

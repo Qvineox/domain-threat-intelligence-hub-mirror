@@ -2,10 +2,10 @@ import {Canvas} from "@react-three/fiber";
 import "./styles/web_map.scss"
 import {Physics} from "@react-three/rapier";
 import {CameraControls} from "@react-three/drei";
-import {Fragment, useRef, useState} from "react";
+import {Fragment, useEffect, useRef, useState} from "react";
 import {PlanetData, NodeDataType} from "@/components/web_map/models/planetData.ts";
-import {SolarNode} from "@/components/web_map/components/solar_node.tsx";
-import {Checkbox, FormControlLabel, Typography} from "@mui/material";
+import {SolarSystem} from "@/components/web_map/components/solarSystem.tsx";
+import {Typography} from "@mui/material";
 import {NodeInfo} from "@/components/web_map/components/nodes_info.tsx";
 import {Vector3} from "three";
 import {MapNavigation} from "@/components/web_map/components/map_navigation.tsx";
@@ -19,7 +19,13 @@ export function WebMap() {
 
     const [selectedNodeID, setSelectedNodeID] = useState<number>()
 
-    const [focusedItem, setFocusedItem] = useState<Vector3>()
+    useEffect(() => {
+        if (selectedNodeID) {
+            setRotate(false)
+        } else {
+            setRotate(true)
+        }
+    }, [selectedNodeID])
 
     const handleNodeHover = (id: number) => {
         console.debug('hovered: ' + id)
@@ -31,7 +37,7 @@ export function WebMap() {
         console.debug("clicked on node with id: " + id)
         console.debug("moving to position: " + position.toArray())
 
-        controlsRef.current.zoomTo(5, true).then(() => {
+        controlsRef.current.zoomTo(6, true).then(() => {
             console.debug("zoomed to position")
         })
 
@@ -109,10 +115,10 @@ export function WebMap() {
                 <CameraControls ref={controlsRef}
                                 makeDefault/>
                 <Physics gravity={[0, 0, 0]}>
-                    <SolarNode central={central}
-                               rotate={rotate}
-                               hoverNode={handleNodeHover}
-                               clickNode={handleNodeClick}/>
+                    <SolarSystem central={central}
+                                 rotate={rotate}
+                                 hoverNode={handleNodeHover}
+                                 clickNode={handleNodeClick}/>
                 </Physics>
             </Canvas>
         </div>
@@ -121,8 +127,6 @@ export function WebMap() {
                        hideInfo={handleHideInfo}/>
     </Fragment>
 }
-
-const defaultZoom: number = 1
 
 const MapData = new PlanetData(1, 'central', 6, NodeDataType.Default, [
     new PlanetData(2, 'Safe domain zone planet', 1, NodeDataType.Safe),

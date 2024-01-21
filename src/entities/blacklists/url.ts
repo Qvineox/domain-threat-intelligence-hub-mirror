@@ -6,7 +6,8 @@ export interface IBlacklistedURL {
     Description: string
     Source: IBlacklistedSource
     SourceID: number
-    ID: number
+    UUID: string
     CreatedAt: Dayjs
     UpdatedAt: Dayjs
+    DeletedAt: Dayjs
 }

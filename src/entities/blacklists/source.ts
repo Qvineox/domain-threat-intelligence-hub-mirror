@@ -6,4 +6,5 @@ export interface IBlacklistedSource {
     ID: number
     CreatedAt: Dayjs
     UpdatedAt: Dayjs
+    DeletedAt?: Dayjs
 }

@@ -1,5 +1,11 @@
 nav#navigation-bar {
+  position: fixed;
+  top: 0;
+
+  z-index: 999;
+
   width: 100%;
+  height: 4vh;
 
   display: flex;
   flex-direction: row;
@@ -8,4 +14,5 @@ nav#navigation-bar {
   align-items: center;
 
   border-bottom: 1px solid #1b263b;
+  background-color: whitesmoke;
 }
