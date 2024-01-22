@@ -1,13 +1,13 @@
 import {useEffect, useState} from "react";
-import BlacklistService, {IBlacklistedFilter} from "@/services/blacklistService.ts";
+import BlacklistService, {IBlacklistedSearchFilter} from "@/services/blacklistService.ts";
 import dayjs from "dayjs";
-import BlacklistsViewerFilter from "@/components/blacklists/filter/blacklistFilter.tsx";
+import BlacklistsViewerFilter from "@/components/blacklists/filter/blacklistViewFilter.tsx";
 import {IBlacklistedHost} from "@/entities/blacklists/host.ts";
 import BlacklistTable from "@/components/blacklists/view/blacklistTable.tsx";
 import {toast} from "react-toastify";
 
 
-const defaultFilter: IBlacklistedFilter = {
+const defaultFilter: IBlacklistedSearchFilter = {
     IsActive: true,
     Limit: 100,
     Offset: 0,
@@ -18,14 +18,13 @@ const defaultFilter: IBlacklistedFilter = {
 }
 
 export default function BlacklistsViewer() {
-    const [filter, setFilter] = useState<IBlacklistedFilter>(defaultFilter)
+    const [filter, setFilter] = useState<IBlacklistedSearchFilter>(defaultFilter)
     const [rows, setRows] = useState<Array<IBlacklistedHost>>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
 
     useEffect(() => {
         handleSearch()
     }, []);
-
 
     const handlePaginationChange = (size: number, page: number) => {
         console.info(size * (page))
@@ -98,7 +97,6 @@ export default function BlacklistsViewer() {
                     toast.error("Ошибка удаления!")
                 })
         }
-
     }
 
     return <div className={"blacklists_viewer"}>
@@ -107,9 +105,6 @@ export default function BlacklistsViewer() {
                                 onSearch={handleSearch}
         />
         <div className={"blacklists_viewer_content"}>
-            <pre>
-                {JSON.stringify(filter)}
-            </pre>
             <BlacklistTable rows={rows}
                             onDelete={handleDelete}
                             isLoading={isLoading}
@@ -120,7 +115,7 @@ export default function BlacklistsViewer() {
 }
 
 export interface IBlacklistedHostsTableProps {
-    filter: IBlacklistedFilter
+    filter: IBlacklistedSearchFilter
     show: boolean
 }
 

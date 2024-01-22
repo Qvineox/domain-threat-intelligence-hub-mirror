@@ -9,6 +9,7 @@ import Root from "@/components/root.tsx";
 import BlacklistsViewer from "@/components/blacklists/view/blacklistsViewer.tsx";
 import BlacklistImporter from "@/components/blacklists/import/BlacklistImporter.tsx";
 import BlacklistExporter from "@/components/blacklists/export/BlacklistExporter.tsx";
+import BlacklistsStats from "@/components/blacklists/stats/blacklistsStats.tsx";
 
 const router = createBrowserRouter([
     {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
                 path: "/blacklists",
                 element: <Blacklists/>,
                 children: [
+                    {
+                        path: "/blacklists",
+                        element: <BlacklistsStats/>
+                    },
                     {
                         path: "/blacklists/view",
                         element: <BlacklistsViewer/>

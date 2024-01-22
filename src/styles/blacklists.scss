@@ -1,11 +1,76 @@
-.blacklists_viewer {
+@import "colors";
+
+.blacklists_stats {
+  height: 100%;
+  padding: 0 20px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  h2 {
+    margin-top: 20px;
+  }
+
+  &_actions {
+    flex-basis: 25vw;
+
+    nav {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+
+      margin-top: 20px;
+
+      a, p {
+        width: 40%;
+
+        padding: 5px;
+        font-size: 1.25rem;
+        color: #778da9;
+
+        transition: .25s ease-in-out;
+
+        &:hover {
+          transform: translateX(20px);
+        }
+      }
+    }
+  }
+
+  &_graphs {
+    flex-basis: 75vw;
+    min-width: 1200px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+
+    gap: 15px;
+    padding-left: 25px;
+
+    border-left: $panel-border;
+
+    .graph-container {
+      border: $panel-border;
+      border-radius: $panel-border-radius;
+
+      h3 {
+        margin: 10px 15px;
+      }
+    }
+  }
+}
+
+.blacklists_viewer, .blacklists_exporter {
   height: 100%;
 
   display: flex;
   flex-direction: row;
 
   &_filter {
-    width: 15vw;
+    width: 20vw;
     min-width: 250px;
     max-width: 400px;
 
@@ -50,6 +115,44 @@
       }
     }
   }
+}
+
+.blacklists_importer {
+  display: flex;
+  flex-direction: row;
+
+  height: 100%;
+
+  &_form {
+    height: 100%;
+    display: flex;
+    align-items: start;
+    justify-content: start;
+
+    padding: 0 25px;
+
+    border-right: 1px solid #1b263b;
+
+    h2 {
+      margin-top: 20px;
+    }
+
+    hr {
+      margin: 10px 0;
+    }
+  }
+
+  &_info {
+    padding: 25px 35px;
+    white-space: pre-wrap;
+  }
+}
+
+.blacklists_exporter {
+  display: flex;
+  flex-direction: row;
+
+  height: 100%;
 }
 
 @keyframes createBox {

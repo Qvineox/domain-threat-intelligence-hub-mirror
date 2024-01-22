@@ -1,10 +1,10 @@
 import {Fragment, ReactNode, useState} from "react";
-import {NavLink, Outlet} from "react-router-dom";
+import {NavLink, Outlet, useLocation} from "react-router-dom";
 import {
     Breadcrumbs,
     Divider,
     Drawer,
-    IconButton, Link,
+    IconButton,
     ListItemIcon,
     ListItemText,
     MenuItem, MenuList,
@@ -138,12 +138,14 @@ interface RootNavigationBarProps {
 }
 
 function RootNavigationBar(props: RootNavigationBarProps) {
+    const location = useLocation();
+
     return <nav id={"navigation-bar"}>
         <IconButton onClick={() => props.setIsOpen(true)}>
             <MenuIcon/>
         </IconButton>
         <Breadcrumbs maxItems={3} aria-label="breadcrumb">
-            {parseHrefToBreadcrumbs()}
+            {parseHrefToBreadcrumbs(location.pathname)}
             {/*<Link underline="hover" color="inherit" href="/">*/}
             {/*    Домой*/}
             {/*</Link>*/}
@@ -162,13 +164,19 @@ function RootNavigationBar(props: RootNavigationBarProps) {
     </nav>
 }
 
-function parseHrefToBreadcrumbs(): Array<ReactNode> {
-    const pathname = window.location.pathname
-    const links = pathname.split("/")
+function parseHrefToBreadcrumbs(location: string): Array<ReactNode> {
+    // const pathname = window.location.pathname
+    const links = location.split("/")
     let href = ""
 
+    if (location == "/" || location == "/home") {
+        return [<NavLink key={0} to={"/home"}>
+            Домашняя страница
+        </NavLink>]
+    }
+
     return links.map((value, index) => {
-        let name: string
+        let name: string = ""
 
         switch (value) {
             case "view":
@@ -209,11 +217,11 @@ function parseHrefToBreadcrumbs(): Array<ReactNode> {
                 break
             case "":
                 name = "Домашняя страница"
-                href = "/home"
+                href = ""
         }
 
-        return <Link key={index} underline="hover" color="inherit" href={href}>
+        return <NavLink key={index} to={href}>
             {name}
-        </Link>
+        </NavLink>
     })
 }

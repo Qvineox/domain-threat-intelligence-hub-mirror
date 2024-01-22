@@ -6,6 +6,7 @@ export interface IBlacklistedHost {
     Host: string
     Description: string
     Type?: "url" | "domain" | "ip"
+    Status?: "new" | "updated" | "default" | "deleted"
 
     Source: IBlacklistedSource
     SourceID: number

@@ -1,9 +1,12 @@
 import {DataGrid, GridActionsCellItem, GridColDef} from '@mui/x-data-grid';
-import {useEffect} from "react";
+import {Fragment} from "react";
 import {IBlacklistedHost} from "@/entities/blacklists/host.ts";
 import dayjs from "dayjs";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-
+import {Chip} from "@mui/material";
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import UpdateIcon from '@mui/icons-material/Update';
 
 interface IBlacklistTableProps {
     rows: Array<IBlacklistedHost>
@@ -12,11 +15,8 @@ interface IBlacklistTableProps {
     onPaginationChange: (size: number, page: number) => void
 }
 
+
 export default function BlacklistTable(props: IBlacklistTableProps) {
-    useEffect(() => {
-
-    }, []);
-
     const columns: GridColDef[] = [
         {
             field: 'Host',
@@ -24,8 +24,39 @@ export default function BlacklistTable(props: IBlacklistTableProps) {
             flex: 3,
         },
         {
+            field: 'Status',
+            headerName: 'Метка',
+            flex: 1,
+            headerAlign: "center",
+            align: "center",
+            renderCell: (params) => {
+                switch (params.value) {
+                    case "new":
+                        return <Chip icon={<NewReleasesIcon/>}
+                                     size={"small"}
+                                     label={"Новый"}
+                                     variant={"outlined"}
+                                     color={"success"}/>;
+                    case "updated":
+                        return <Chip icon={<UpdateIcon/>}
+                                     size={"small"}
+                                     label={"Обновлен"}
+                                     variant={"outlined"}
+                                     color={"warning"}/>;
+                    case "deleted":
+                        return <Chip icon={<HighlightOffIcon/>}
+                                     size={"small"}
+                                     label={"Удален"}
+                                     variant={"outlined"}
+                                     color={"error"}/>;
+                    default:
+                        return <Fragment/>
+                }
+            }
+        },
+        {
             field: 'Type',
-            headerName: 'Тип хоста',
+            headerName: 'Тип узла',
             flex: 1,
             headerAlign: "center",
             align: "center",
