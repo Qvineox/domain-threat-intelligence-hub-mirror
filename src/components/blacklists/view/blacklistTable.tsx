@@ -181,11 +181,11 @@ export default function BlacklistTable(props: IBlacklistTableProps) {
         initialState={{
             pagination: {
                 paginationModel: {
-                    pageSize: 100,
+                    pageSize: 50,
                 },
             },
         }}
-        pageSizeOptions={[100]}
+        pageSizeOptions={[50, 100]}
         onPaginationModelChange={(model) => {
             props.onPaginationChange(model.pageSize, model.page)
         }}

@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client'
 import {ObamiumInspector} from "@/components/map/obamiumInspector.tsx";
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
 import {WebMap} from "@/components/web_map/web_map.tsx";
 import "./styles/global.scss"
 import Blacklists from "@/components/blacklists/blacklists.tsx";
@@ -24,6 +24,10 @@ const router = createBrowserRouter([
         path: "/",
         element: <Root/>,
         children: [
+            {
+                path: "/",
+                element: <Navigate to="/home" replace/>,
+            },
             {
                 path: "/home",
                 element: <HomePage/>,

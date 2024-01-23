@@ -1,0 +1,58 @@
+@import "colors";
+
+.home-page {
+  height: 100%;
+  display: flex;
+
+  img.spinning-orbit {
+    position: fixed;
+    height: 140vh;
+    bottom: -70vh;
+    left: -60vh;
+
+    opacity: 0.55;
+
+    -webkit-animation: rotating 128s linear infinite;
+  }
+
+  &_navigation {
+    position: fixed;
+    right: 20vw;
+    top: 30vh;
+
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+
+    &_group {
+      display: flex;
+      flex-direction: column;
+      padding: 5px;
+      gap: 5px;
+      font-size: 1.5rem;
+
+      a {
+        transition: .25s ease-in-out;
+
+        &:hover {
+          transform: translate(10px) scale(1.1);
+        }
+
+        &:not(:first-child) {
+          margin-left: .5rem;
+          opacity: 0.75;
+        }
+      }
+    }
+  }
+
+}
+
+@-webkit-keyframes rotating {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}

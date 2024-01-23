@@ -45,6 +45,9 @@ export default function Root() {
             theme="light"
             transition={Slide}
         />
+        <p id="version-footer">
+            [{import.meta.env.VITE_APP_VERSION}_{import.meta.env.VITE_BUILD_ID}]
+        </p>
     </Fragment>
 }
 

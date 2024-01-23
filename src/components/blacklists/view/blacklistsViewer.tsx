@@ -24,18 +24,14 @@ export default function BlacklistsViewer() {
 
     useEffect(() => {
         handleSearch()
-    }, []);
+    }, [filter.Offset]);
 
     const handlePaginationChange = (size: number, page: number) => {
-        console.info(size * (page))
-
-        if (filter.Offset < size * (page)) {
+        if (rows.length === size * (page + 1)) {
             setFilter(prevState => ({
                 ...prevState,
-                Offset: prevState.Offset + size * (page)
+                Offset: prevState.Offset + prevState.Limit
             }))
-
-            handleSearch()
         }
     }
 
@@ -44,7 +40,10 @@ export default function BlacklistsViewer() {
 
         BlacklistService.getHostsByFilter(filter).then((response) => {
             if (response.data) {
-                setRows(response.data)
+                setRows(prevState => [
+                    ...prevState,
+                    ...response.data
+                ])
             } else {
                 setRows([])
             }

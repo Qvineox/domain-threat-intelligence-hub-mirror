@@ -17,3 +17,17 @@ a {
 pre {
   font-family: "Courier New", "Bahnschrift", sans-serif;
 }
+
+p#version-footer {
+  position: fixed;
+  bottom: 5px;
+  left: 2px;
+
+  height: 3rem;
+  padding: 0;
+  margin: 0;
+
+  opacity: 0.25;
+
+  font-size: 3rem;
+}
