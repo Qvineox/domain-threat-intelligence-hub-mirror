@@ -1,8 +1,13 @@
-import solarSvg from "/public/images/solar.svg"
+import solarSvg from "/images/solar.svg"
 import "@/styles/home.scss"
 import {NavLink} from "react-router-dom";
+import {useEffect} from "react";
 
 export default function HomePage() {
+    useEffect(() => {
+        document.title = `${import.meta.env.VITE_TITLE_NAME} | Домашняя страница`
+    }, [])
+
     return <div className={"home-page"}>
         <img className={"spinning-orbit"}
              src={solarSvg}

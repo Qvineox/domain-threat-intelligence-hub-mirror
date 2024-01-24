@@ -11,6 +11,8 @@ export default function BlacklistsStats() {
     const [stats, setStats] = useState<IBlacklistStatistics>()
 
     useEffect(() => {
+        document.title = `${import.meta.env.VITE_TITLE_NAME} | Статистика блокировок`
+
         BlacklistService.getStatistics().then((response) => {
             setStats(response.data)
         }).catch((error: AxiosError<ApiError>) => {
@@ -20,7 +22,6 @@ export default function BlacklistsStats() {
     }, []);
 
     return <div className={"blacklists_stats"}>
-
         <div className={"blacklists_stats_actions"}>
             <h2>Панель управления блокировками</h2>
             <nav>
@@ -29,7 +30,6 @@ export default function BlacklistsStats() {
                 <NavLink to={"/blacklists/export"}> / Экспорт</NavLink>
             </nav>
         </div>
-
         {
             stats ? <div className={"blacklists_stats_graphs"}>
                 <h2>Статистика</h2>

@@ -1,7 +1,7 @@
 import BlacklistExportFilter from "@/components/blacklists/filter/blacklistExportFilter.tsx";
 import BlacklistService, {IBlacklistedExportFilter} from "@/services/blacklistService.ts";
 import dayjs from "dayjs";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {AxiosError} from "axios";
 import {ApiError} from "@/http/api.ts";
 import {toast} from "react-toastify";
@@ -17,6 +17,10 @@ const todayExportFilter: IBlacklistedExportFilter = {
 export default function BlacklistExporter() {
     const [filter, setFilter] = useState<IBlacklistedExportFilter>(todayExportFilter)
     const [isLoading, setLoading] = useState<boolean>(false)
+
+    useEffect(() => {
+        document.title = `${import.meta.env.VITE_TITLE_NAME} | Экспорт блокировок`
+    }, []);
 
     const handleExport = () => {
         setLoading(true)

@@ -23,6 +23,10 @@ export default function BlacklistsViewer() {
     const [isLoading, setIsLoading] = useState<boolean>(true)
 
     useEffect(() => {
+        document.title = `${import.meta.env.VITE_TITLE_NAME} | Блокировки`
+    }, [])
+
+    useEffect(() => {
         handleSearch()
     }, [filter.Offset]);
 

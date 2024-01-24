@@ -1,7 +1,7 @@
 import {Backdrop, Button, CircularProgress, FormControl, styled} from "@mui/material";
 
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import {ChangeEvent, useState} from "react";
+import {ChangeEvent, useEffect, useState} from "react";
 import dayjs from "dayjs";
 import BlacklistService from "@/services/blacklistService.ts";
 import {ApiError} from "@/http/api.ts";
@@ -24,8 +24,12 @@ export default function BlacklistImporter() {
     const [log, setLog] = useState<Array<string>>([])
     const [isLoading, setLoading] = useState<boolean>(false)
 
+    useEffect(() => {
+        document.title = `${import.meta.env.VITE_TITLE_NAME} | Импорт блокировок`
+    }, []);
+
     const handleLogEntry = (value: string) => {
-        let now = dayjs()
+        const now = dayjs()
 
         setLog(prevState => [
             ...prevState,
@@ -39,7 +43,7 @@ export default function BlacklistImporter() {
         const uploadFiles = event.target.files;
 
         if (uploadFiles && uploadFiles.length > 0) {
-            let files = Array.from(uploadFiles)
+            const files = Array.from(uploadFiles)
 
             if (files.length > 1) {
                 handleLogEntry(`добавлено ${uploadFiles.length} файлов:${files.map((value) => {
@@ -95,7 +99,7 @@ export default function BlacklistImporter() {
         const uploadFiles = event.target.files;
 
         if (uploadFiles && uploadFiles.length > 0) {
-            let files = Array.from(uploadFiles)
+            const files = Array.from(uploadFiles)
 
             if (files.length > 1) {
                 handleLogEntry(`добавлено ${uploadFiles.length} файлов:${files.map((value) => {
