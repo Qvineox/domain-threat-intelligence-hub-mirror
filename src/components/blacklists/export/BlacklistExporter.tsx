@@ -1,4 +1,4 @@
-import BlacklistExportFilter from "@/components/blacklists/filter/blacklistExportFilter.tsx";
+import BlacklistExportFilter from "@/components/blacklists/export/blacklistExportFilter.tsx";
 import BlacklistService, {IBlacklistedExportFilter} from "@/services/blacklistService.ts";
 import dayjs from "dayjs";
 import {useEffect, useState} from "react";
@@ -6,16 +6,19 @@ import {AxiosError} from "axios";
 import {ApiError} from "@/http/api.ts";
 import {toast} from "react-toastify";
 import {Backdrop, CircularProgress} from "@mui/material";
+import {SetURLSearchParams, useSearchParams} from "react-router-dom";
 
-const todayExportFilter: IBlacklistedExportFilter = {
+const defaultExportFilter: IBlacklistedExportFilter = {
     IsActive: true,
     SourceIDs: [],
-    CreatedBefore: dayjs().add(1, "day"),
-    CreatedAfter: dayjs()
+    CreatedBefore: null,
+    CreatedAfter: null
 }
 
 export default function BlacklistExporter() {
-    const [filter, setFilter] = useState<IBlacklistedExportFilter>(todayExportFilter)
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const [filter, setFilter] = useState<IBlacklistedExportFilter>(getFilterFromSearchParams(searchParams))
     const [isLoading, setLoading] = useState<boolean>(false)
 
     useEffect(() => {
@@ -40,7 +43,10 @@ export default function BlacklistExporter() {
         }).catch((error: AxiosError<ApiError>) => {
             console.error(error)
             toast.error("Ошибка экспорта!")
-        }).finally(() => setLoading(false))
+        }).finally(() => {
+            setSearchParamsFromFilter(filter, setSearchParams)
+            setLoading(false)
+        })
     }
 
     return <div className={"blacklists_exporter"}>
@@ -54,4 +60,21 @@ export default function BlacklistExporter() {
                                setFilter={setFilter}
                                onExport={handleExport}/>
     </div>
+}
+
+function getFilterFromSearchParams(params: URLSearchParams) {
+    let filter = defaultExportFilter
+
+    const importEventID = params.get("import_event_id")
+    if (importEventID) {
+        filter.ImportEventID = parseInt(importEventID)
+    }
+
+    return filter
+}
+
+function setSearchParamsFromFilter(filter: IBlacklistedExportFilter, setParams: SetURLSearchParams) {
+    setParams({
+        import_event_id: filter.ImportEventID ? filter.ImportEventID.toString() : "",
+    })
 }

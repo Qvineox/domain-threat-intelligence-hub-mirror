@@ -26,6 +26,7 @@ export default function BlacklistsStats() {
             <h2>Панель управления блокировками</h2>
             <nav>
                 <NavLink to={"/blacklists/view"}> / Просмотр</NavLink>
+                <NavLink to={"/blacklists/imports"}> / События импорта</NavLink>
                 <NavLink to={"/blacklists/import"}> / Импорт</NavLink>
                 <NavLink to={"/blacklists/export"}> / Экспорт</NavLink>
             </nav>
@@ -62,6 +63,14 @@ export default function BlacklistsStats() {
                                        stack: 'total',
                                        color: "#E49273"
                                    },
+                                   {
+                                       data: stats.ByDate.Emails,
+                                       label: 'Почтовые адреса',
+                                       id: 'emailId',
+                                       area: true,
+                                       stack: 'total',
+                                       color: "#f187bd"
+                                   },
                                ]}
                                xAxis={[{
                                    data: stats.ByDate.Dates,
@@ -71,9 +80,8 @@ export default function BlacklistsStats() {
                 </div>
                 <div className={"graph-container"}>
                     <h3>Глобальное распределение</h3>
-                    <PieChart width={600}
+                    <PieChart width={700}
                               height={400}
-
                               series={[
                                   {
                                       innerRadius: 70,
@@ -99,6 +107,12 @@ export default function BlacklistsStats() {
                                               value: stats.TotalURLs,
                                               label: `Ссылки (${stats.TotalURLs})`,
                                               color: "#E49273"
+                                          },
+                                          {
+                                              id: 3,
+                                              value: stats.TotalEmails,
+                                              label: `Почтовые адреса (${stats.TotalEmails})`,
+                                              color: "#f187bd"
                                           },
                                       ],
                                   },

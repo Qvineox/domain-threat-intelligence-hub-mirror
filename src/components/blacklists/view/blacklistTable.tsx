@@ -7,16 +7,20 @@ import {Chip} from "@mui/material";
 import NewReleasesIcon from '@mui/icons-material/NewReleases';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import UpdateIcon from '@mui/icons-material/Update';
+import {useNavigate} from "react-router-dom";
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
 interface IBlacklistTableProps {
     rows: Array<IBlacklistedHost>
     isLoading: boolean
-    onDelete: (type: "url" | "domain" | "ip", uuid: string) => void
+    onDelete: (type: "url" | "domain" | "ip" | "email", uuid: string) => void
     onPaginationChange: (size: number, page: number) => void
 }
 
 
 export default function BlacklistTable(props: IBlacklistTableProps) {
+    const navigate = useNavigate()
+
     const columns: GridColDef[] = [
         {
             field: 'Host',
@@ -68,6 +72,8 @@ export default function BlacklistTable(props: IBlacklistTableProps) {
                         return "URL"
                     case "ip":
                         return "IP"
+                    case "email":
+                        return "Почта"
                     default:
                         return "Неизвестно"
                 }
@@ -118,43 +124,26 @@ export default function BlacklistTable(props: IBlacklistTableProps) {
             flex: 1,
             cellClassName: 'actions',
             getActions: ({row}) => {
-                switch (row.Type) {
-                    case "url":
-                        return [
-                            <GridActionsCellItem
-                                icon={<DeleteOutlineIcon/>}
-                                label="Delete"
-                                onClick={() => {
-                                    props.onDelete("url", row.UUID)
-                                }}
-                                color="inherit"
-                            />,
-                        ];
-                    case "domain":
-                        return [
-                            <GridActionsCellItem
-                                icon={<DeleteOutlineIcon/>}
-                                label="Delete"
-                                onClick={() => {
-                                    props.onDelete("domain", row.UUID)
-                                }}
-                                color="inherit"
-                            />,
-                        ];
-                    case "ip":
-                        return [
-                            <GridActionsCellItem
-                                icon={<DeleteOutlineIcon/>}
-                                label="Delete"
-                                onClick={() => {
-                                    props.onDelete("ip", row.UUID)
-                                }}
-                                color="inherit"
-                            />,
-                        ];
-                    default:
-                        return []
+
+                let actions = [
+                    <GridActionsCellItem
+                        icon={<DeleteOutlineIcon/>}
+                        label="Delete"
+                        onClick={() => props.onDelete(row.Type, row.UUID)}
+                        color="inherit"
+                    />,
+                ]
+
+                if (row.ImportEventID) {
+                    actions.push(<GridActionsCellItem
+                        icon={<OpenInNewIcon/>}
+                        label="Show import event"
+                        onClick={() => navigate(`/blacklists/imports/${row.ImportEventID}`)}
+                        color="inherit"
+                    />)
                 }
+
+                return actions
 
                 // return [
                 //     <GridActionsCellItem

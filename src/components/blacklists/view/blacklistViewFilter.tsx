@@ -8,22 +8,23 @@ import {
     Button,
     ButtonGroup,
     FormControl,
-    FormControlLabel, Switch,
+    FormControlLabel, IconButton, Switch,
     TextField
 } from "@mui/material";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
-import dayjs from "dayjs";
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import {useNavigate} from "react-router-dom";
 import {ApiError} from "@/http/api.ts";
 import {AxiosError} from "axios";
 import {toast} from "react-toastify";
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 
 interface IBlacklistsViewerFilterProps {
     filter: IBlacklistedSearchFilter
     setFilter: Dispatch<SetStateAction<IBlacklistedSearchFilter>>
-    onSearch: () => void
+    resetFilter: () => void
+    onSearch: (clear: boolean) => void
 }
 
 export default function BlacklistsViewerFilter(props: IBlacklistsViewerFilterProps) {
@@ -58,6 +59,34 @@ export default function BlacklistsViewerFilter(props: IBlacklistsViewerFilterPro
                                }))
                            }}
                 />
+                <TextField id={"import-event-id"}
+                           label={"Поиск по ID импорта"}
+                           variant={"outlined"}
+                           size={"small"}
+                           inputProps={{inputMode: 'numeric'}}
+                           value={props.filter.ImportEventID || ""}
+                           onChange={(event) => {
+                               event.preventDefault()
+
+                               if (event.target.value.length > 0) {
+                                   const value = parseInt(event.target.value)
+
+                                   if (!isNaN(value)) {
+                                       console.debug(value)
+
+                                       props.setFilter(prevState => ({
+                                           ...prevState,
+                                           ImportEventID: value
+                                       }))
+                                   }
+                               } else {
+                                   props.setFilter(prevState => ({
+                                       ...prevState,
+                                       ImportEventID: 0
+                                   }))
+                               }
+                           }}
+                />
                 <Autocomplete disablePortal
                               multiple
                               limitTags={3}
@@ -84,6 +113,7 @@ export default function BlacklistsViewerFilter(props: IBlacklistsViewerFilterPro
                 <hr/>
                 <DatePicker label="Обнаружены после"
                             value={props.filter.CreatedAfter ?? null}
+                            format={"DD/MM/YYYY"}
                             onChange={(value) => {
                                 if (value) {
                                     props.setFilter(prevState => ({
@@ -94,7 +124,8 @@ export default function BlacklistsViewerFilter(props: IBlacklistsViewerFilterPro
                             }}
                 />
                 <DatePicker label="Обнаружены до"
-                            value={props.filter.CreatedBefore ?? dayjs()}
+                            value={props.filter.CreatedBefore ?? null}
+                            format={"DD/MM/YYYY"}
                             onChange={(value) => {
                                 if (value) {
                                     props.setFilter(prevState => ({
@@ -114,9 +145,14 @@ export default function BlacklistsViewerFilter(props: IBlacklistsViewerFilterPro
                                       }))
                                   }}
                 />
-                <Button onClick={props.onSearch} variant={"outlined"} color={"info"}>
-                    Поиск
-                </Button>
+                <div className="search-buttons">
+                    <Button fullWidth onClick={() => props.onSearch(true)} variant={"outlined"} color={"info"}>
+                        Поиск
+                    </Button>
+                    <IconButton color={'primary'} onClick={props.resetFilter}>
+                        <RestartAltIcon/>
+                    </IconButton>
+                </div>
                 <ButtonGroup fullWidth variant="outlined">
                     <Button color={"info"}
                             startIcon={<GetAppIcon/>}
@@ -128,7 +164,18 @@ export default function BlacklistsViewerFilter(props: IBlacklistsViewerFilterPro
                     <Button color={"info"}
                             startIcon={<FileUploadIcon/>}
                             onClick={() => {
-                                navigate("/blacklists/export")
+                                let href = `/blacklists/export`
+                                let params: Array<string> = []
+
+                                if (props.filter.ImportEventID !== 0) {
+                                    params.push(`export_event_id=${props.filter.ImportEventID}`)
+                                }
+
+                                if (props.filter.SourceIDs && props.filter.SourceIDs.length > 0) {
+                                    params.push(`source_ids=${props.filter.SourceIDs.join(",")}`)
+                                }
+
+                                navigate(`${href}?${params.join("&")}`)
                             }}>
                         Экспорт
                     </Button>

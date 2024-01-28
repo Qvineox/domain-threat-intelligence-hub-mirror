@@ -12,7 +12,6 @@ import {
     TextField
 } from "@mui/material";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
-import dayjs from "dayjs";
 import {AxiosError} from "axios";
 import {ApiError} from "@/http/api.ts";
 import {toast} from "react-toastify";
@@ -40,16 +39,43 @@ export default function BlacklistExportFilter(props: IBlacklistExportFilterProps
     }, [])
 
     return <div className={"blacklists_exporter_filter"}>
-
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <FormControl className={"blacklists_viewer_filter_form"} fullWidth variant={'outlined'}>
+                <TextField id={"search-string"}
+                           label={"ID события импорта"}
+                           variant={"outlined"}
+                           size={"small"}
+                           type={"number"}
+                           sx={{marginTop: "20px"}}
+                           value={props.filter.ImportEventID ?? ""}
+                           onChange={(event) => {
+                               if (event.target.value.length > 0) {
+                                   props.setFilter({
+                                       SourceIDs: [],
+                                       CreatedAfter: null,
+                                       CreatedBefore: null,
+                                       OnlyNew: true,
+                                       IsActive: true,
+                                       ImportEventID: parseInt(event.target.value)
+                                   })
+
+                                   setSelectedSourceOptions([])
+                               } else {
+                                   props.setFilter(prevState => ({
+                                       ...prevState,
+                                       ImportEventID: undefined
+                                   }))
+                               }
+
+                           }}
+                />
                 <Autocomplete disablePortal
                               multiple
                               limitTags={3}
-                              sx={{marginTop: "20px"}}
                               id={"host_types"}
                               size={"small"}
                               value={selectedSourceOptions}
+                              disabled={props.filter.ImportEventID !== undefined}
                               isOptionEqualToValue={((option, value) => {
                                   return option.value === value.value
                               })}
@@ -70,6 +96,7 @@ export default function BlacklistExportFilter(props: IBlacklistExportFilterProps
                 <hr/>
                 <DatePicker label="Обнаружены после"
                             value={props.filter.CreatedAfter ?? null}
+                            disabled={props.filter.ImportEventID !== undefined}
                             onChange={(value) => {
                                 if (value) {
                                     props.setFilter(prevState => ({
@@ -80,7 +107,8 @@ export default function BlacklistExportFilter(props: IBlacklistExportFilterProps
                             }}
                 />
                 <DatePicker label="Обнаружены до"
-                            value={props.filter.CreatedBefore ?? dayjs()}
+                            value={props.filter.CreatedBefore ?? null}
+                            disabled={props.filter.ImportEventID !== undefined}
                             onChange={(value) => {
                                 if (value) {
                                     props.setFilter(prevState => ({
@@ -93,6 +121,7 @@ export default function BlacklistExportFilter(props: IBlacklistExportFilterProps
                 <hr/>
                 <FormControlLabel label="Только активные"
                                   control={<Switch defaultChecked/>}
+                                  disabled={props.filter.ImportEventID !== undefined}
                                   onChange={(_event, checked) => {
                                       props.setFilter(prevState => ({
                                           ...prevState,
@@ -102,6 +131,7 @@ export default function BlacklistExportFilter(props: IBlacklistExportFilterProps
                 />
                 <FormControlLabel label="Только новые"
                                   control={<Switch defaultChecked/>}
+                                  disabled={props.filter.ImportEventID !== undefined}
                                   onChange={(_event, checked) => {
                                       props.setFilter(prevState => ({
                                           ...prevState,

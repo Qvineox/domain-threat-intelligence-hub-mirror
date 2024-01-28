@@ -10,6 +10,8 @@ import BlacklistsViewer from "@/components/blacklists/view/blacklistsViewer.tsx"
 import BlacklistImporter from "@/components/blacklists/import/BlacklistImporter.tsx";
 import BlacklistExporter from "@/components/blacklists/export/BlacklistExporter.tsx";
 import BlacklistsStats from "@/components/blacklists/stats/blacklistsStats.tsx";
+import BlacklistImportEventsViewer from "@/components/blacklists/importEvents/blacklistImportEventsViewer.tsx";
+import BlacklistImportEventViewer from "@/components/blacklists/importEvents/blacklistImportEventViewer.tsx";
 
 const router = createBrowserRouter([
     {
@@ -47,6 +49,14 @@ const router = createBrowserRouter([
                     {
                         path: "/blacklists/import",
                         element: <BlacklistImporter/>
+                    },
+                    {
+                        path: "/blacklists/imports",
+                        element: <BlacklistImportEventsViewer/>
+                    },
+                    {
+                        path: "/blacklists/imports/:id",
+                        element: <BlacklistImportEventViewer/>
                     },
                     {
                         path: "/blacklists/export",

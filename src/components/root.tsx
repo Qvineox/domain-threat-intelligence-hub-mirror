@@ -91,7 +91,7 @@ function RootNavigationDrawer(props: RootNavigationDrawerProps) {
                 </MenuItem>
             </NavLink>
             <Divider/>
-            <NavLink to={"/blacklists/view"} onClick={handleClose}>
+            <NavLink to={"/blacklists"} onClick={handleClose}>
                 <MenuItem>
                     <ListItemIcon>
                         <LocalFireDepartmentIcon/>
@@ -147,7 +147,7 @@ function RootNavigationBar(props: RootNavigationBarProps) {
         <IconButton onClick={() => props.setIsOpen(true)}>
             <MenuIcon/>
         </IconButton>
-        <Breadcrumbs maxItems={3} aria-label="breadcrumb">
+        <Breadcrumbs maxItems={4} aria-label="breadcrumb">
             {parseHrefToBreadcrumbs(location.pathname)}
             {/*<Link underline="hover" color="inherit" href="/">*/}
             {/*    Домой*/}
@@ -190,6 +190,10 @@ function parseHrefToBreadcrumbs(location: string): Array<ReactNode> {
                 name = "Импорт"
                 href += "/import"
                 break
+            case "imports":
+                name = "События импорта"
+                href += "/imports"
+                break
             case "export":
                 name = "Экспорт"
                 href += "/export"
@@ -221,6 +225,15 @@ function parseHrefToBreadcrumbs(location: string): Array<ReactNode> {
             case "":
                 name = "Домашняя страница"
                 href = ""
+                break
+            default:
+                if (!isNaN(Number(value))) {
+                    name = "#" + value
+                    href += "/" + value
+                    break
+                }
+
+                name = value
         }
 
         return <NavLink key={index} to={href}>

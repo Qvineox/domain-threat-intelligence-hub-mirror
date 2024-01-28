@@ -2,8 +2,8 @@ import {Dayjs} from "dayjs";
 import {IBlacklistedSource} from "@/entities/blacklists/source.ts";
 import {IBlacklistImportEvent} from "@/entities/blacklists/importEvent.ts";
 
-export interface IBlacklistedURL {
-    URL: string
+export interface IBlacklistedEmail {
+    Email: string
     Description: string
 
     ImportEvent?: IBlacklistImportEvent

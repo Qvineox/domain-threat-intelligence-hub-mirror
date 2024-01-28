@@ -8,6 +8,7 @@ import {IBlacklistedIP} from "@/entities/blacklists/ip.ts";
 import {IBlacklistedHost} from "@/entities/blacklists/host.ts";
 import {IDatabaseResponse} from "@/http/responses.ts";
 import {IBlacklistStatistics} from "@/entities/blacklists/statistics.ts";
+import {IBlacklistImportEvent} from "@/entities/blacklists/importEvent.ts";
 
 export default class BlacklistService {
     static async getURLsByFilter(filter: IBlacklistedSearchFilter): Promise<AxiosResponse<Array<IBlacklistedURL>>> {
@@ -15,6 +16,8 @@ export default class BlacklistService {
             params: {
                 'limit': filter.Limit,
                 'offset': filter.Offset,
+                'source_id': filter.SourceIDs,
+                'import_event_id': filter.ImportEventID,
                 'search_string': filter.SearchString,
                 'created_after': filter.CreatedAfter ? filter.CreatedAfter.format("YYYY-MM-DD") : null,
                 'created_before': filter.CreatedBefore ? filter.CreatedBefore.format("YYYY-MM-DD") : null,
@@ -28,6 +31,8 @@ export default class BlacklistService {
             params: {
                 'limit': filter.Limit,
                 'offset': filter.Offset,
+                'source_id': filter.SourceIDs,
+                'import_event_id': filter.ImportEventID,
                 'search_string': filter.SearchString,
                 'created_after': filter.CreatedAfter ? filter.CreatedAfter.format("YYYY-MM-DD") : null,
                 'created_before': filter.CreatedBefore ? filter.CreatedBefore.format("YYYY-MM-DD") : null,
@@ -41,6 +46,8 @@ export default class BlacklistService {
             params: {
                 'limit': filter.Limit,
                 'offset': filter.Offset,
+                'source_id': filter.SourceIDs,
+                'import_event_id': filter.ImportEventID,
                 'search_string': filter.SearchString,
                 'created_after': filter.CreatedAfter ? filter.CreatedAfter.format("YYYY-MM-DD") : null,
                 'created_before': filter.CreatedBefore ? filter.CreatedBefore.format("YYYY-MM-DD") : null,
@@ -52,7 +59,7 @@ export default class BlacklistService {
     static async deleteIP(uuid: string): Promise<AxiosResponse<IDatabaseResponse>> {
         return api.delete<IDatabaseResponse>('blacklists/ip', {
             data: {
-                uuid: uuid
+                UUID: uuid
             }
         })
     }
@@ -60,7 +67,7 @@ export default class BlacklistService {
     static async deleteURL(uuid: string): Promise<AxiosResponse<IDatabaseResponse>> {
         return api.delete<IDatabaseResponse>('blacklists/url', {
             data: {
-                uuid: uuid
+                UUID: uuid
             }
         })
     }
@@ -68,7 +75,15 @@ export default class BlacklistService {
     static async deleteDomain(uuid: string): Promise<AxiosResponse<IDatabaseResponse>> {
         return api.delete<IDatabaseResponse>('blacklists/domain', {
             data: {
-                uuid: uuid
+                UUID: uuid
+            }
+        })
+    }
+
+    static async deleteEmail(uuid: string): Promise<AxiosResponse<IDatabaseResponse>> {
+        return api.delete<IDatabaseResponse>('blacklists/email', {
+            data: {
+                UUID: uuid
             }
         })
     }
@@ -79,12 +94,29 @@ export default class BlacklistService {
                 'limit': filter.Limit,
                 'offset': filter.Offset,
                 'source_id': filter.SourceIDs,
+                'import_event_id': filter.ImportEventID,
                 'search_string': filter.SearchString,
                 'created_after': filter.CreatedAfter ? filter.CreatedAfter.format("YYYY-MM-DD") : null,
                 'created_before': filter.CreatedBefore ? filter.CreatedBefore.format("YYYY-MM-DD") : null,
                 'is_active': filter.IsActive,
             }
         })
+    }
+
+    static async getImportEventsByFilter(filter: IBlacklistImportEventsFilter): Promise<AxiosResponse<Array<IBlacklistImportEvent>>> {
+        return api.get<Array<IBlacklistImportEvent>>('blacklists/import/events', {
+            params: {
+                'limit': filter.Limit,
+                'offset': filter.Offset,
+                'type': filter.Type,
+                'created_after': filter.CreatedAfter ? filter.CreatedAfter.format("YYYY-MM-DD") : null,
+                'created_before': filter.CreatedBefore ? filter.CreatedBefore.format("YYYY-MM-DD") : null,
+            }
+        })
+    }
+
+    static async getImportEvent(id: number): Promise<AxiosResponse<IBlacklistImportEvent>> {
+        return api.get<IBlacklistImportEvent>(`blacklists/import/events/${id}`)
     }
 
     static async getAllSources(): Promise<AxiosResponse<Array<IBlacklistedSource>>> {
@@ -117,6 +149,7 @@ export default class BlacklistService {
         }, {
             params: {
                 'source_id': filter.SourceIDs,
+                'import_event_id': filter.ImportEventID,
                 'created_after': filter.CreatedAfter ? filter.CreatedAfter.format("YYYY-MM-DD") : null,
                 'created_before': filter.CreatedBefore ? filter.CreatedBefore.format("YYYY-MM-DD") : null,
                 'is_active': filter.IsActive,
@@ -134,19 +167,30 @@ export interface IBlacklistedSearchFilter {
     Limit: number
 
     SourceIDs?: Array<number>
+    ImportEventID: number | null
     IsActive?: boolean
-    CreatedAfter?: Dayjs
-    CreatedBefore?: Dayjs
+    CreatedAfter: Dayjs | null
+    CreatedBefore: Dayjs | null
     SearchString?: string
     Offset: number
 }
 
 export interface IBlacklistedExportFilter {
     SourceIDs?: Array<number>
+    ImportEventID?: number
     IsActive?: boolean
     OnlyNew?: boolean
-    CreatedAfter?: Dayjs
-    CreatedBefore?: Dayjs
+    CreatedAfter: Dayjs | null
+    CreatedBefore: Dayjs | null
+}
+
+export interface IBlacklistImportEventsFilter {
+    Limit: number
+
+    CreatedAfter: Dayjs | null
+    CreatedBefore: Dayjs | null
+    Type?: string
+    Offset: number
 }
 
 export const HostTypes: Array<{ label: string, value: number, host: "domain" | "url" | "ip" }> = [
