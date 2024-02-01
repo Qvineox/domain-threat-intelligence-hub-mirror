@@ -37,7 +37,7 @@ export default function BlacklistImportEventsViewer() {
 
     // TODO: handle delete
     const handleDelete = (uuid: string) => {
-        let approved = confirm(`Удалить событий импорта ID#${uuid}?`)
+        let approved = confirm(`Удалить событие импорта ID#${uuid}?`)
 
         console.debug("deleting: " + uuid)
         console.debug(approved)

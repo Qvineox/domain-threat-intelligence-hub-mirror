@@ -27,7 +27,7 @@ export default class BlacklistService {
     }
 
     static async getDomainsByFilter(filter: IBlacklistedSearchFilter): Promise<AxiosResponse<Array<IBlacklistedDomain>>> {
-        return api.get<Array<IBlacklistedDomain>>('blacklists/domains', {
+        return api.get<Array<IBlacklistedDomain>>('blacklists/domain', {
             params: {
                 'limit': filter.Limit,
                 'offset': filter.Offset,
@@ -42,7 +42,7 @@ export default class BlacklistService {
     }
 
     static async getIPsByFilter(filter: IBlacklistedSearchFilter): Promise<AxiosResponse<Array<IBlacklistedIP>>> {
-        return api.get<Array<IBlacklistedIP>>('blacklists/ips', {
+        return api.get<Array<IBlacklistedIP>>('blacklists/ip', {
             params: {
                 'limit': filter.Limit,
                 'offset': filter.Offset,
@@ -89,7 +89,7 @@ export default class BlacklistService {
     }
 
     static async getHostsByFilter(filter: IBlacklistedSearchFilter): Promise<AxiosResponse<Array<IBlacklistedHost>>> {
-        return api.get<Array<IBlacklistedHost>>('blacklists/hosts', {
+        return api.get<Array<IBlacklistedHost>>('blacklists/host', {
             params: {
                 'limit': filter.Limit,
                 'offset': filter.Offset,
@@ -104,7 +104,7 @@ export default class BlacklistService {
     }
 
     static async getImportEventsByFilter(filter: IBlacklistImportEventsFilter): Promise<AxiosResponse<Array<IBlacklistImportEvent>>> {
-        return api.get<Array<IBlacklistImportEvent>>('blacklists/import/events', {
+        return api.get<Array<IBlacklistImportEvent>>('blacklists/import/event', {
             params: {
                 'limit': filter.Limit,
                 'offset': filter.Offset,
@@ -116,31 +116,31 @@ export default class BlacklistService {
     }
 
     static async getImportEvent(id: number): Promise<AxiosResponse<IBlacklistImportEvent>> {
-        return api.get<IBlacklistImportEvent>(`blacklists/import/events/${id}`)
+        return api.get<IBlacklistImportEvent>(`blacklists/import/event/${id}`)
     }
 
     static async getAllSources(): Promise<AxiosResponse<Array<IBlacklistedSource>>> {
         return api.get<Array<IBlacklistedSource>>('blacklists/sources')
     }
 
-    static async postImportSTIX(files: Array<File>): Promise<AxiosResponse<IDatabaseResponse>> {
+    static async postImportSTIX(files: Array<File>): Promise<AxiosResponse<IBlacklistImportEvent>> {
         const form = new FormData();
 
         files.forEach((value) => {
             form.append("file_upload", value)
         })
 
-        return api.post<IDatabaseResponse>('blacklists/import/stix', form)
+        return api.post<IBlacklistImportEvent>('blacklists/import/stix', form)
     }
 
-    static async postImportCSV(files: Array<File>): Promise<AxiosResponse<IDatabaseResponse>> {
+    static async postImportCSV(files: Array<File>): Promise<AxiosResponse<IBlacklistImportEvent>> {
         const form = new FormData();
 
         files.forEach((value) => {
             form.append("file_upload", value)
         })
 
-        return api.post<IDatabaseResponse>('blacklists/import/csv', form)
+        return api.post<IBlacklistImportEvent>('blacklists/import/csv', form)
     }
 
     static async postExportCSV(filter: IBlacklistedExportFilter): Promise<AxiosResponse<Blob>> {

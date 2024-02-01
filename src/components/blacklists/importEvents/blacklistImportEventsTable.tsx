@@ -47,7 +47,7 @@ export default function BlacklistImportEventsTable(props: IBlacklistImportEvents
             headerAlign: "center",
             align: "center",
             valueGetter: (params) => {
-                return `${params.value.Imported.Total} — ${params.value.Imported.IPs} — ${params.value.Imported.Domains} — ${params.value.Imported.URLs} — ${params.value.Imported.Emails}`
+                return `(${params.value.Imported.Total}) ${params.value.New.Total} — ${params.value.New.IPs} — ${params.value.New.Domains} — ${params.value.New.URLs} — ${params.value.New.Emails}`
             },
         },
         {
