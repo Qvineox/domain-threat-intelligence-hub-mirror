@@ -4,6 +4,20 @@
   height: 100%;
   display: flex;
 
+  h1, h2, p {
+    &:hover {
+      cursor: default;
+    }
+  }
+
+  h1 {
+    position: fixed;
+    top: 6vh;
+    left: 2vw;
+    font-weight: normal;
+    font-size: 3rem;
+  }
+
   img.spinning-orbit {
     position: fixed;
     height: 140vh;
@@ -17,8 +31,8 @@
 
   &_navigation {
     position: fixed;
-    right: 20vw;
-    top: 30vh;
+    right: 15vw;
+    top: 35vh;
 
     display: flex;
     flex-direction: row;
@@ -35,7 +49,7 @@
         transition: .25s ease-in-out;
 
         &:hover {
-          transform: translate(10px) scale(1.1);
+          transform: translate(10px);
         }
 
         &:not(:first-child) {

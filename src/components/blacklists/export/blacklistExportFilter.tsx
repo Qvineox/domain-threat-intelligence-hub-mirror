@@ -94,7 +94,7 @@ export default function BlacklistExportFilter(props: IBlacklistExportFilterProps
                               renderInput={(params) => <TextField {...params} label="Типы источников (все)"/>}
                 />
                 <hr/>
-                <DatePicker label="Обнаружены после"
+                <DatePicker label="Созданы после"
                             value={props.filter.CreatedAfter ?? null}
                             disabled={props.filter.ImportEventID !== undefined}
                             onChange={(value) => {
@@ -103,10 +103,15 @@ export default function BlacklistExportFilter(props: IBlacklistExportFilterProps
                                         ...prevState,
                                         CreatedAfter: value
                                     }))
+                                } else {
+                                    props.setFilter(prevState => ({
+                                        ...prevState,
+                                        CreatedAfter: null
+                                    }))
                                 }
                             }}
                 />
-                <DatePicker label="Обнаружены до"
+                <DatePicker label="Созданы до"
                             value={props.filter.CreatedBefore ?? null}
                             disabled={props.filter.ImportEventID !== undefined}
                             onChange={(value) => {
@@ -114,6 +119,11 @@ export default function BlacklistExportFilter(props: IBlacklistExportFilterProps
                                     props.setFilter(prevState => ({
                                         ...prevState,
                                         CreatedBefore: value
+                                    }))
+                                } else {
+                                    props.setFilter(prevState => ({
+                                        ...prevState,
+                                        CreatedBefore: null
                                     }))
                                 }
                             }}

@@ -123,8 +123,10 @@ export default class BlacklistService {
         return api.get<Array<IBlacklistedSource>>('blacklists/sources')
     }
 
-    static async postImportSTIX(files: Array<File>): Promise<AxiosResponse<IBlacklistImportEvent>> {
+    static async postImportSTIX(files: Array<File>, extractAll: boolean): Promise<AxiosResponse<IBlacklistImportEvent>> {
         const form = new FormData();
+
+        form.append("extract_all", extractAll ? "true" : "false")
 
         files.forEach((value) => {
             form.append("file_upload", value)
@@ -133,8 +135,10 @@ export default class BlacklistService {
         return api.post<IBlacklistImportEvent>('blacklists/import/stix', form)
     }
 
-    static async postImportCSV(files: Array<File>): Promise<AxiosResponse<IBlacklistImportEvent>> {
+    static async postImportCSV(files: Array<File>, extractAll: boolean): Promise<AxiosResponse<IBlacklistImportEvent>> {
         const form = new FormData();
+
+        form.append("extract_all", extractAll ? "true" : "false")
 
         files.forEach((value) => {
             form.append("file_upload", value)

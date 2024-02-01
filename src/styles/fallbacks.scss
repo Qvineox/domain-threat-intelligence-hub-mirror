@@ -1,0 +1,38 @@
+.not-found {
+  margin-top: 20vh;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+
+  img {
+    height: 60vh;
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    hr {
+      margin: 10px 0;
+    }
+
+    h1 {
+      &:hover {
+        cursor: default;
+      }
+    }
+
+    a {
+      transition: .25s ease-in-out;
+
+      &:hover {
+        transform: translate(10px);
+      }
+    }
+  }
+
+
+}

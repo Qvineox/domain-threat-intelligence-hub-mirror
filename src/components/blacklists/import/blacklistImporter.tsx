@@ -1,10 +1,9 @@
 import {
     Backdrop,
     Button,
-    ButtonGroup,
     CircularProgress,
-    FormControl,
-    styled
+    FormControl, FormControlLabel,
+    styled, Switch, Tooltip
 } from "@mui/material";
 
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -32,6 +31,7 @@ const VisuallyHiddenInput = styled('input')({
 export default function BlacklistImporter() {
     const [isLoading, setLoading] = useState<boolean>(false)
     const [importEvents, setImportEvents] = useState<Array<IBlacklistImportEvent>>([])
+    const [extractAll, setExtractAll] = useState<boolean>(true)
 
     useEffect(() => {
         document.title = `${import.meta.env.VITE_TITLE_NAME} | Импорт блокировок`
@@ -46,7 +46,7 @@ export default function BlacklistImporter() {
             if (files.length > 0) {
                 setLoading(true)
 
-                BlacklistService.postImportSTIX(files)
+                BlacklistService.postImportSTIX(files, extractAll)
                     .then((response) => {
                         console.info(response)
 
@@ -78,7 +78,7 @@ export default function BlacklistImporter() {
             if (files.length > 0) {
                 setLoading(true)
 
-                BlacklistService.postImportCSV(files)
+                BlacklistService.postImportCSV(files, extractAll)
                     .then((response) => {
                         console.info(response)
 
@@ -112,6 +112,15 @@ export default function BlacklistImporter() {
             <FormControl className={"blacklists_importer_input-from"} variant={'outlined'}>
                 <h2>Импорт хостов из файлов.</h2>
                 <p>Для загрузки доступны файлы в формате STIX (JSON) и ФинЦЕРТ (CSV).</p>
+                <hr/>
+                <Tooltip arrow placement="right-start" title={"Из URL и почтовых адресов будут извлечены домены. Также будут извлечены IP адреса."}>
+                    <FormControlLabel label="Извлекать связанные типы хостов"
+                                      control={<Switch defaultChecked/>}
+                                      onChange={(_event, checked) => {
+                                          setExtractAll(checked)
+                                      }}
+                    />
+                </Tooltip>
                 <hr/>
                 <Button component="label"
                         variant="outlined"

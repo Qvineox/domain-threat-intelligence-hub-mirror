@@ -173,23 +173,7 @@
       border-radius: $panel-border-radius;
       padding: 10px 15px;
 
-      table {
-        margin: 10px 0 10px 0;
-        border-collapse: collapse;
 
-        th, td {
-          border: 1px solid #bfc6d2;
-          text-align: center;
-        }
-
-        td {
-          padding: 2px 5px;
-        }
-
-        tfoot {
-          background-color: #daddde;
-        }
-      }
 
       hr {
         margin: 5px 0 10px 0;
@@ -253,6 +237,9 @@
 
   &_stats {
     flex-basis: 60%;
+    padding: 10px 20px;
+
+    min-height: 80vh;
   }
 
   h2 {
@@ -267,6 +254,24 @@
 
   p {
     font-size: 1.25rem;
+  }
+}
+
+table {
+  margin: 10px 0 10px 0;
+  border-collapse: collapse;
+
+  th, td {
+    border: 1px solid #bfc6d2;
+    text-align: center;
+  }
+
+  td {
+    padding: 2px 5px;
+  }
+
+  tfoot {
+    background-color: #daddde;
   }
 }
 

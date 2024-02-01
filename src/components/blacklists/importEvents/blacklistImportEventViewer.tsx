@@ -37,7 +37,12 @@ export default function BlacklistImportEventViewer() {
                 }
             }).catch((error: AxiosError<ApiError>) => {
                 console.error(error)
-                toast.error("Ошибка получения данных")
+                if (error.response?.data.ErrorCode === 6) {
+                    toast.warning("Объект не найден")
+                } else {
+                    toast.error("Ошибка получения данных")
+                }
+
             }).finally(() => {
                 setIsLoading(false)
             })

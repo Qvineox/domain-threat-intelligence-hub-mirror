@@ -9,6 +9,7 @@ export default function HomePage() {
     }, [])
 
     return <div className={"home-page"}>
+        <h1>// {import.meta.env.VITE_HOME_NAME}</h1>
         <img className={"spinning-orbit"}
              src={solarSvg}
              alt="spinning-orbit"/>
@@ -16,17 +17,21 @@ export default function HomePage() {
             <div className={"home-page_navigation_group"}>
                 <NavLink to={"/blacklists"}>/ блокировки</NavLink>
                 <NavLink to={"/blacklists/view"}>/ просмотр</NavLink>
+                <NavLink to={"/blacklists/imports"}>/ события</NavLink>
                 <NavLink to={"/blacklists/import"}>/ импорт</NavLink>
                 <NavLink to={"/blacklists/export"}>/ экспорт</NavLink>
             </div>
             <div className={"home-page_navigation_group"}>
-                <NavLink to={"/blacklists"}>/ карта сети</NavLink>
+                <NavLink to={"/scan/view"}>/ сканирование</NavLink>
+                <NavLink to={"/scan/agents"}>/ агенты</NavLink>
+                <NavLink to={"/nodes/jobs"}>/ задачи</NavLink>
             </div>
             <div className={"home-page_navigation_group"}>
-                <NavLink to={"/blacklists"}>/ сетевые узлы</NavLink>
+                <NavLink to={"/nodes/view"}>/ сетевые узлы</NavLink>
+                <NavLink to={"/nodes/map"}>/ карта сети</NavLink>
             </div>
             <div className={"home-page_navigation_group"}>
-                <NavLink to={"/blacklists"}>/ профиль</NavLink>
+                <NavLink to={"/account/profile"}>/ профиль</NavLink>
             </div>
         </nav>
     </div>

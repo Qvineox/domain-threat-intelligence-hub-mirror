@@ -9,7 +9,7 @@ import {
     ButtonGroup,
     FormControl,
     FormControlLabel, IconButton, Switch,
-    TextField
+    TextField, Tooltip
 } from "@mui/material";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
 import FileUploadIcon from '@mui/icons-material/FileUpload';
@@ -120,6 +120,11 @@ export default function BlacklistsViewerFilter(props: IBlacklistsViewerFilterPro
                                         ...prevState,
                                         CreatedAfter: value
                                     }))
+                                } else {
+                                    props.setFilter(prevState => ({
+                                        ...prevState,
+                                        CreatedAfter: null
+                                    }))
                                 }
                             }}
                 />
@@ -132,19 +137,26 @@ export default function BlacklistsViewerFilter(props: IBlacklistsViewerFilterPro
                                         ...prevState,
                                         CreatedBefore: value
                                     }))
+                                } else {
+                                    props.setFilter(prevState => ({
+                                        ...prevState,
+                                        CreatedBefore: null
+                                    }))
                                 }
                             }}
                 />
                 <hr/>
-                <FormControlLabel label="Только активные"
-                                  control={<Switch defaultChecked/>}
-                                  onChange={(_event, checked) => {
-                                      props.setFilter(prevState => ({
-                                          ...prevState,
-                                          IsActive: checked
-                                      }))
-                                  }}
-                />
+                <Tooltip arrow placement="right-start" title={"Удаленные хосты не будут участвовать в выборке."}>
+                    <FormControlLabel label="Только активные"
+                                      control={<Switch defaultChecked/>}
+                                      onChange={(_event, checked) => {
+                                          props.setFilter(prevState => ({
+                                              ...prevState,
+                                              IsActive: checked
+                                          }))
+                                      }}
+                    />
+                </Tooltip>
                 <div className="search-buttons">
                     <Button fullWidth onClick={() => props.onSearch(true)} variant={"outlined"} color={"info"}>
                         Поиск
@@ -168,7 +180,7 @@ export default function BlacklistsViewerFilter(props: IBlacklistsViewerFilterPro
                                 let params: Array<string> = []
 
                                 if (props.filter.ImportEventID !== 0) {
-                                    params.push(`export_event_id=${props.filter.ImportEventID}`)
+                                    params.push(`import_event_id=${props.filter.ImportEventID}`)
                                 }
 
                                 if (props.filter.SourceIDs && props.filter.SourceIDs.length > 0) {

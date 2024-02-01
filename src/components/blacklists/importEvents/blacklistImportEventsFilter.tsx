@@ -32,13 +32,18 @@ export default function BlacklistImportEventsFilter(props: IBlacklistImportEvent
                 />
                 <hr/>
                 <DatePicker label="Создан после"
-                            value={props.filter.CreatedBefore ?? null}
+                            value={props.filter.CreatedAfter ?? null}
                             format={"DD/MM/YYYY"}
                             onChange={(value) => {
                                 if (value) {
                                     props.setFilter(prevState => ({
                                         ...prevState,
                                         CreatedAfter: value
+                                    }))
+                                } else {
+                                    props.setFilter(prevState => ({
+                                        ...prevState,
+                                        CreatedAfter: null
                                     }))
                                 }
                             }}
@@ -51,6 +56,11 @@ export default function BlacklistImportEventsFilter(props: IBlacklistImportEvent
                                     props.setFilter(prevState => ({
                                         ...prevState,
                                         CreatedBefore: value
+                                    }))
+                                } else {
+                                    props.setFilter(prevState => ({
+                                        ...prevState,
+                                        CreatedBefore: null
                                     }))
                                 }
                             }}

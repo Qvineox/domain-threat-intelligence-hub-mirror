@@ -7,11 +7,12 @@ import Blacklists from "@/components/blacklists/blacklists.tsx";
 import HomePage from "@/components/home/home.tsx";
 import Root from "@/components/root.tsx";
 import BlacklistsViewer from "@/components/blacklists/view/blacklistsViewer.tsx";
-import BlacklistImporter from "@/components/blacklists/import/BlacklistImporter.tsx";
-import BlacklistExporter from "@/components/blacklists/export/BlacklistExporter.tsx";
+import BlacklistImporter from "@/components/blacklists/import/blacklistImporter.tsx";
+import BlacklistExporter from "@/components/blacklists/export/blacklistExporter.tsx";
 import BlacklistsStats from "@/components/blacklists/stats/blacklistsStats.tsx";
 import BlacklistImportEventsViewer from "@/components/blacklists/importEvents/blacklistImportEventsViewer.tsx";
 import BlacklistImportEventViewer from "@/components/blacklists/importEvents/blacklistImportEventViewer.tsx";
+import PageNotFound from "@/components/fallbacks/pageNotFound.tsx";
 
 const router = createBrowserRouter([
     {
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
                         element: <BlacklistExporter/>
                     }
                 ]
+            },
+            {
+                path: "*",
+                element: <PageNotFound/>
             }
         ]
     },
