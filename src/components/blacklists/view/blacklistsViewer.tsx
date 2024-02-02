@@ -69,7 +69,9 @@ export default function BlacklistsViewer() {
                     ])
                 }
             } else {
-                setRows([])
+                if (clear) {
+                    setRows([])
+                }
             }
         }).catch((response) => {
             console.error(response)

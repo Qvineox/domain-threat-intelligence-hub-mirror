@@ -25,14 +25,15 @@ npm run dev --host
 
 Following variables are used in application. These variables are also mapped in automated GitLab CI/CD:
 
-| Environment Variable | 	Is Required? | 	GitLab CI Variable | 	Description        | 	Example values       |
-|----------------------|---------------|---------------------|---------------------|-----------------------|
-| VITE_API_URL         |               | API_URL             | Backend API URL     | http://localhost:7090 |
-| VITE_API_VERSION     |               | API_VERSION         | Backend API version | v1                    |
-| VITE_APP_VERSION     | optional      | APP_VERSION         | Application version | v0.1.0                |
-| VITE_APP_BRANCH      | optional      | APP_BRANCH          | Application branch  | test                  |
-| VITE_BUILD_ID        | optional      | BUILD_ID            | Git build ID        | d4e5c67d              |
-| VITE_TITLE_NAME        | optional      | BUILD_ID            | Git build ID        | d4e5c67d              |
+| Environment Variable | 	Is Required? | 	GitLab CI Variable | 	Description        | 	Example values            |
+|----------------------|---------------|---------------------|---------------------|----------------------------|
+| VITE_API_URL         |               | API_URL             | Backend API URL     | http://localhost:7090      |
+| VITE_API_VERSION     |               | API_VERSION         | Backend API version | v1                         |
+| VITE_APP_VERSION     | optional      | APP_VERSION         | Application version | v0.1.0                     |
+| VITE_APP_BRANCH      | optional      | APP_BRANCH          | Application branch  | test                       |
+| VITE_APP_NAME        | optional      | APP_NAME            | Application name    | Domain Threat Intelligence |
+| VITE_BUILD_ID        | optional      | BUILD_ID            | Git build ID        | d4e5c67d                   |
+| VITE_TITLE_NAME      | optional      | BUILD_ID            | Git build ID        | d4e5c67d                   |
 
 ## Demo
 

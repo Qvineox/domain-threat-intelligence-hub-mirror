@@ -15,6 +15,7 @@ export interface IBlacklistedHost {
     ImportEvent?: IBlacklistImportEvent
     ImportEventID?: number
 
+    DiscoveredAt: Dayjs
     CreatedAt: Dayjs
     UpdatedAt: Dayjs
     DeletedAt: Dayjs
