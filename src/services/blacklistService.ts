@@ -115,6 +115,14 @@ export default class BlacklistService {
         })
     }
 
+    static async deleteImportEvent(id: number): Promise<AxiosResponse<IDatabaseResponse>> {
+        return api.delete<IDatabaseResponse>(`blacklists/import/event`, {
+            data: {
+                "ID": id
+            }
+        })
+    }
+
     static async getImportEvent(id: number): Promise<AxiosResponse<IBlacklistImportEvent>> {
         return api.get<IBlacklistImportEvent>(`blacklists/import/event/${id}`)
     }
@@ -151,6 +159,19 @@ export default class BlacklistService {
         return api.post<Blob>('blacklists/export/csv', {
             responseType: 'blob',
         }, {
+            params: {
+                'source_id': filter.SourceIDs,
+                'import_event_id': filter.ImportEventID,
+                'created_after': filter.CreatedAfter ? filter.CreatedAfter.format("YYYY-MM-DD") : null,
+                'created_before': filter.CreatedBefore ? filter.CreatedBefore.format("YYYY-MM-DD") : null,
+                'is_active': filter.IsActive,
+                'only_new': filter.OnlyNew,
+            }
+        })
+    }
+
+    static async postExportNSD(filter: IBlacklistedExportFilter): Promise<AxiosResponse<Blob>> {
+        return api.post<Blob>('blacklists/export/naumen', {
             params: {
                 'source_id': filter.SourceIDs,
                 'import_event_id': filter.ImportEventID,

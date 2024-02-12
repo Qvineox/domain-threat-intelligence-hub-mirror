@@ -13,8 +13,11 @@ import {ApiError} from "@/http/api.ts";
 import {toast} from "react-toastify";
 import {AxiosError} from "axios";
 import {IBlacklistImportEvent} from "@/entities/blacklists/importEvent.ts";
-import dayjs from "dayjs";
+import dayjs, {Dayjs} from "dayjs";
 import {NavLink} from "react-router-dom";
+import {DatePicker} from "@mui/x-date-pickers/DatePicker";
+import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
+import {LocalizationProvider} from "@mui/x-date-pickers";
 
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -32,6 +35,7 @@ export default function BlacklistImporter() {
     const [isLoading, setLoading] = useState<boolean>(false)
     const [importEvents, setImportEvents] = useState<Array<IBlacklistImportEvent>>([])
     const [extractAll, setExtractAll] = useState<boolean>(true)
+    const [discoveryDate, setDiscoveryDate] = useState<Dayjs | null>(dayjs())
 
     useEffect(() => {
         document.title = `${import.meta.env.VITE_TITLE_NAME} | Импорт блокировок`
@@ -51,10 +55,7 @@ export default function BlacklistImporter() {
                         console.info(response)
 
                         if (response.data) {
-                            setImportEvents(prevState => [
-                                ...prevState,
-                                response.data
-                            ])
+                            setImportEvents(prevState => [response.data, ...prevState].slice(0, 8))
                         }
 
                         toast.success("Файлы обработаны.")
@@ -83,10 +84,7 @@ export default function BlacklistImporter() {
                         console.info(response)
 
                         if (response.data) {
-                            setImportEvents(prevState => [
-                                ...prevState,
-                                response.data
-                            ])
+                            setImportEvents(prevState => [response.data, ...prevState].slice(0, 8))
                         }
 
                         toast.success("Файлы обработаны.")
@@ -109,39 +107,56 @@ export default function BlacklistImporter() {
             <CircularProgress color="inherit"/>
         </Backdrop>
         <div className={"blacklists_importer_form"}>
-            <FormControl className={"blacklists_importer_input-from"} variant={'outlined'}>
-                <h2>Импорт хостов из файлов.</h2>
-                <p>Для загрузки доступны файлы в формате STIX (JSON) и ФинЦЕРТ (CSV).</p>
-                <hr/>
-                <Tooltip arrow placement="right-start" title={"Из URL и почтовых адресов будут извлечены домены. Также будут извлечены IP адреса."}>
-                    <FormControlLabel label="Извлекать связанные типы хостов"
-                                      control={<Switch defaultChecked/>}
-                                      onChange={(_event, checked) => {
-                                          setExtractAll(checked)
-                                      }}
-                    />
-                </Tooltip>
-                <hr/>
-                <Button component="label"
-                        variant="outlined"
-                        startIcon={<CloudUploadIcon/>}>
-                    Загрузка файлов JSON
-                    <VisuallyHiddenInput accept=".json"
-                                         onChange={handleFilesSTIX}
-                                         type="file"
-                                         multiple={true}/>
-                </Button>
-                <Button component="label"
-                        variant="outlined"
-                        sx={{marginTop: "10px"}}
-                        startIcon={<CloudUploadIcon/>}>
-                    Загрузка файлов CSV
-                    <VisuallyHiddenInput accept=".csv"
-                                         onChange={handleFilesCSV}
-                                         type="file"
-                                         multiple={true}/>
-                </Button>
-            </FormControl>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <FormControl className={"blacklists_importer_input-from"} variant={'outlined'}>
+                    <h2>Импорт хостов из файлов.</h2>
+                    <p>Для загрузки доступны файлы в формате STIX (JSON) и ФинЦЕРТ (CSV).</p>
+                    <hr/>
+                    <Tooltip arrow placement="right-start"
+                             title={"Из URL и почтовых адресов будут извлечены домены. Также будут извлечены IP адреса."}>
+                        <FormControlLabel label="Извлекать связанные типы хостов"
+                                          control={<Switch defaultChecked/>}
+                                          onChange={(_event, checked) => {
+                                              setExtractAll(checked)
+                                          }}
+                        />
+                    </Tooltip>
+                    <Tooltip arrow placement="right-start"
+                             title={"Устанавливает дату обнаружения для хостов. Хосты, у которых дата уже установлена (например, импорт STIX), дата изменена не будет."}>
+                        <DatePicker label="Дата обнаружения"
+                                    sx={{marginTop: "10px"}}
+                                    value={discoveryDate ?? null}
+                                    onChange={(value) => {
+                                        if (value) {
+                                            setDiscoveryDate(value)
+                                        } else {
+                                            setDiscoveryDate(null)
+                                        }
+                                    }}
+                        />
+                    </Tooltip>
+                    <hr/>
+                    <Button component="label"
+                            variant="outlined"
+                            startIcon={<CloudUploadIcon/>}>
+                        Загрузка файлов JSON
+                        <VisuallyHiddenInput accept=".json"
+                                             onChange={handleFilesSTIX}
+                                             type="file"
+                                             multiple={true}/>
+                    </Button>
+                    <Button component="label"
+                            variant="outlined"
+                            sx={{marginTop: "10px"}}
+                            startIcon={<CloudUploadIcon/>}>
+                        Загрузка файлов CSV
+                        <VisuallyHiddenInput accept=".csv"
+                                             onChange={handleFilesCSV}
+                                             type="file"
+                                             multiple={true}/>
+                    </Button>
+                </FormControl>
+            </LocalizationProvider>
         </div>
         <div className={"blacklists_importer_info"}>
             {
@@ -163,7 +178,7 @@ function ImportEventItem(props: IBlacklistImportEvent) {
         <hr/>
         <p>Импорт из {props.Type}. {props.IsComplete ? "Завершено успешно." : "Ошибка выполнения."}</p>
         <p>Дата импорта {dayjs(props.CreatedAt).format("DD.MM.YYYY HH:mm")}.</p>
-        <table>
+        <table className={'hosts'}>
             <thead>
             <tr>
                 <td>

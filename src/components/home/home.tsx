@@ -9,7 +9,7 @@ export default function HomePage() {
     }, [])
 
     return <div className={"home-page"}>
-        <h1>// {import.meta.env.VITE_HOME_NAME}</h1>
+        <h1>// {import.meta.env.VITE_APP_NAME}</h1>
         <img className={"spinning-orbit"}
              src={solarSvg}
              alt="spinning-orbit"/>

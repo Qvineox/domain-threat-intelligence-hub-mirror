@@ -53,7 +53,7 @@ export default function BlacklistExporter() {
             CreatedAfter: filter.CreatedAfter,
             CreatedBefore: filter.CreatedBefore,
         }).then(response => {
-            let info: PreloadInfo = {
+            const info: PreloadInfo = {
                 Total: 0,
                 IPs: 0,
                 Domains: 0,
@@ -93,7 +93,12 @@ export default function BlacklistExporter() {
         })
     }
 
-    const handleExport = () => {
+    // TODO
+    // const handleNSDExport = () => {
+    //
+    // }
+
+    const handleCSVExport = () => {
         setLoading(true)
 
         BlacklistService.postExportCSV(filter).then((response) => {
@@ -126,7 +131,7 @@ export default function BlacklistExporter() {
         </Backdrop>
         <BlacklistExportFilter filter={filter}
                                setFilter={setFilter}
-                               onExport={handleExport}/>
+                               onExport={handleCSVExport}/>
         <div className={"blacklists_exporter_content"}>
             {
                 preloadedInfo ? <Fragment>
@@ -134,7 +139,7 @@ export default function BlacklistExporter() {
                     {
                         preloadedInfo.Total === 5000 ? <p>Лимит предпросмотра: 5000</p> : <Fragment/>
                     }
-                    <table className={"preloaded_hosts"}>
+                    <table className={"hosts"}>
                         <thead>
                         <tr>
                             <td>
@@ -205,7 +210,7 @@ export default function BlacklistExporter() {
 }
 
 function getFilterFromSearchParams(params: URLSearchParams) {
-    let filter = defaultExportFilter
+    const filter = defaultExportFilter
 
     const importEventID = params.get("import_event_id")
     if (importEventID) {
@@ -216,7 +221,9 @@ function getFilterFromSearchParams(params: URLSearchParams) {
 }
 
 function setSearchParamsFromFilter(filter: IBlacklistedExportFilter, setParams: SetURLSearchParams) {
-    setParams({
-        import_event_id: filter.ImportEventID ? filter.ImportEventID.toString() : "",
-    })
+    if (filter.ImportEventID) {
+        setParams({
+            import_event_id: filter.ImportEventID ? filter.ImportEventID.toString() : "",
+        })
+    }
 }

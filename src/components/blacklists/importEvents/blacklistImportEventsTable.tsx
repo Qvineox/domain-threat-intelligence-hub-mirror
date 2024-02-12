@@ -10,7 +10,7 @@ import ListIcon from '@mui/icons-material/List';
 interface IBlacklistImportEventsTableProps {
     rows: Array<IBlacklistImportEvent>
     isLoading: boolean
-    onDelete: (id: string) => void
+    onDelete: (id: number) => void
     onPaginationChange: (size: number, page: number) => void
 }
 

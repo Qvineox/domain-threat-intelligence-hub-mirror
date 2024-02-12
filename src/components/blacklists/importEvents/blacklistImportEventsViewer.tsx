@@ -36,11 +36,21 @@ export default function BlacklistImportEventsViewer() {
     }
 
     // TODO: handle delete
-    const handleDelete = (uuid: string) => {
-        let approved = confirm(`Удалить событие импорта ID#${uuid}?`)
+    const handleDelete = (id: number) => {
+        const approved = confirm(`Удалить событие импорта ID#${id}?`)
 
-        console.debug("deleting: " + uuid)
-        console.debug(approved)
+        if (approved) {
+            setIsLoading(true)
+
+            BlacklistService.deleteImportEvent(id).then(() => {
+                toast.success(`Событие импорта ID#${id} удалено.`)
+            }).catch((response) => {
+                console.error(response)
+                toast.error("Ошибка удаления.")
+            }).finally(() => {
+                handleSearch()
+            })
+        }
     }
 
     const handleSearch = () => {

@@ -80,6 +80,14 @@ export default function BlacklistTable(props: IBlacklistTableProps) {
             }
         },
         {
+            field: 'ImportEventID',
+            headerName: 'Импорт',
+            flex: 0.5,
+            headerAlign: "center",
+            align: "center",
+            // valueFormatter: (params) => params.value.Name
+        },
+        {
             field: 'Source',
             headerName: 'Источник',
             flex: 1,
@@ -89,14 +97,7 @@ export default function BlacklistTable(props: IBlacklistTableProps) {
             // valueFormatter: (params) => params.value.Name
         },
         {
-            field: 'UUID',
-            headerName: 'UUID',
-            flex: 2,
-            headerAlign: "center",
-            align: "center",
-        },
-        {
-            field: 'CreatedAt',
+            field: 'DiscoveredAt',
             headerName: 'Дата обнаружения',
             type: 'dayjs',
             flex: 1,
@@ -106,8 +107,8 @@ export default function BlacklistTable(props: IBlacklistTableProps) {
             valueFormatter: (params) => dayjs(params.value).format('DD/MM/YYYY HH:mm')
         },
         {
-            field: 'UpdatedAt',
-            headerName: 'Дата обновления',
+            field: 'CreatedAt',
+            headerName: 'Дата создания',
             type: 'dayjs',
             flex: 1,
             editable: false,
@@ -125,7 +126,7 @@ export default function BlacklistTable(props: IBlacklistTableProps) {
             cellClassName: 'actions',
             getActions: ({row}) => {
 
-                let actions = [
+                const actions = [
                     <GridActionsCellItem
                         icon={<DeleteOutlineIcon/>}
                         label="Delete"
