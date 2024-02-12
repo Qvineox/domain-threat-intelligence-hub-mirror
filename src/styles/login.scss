@@ -1,0 +1,21 @@
+@import "colors";
+
+.login-page {
+  &_form {
+    position: fixed;
+    top: 50vh;
+    left: 70vw;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2rem 0;
+
+    width: 30vw;
+    height: 20vh;
+
+    button {
+      margin-left: 60%;
+      align-self: center;
+    }
+  }
+}

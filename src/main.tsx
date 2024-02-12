@@ -13,6 +13,7 @@ import BlacklistsStats from "@/components/blacklists/stats/blacklistsStats.tsx";
 import BlacklistImportEventsViewer from "@/components/blacklists/importEvents/blacklistImportEventsViewer.tsx";
 import BlacklistImportEventViewer from "@/components/blacklists/importEvents/blacklistImportEventViewer.tsx";
 import PageNotFound from "@/components/fallbacks/pageNotFound.tsx";
+import Login from "@/components/login/login.tsx";
 
 const router = createBrowserRouter([
     {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
     {
         path: "/obamium",
         element: <ObamiumInspector/>,
+    },
+    {
+        path: "/login",
+        element: <Login/>,
     },
     {
         path: "/",
