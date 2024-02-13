@@ -5,7 +5,6 @@ import {WebMap} from "@/components/web_map/web_map.tsx";
 import "./styles/global.scss"
 import Blacklists from "@/components/blacklists/blacklists.tsx";
 import HomePage from "@/components/home/home.tsx";
-import Root from "@/components/root.tsx";
 import BlacklistsViewer from "@/components/blacklists/view/blacklistsViewer.tsx";
 import BlacklistImporter from "@/components/blacklists/import/blacklistImporter.tsx";
 import BlacklistExporter from "@/components/blacklists/export/blacklistExporter.tsx";
@@ -14,6 +13,20 @@ import BlacklistImportEventsViewer from "@/components/blacklists/importEvents/bl
 import BlacklistImportEventViewer from "@/components/blacklists/importEvents/blacklistImportEventViewer.tsx";
 import PageNotFound from "@/components/fallbacks/pageNotFound.tsx";
 import Login from "@/components/login/login.tsx";
+import Store from "@/store/store.ts";
+import {createContext} from "react";
+import Root from "@/components/root.tsx";
+
+const store = new Store()
+
+interface State {
+    store: Store
+}
+
+export const Context = createContext<State>({
+    store: store
+})
+
 
 const router = createBrowserRouter([
     {

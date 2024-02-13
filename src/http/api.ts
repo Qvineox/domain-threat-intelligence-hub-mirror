@@ -3,22 +3,18 @@ import AuthService from "@/services/authService.ts";
 
 const API_URL = import.meta.env.VITE_API_URL + '/api/' + import.meta.env.VITE_API_VERSION + "/"
 
-const api = axios.create({
-    // withCredentials: true,
+export const api = axios.create({
+    withCredentials: true,
+    baseURL: API_URL
+})
+
+export const apiNoAuth = axios.create({
+    withCredentials: true,
     baseURL: API_URL
 })
 
 api.interceptors.request.use((config) => {
-    const token = sessionStorage.getItem("access_token")
-
-    config.headers['x-api-token'] = token
-
-    if (token) {
-        console.debug("access token: " + token)
-    } else {
-        console.debug("no access token")
-    }
-
+    config.headers['x-api-key'] = sessionStorage.getItem("access_token")
 
     return config
 })
@@ -50,5 +46,3 @@ export interface ApiError {
     ErrorModule: string
     StatusCode: number
 }
-
-export default api

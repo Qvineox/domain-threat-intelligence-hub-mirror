@@ -1,12 +1,16 @@
 import {Button, FormControl, FormHelperText, Input, InputLabel} from "@mui/material";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import "@/styles/login.scss"
-import AuthService from "@/services/authService.ts";
 import {AxiosError} from "axios";
 import {ApiError} from "@/http/api.ts";
-import {toast} from "react-toastify";
+import {Slide, toast, ToastContainer} from "react-toastify";
+import {Context} from "@/main.tsx";
+import {useNavigate} from "react-router-dom";
 
 export default function Login() {
+    const {store} = useContext(Context)
+    const navigate = useNavigate()
+
     const [username, setUsername] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const [isEnabled, setIsEnabled] = useState<boolean>(false)
@@ -17,16 +21,44 @@ export default function Login() {
         }
     }, [username, password])
 
-    const login = () => {
-        AuthService.login(username, password).then((response) => {
-            console.debug(response.data.AccessToken)
-        }).catch((error: AxiosError<ApiError>) => {
-            console.error(error)
-            toast.error("Ошибка авторизации.")
-        })
+    const useLogin = () => {
+        store.login(username, password)
+            .catch((error: AxiosError<ApiError>) => {
+                switch (error.response?.data.ErrorMessage) {
+                    case "user not found": {
+                        toast.error("Ошибка авторизации. Пользователь не найден.")
+                        break
+                    }
+                    case "password invalid": {
+                        toast.error("Ошибка авторизации. Неверный логин или пароль.")
+                        break
+                    }
+                    default: {
+                        toast.error("Ошибка авторизации.")
+                    }
+                }
+            })
+            .then(() => {
+                console.info("routing home...")
+
+                navigate("/home")
+            })
     }
 
     return <div className={"login-page"}>
+        <ToastContainer
+            position="bottom-left"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+            transition={Slide}
+        />
         <div className="login-page_form">
             <FormControl variant={'outlined'}>
                 <InputLabel htmlFor="username">Имя пользователя</InputLabel>
@@ -52,7 +84,7 @@ export default function Login() {
             </FormControl>
             <Button disabled={!isEnabled}
                     color={'success'}
-                    onClick={login}
+                    onClick={useLogin}
                     variant={'outlined'}>
                 Войти
             </Button>

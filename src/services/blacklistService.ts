@@ -1,4 +1,3 @@
-import api from "@/http/api.ts";
 import {AxiosResponse} from "axios";
 import {IBlacklistedURL} from "@/entities/blacklists/url.ts";
 import {Dayjs} from "dayjs";
@@ -9,6 +8,7 @@ import {IBlacklistedHost} from "@/entities/blacklists/host.ts";
 import {IDatabaseResponse} from "@/http/responses.ts";
 import {IBlacklistStatistics} from "@/entities/blacklists/statistics.ts";
 import {IBlacklistImportEvent} from "@/entities/blacklists/importEvent.ts";
+import { api } from "@/http/api";
 
 export default class BlacklistService {
     static async getURLsByFilter(filter: IBlacklistedSearchFilter): Promise<AxiosResponse<Array<IBlacklistedURL>>> {

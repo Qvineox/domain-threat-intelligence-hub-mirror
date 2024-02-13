@@ -31,6 +31,8 @@
     "localforage": "^1.10.0",
     "lucide-react": "^0.303.0",
     "match-sorter": "^6.3.1",
+    "mobx": "^6.12.0",
+    "mobx-react-lite": "^4.0.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-fps-stats": "^0.3.1",
