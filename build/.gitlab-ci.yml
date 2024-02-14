@@ -42,7 +42,7 @@ build docker image:
     - docker
   only:
     refs:
-      - stage
+      - main
 
 sast:
   allow_failure: true
@@ -61,6 +61,6 @@ deploy to staging:
     - shell
   only:
     refs:
-      - stage
+      - main
 
 
