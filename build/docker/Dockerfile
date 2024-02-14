@@ -3,6 +3,8 @@ FROM node:21-alpine3.18 as builder
 WORKDIR /src
 COPY . /src
 
+RUN npm i vite
+
 RUN npm install
 RUN vite build --mode staging
 
