@@ -15,7 +15,7 @@ include:
     - docker
   only:
     refs:
-      - main
+      - stage
 
 #build gateway docker image:
 #  stage: build
@@ -42,7 +42,7 @@ build docker image:
     - docker
   only:
     refs:
-      - main
+      - stage
 
 sast:
   allow_failure: true
@@ -53,7 +53,7 @@ deploy to staging:
   stage: deploy
   environment:
     name: Stage
-    url: https://domain-threat-intel-hub-stage.qvineox.ru/
+    url: https://domain-threat-intel-stage.qvineox.ru/
   script:
     - docker pull $IMAGE_TAG
     - docker compose -f build/docker/docker-compose.stage.yml up -d
@@ -61,6 +61,6 @@ deploy to staging:
     - shell
   only:
     refs:
-      - main
+      - stage
 
 
