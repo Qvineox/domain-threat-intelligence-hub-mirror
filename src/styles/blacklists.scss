@@ -53,7 +53,18 @@
 
     border-left: $panel-border;
 
+    &_created, &_discovered {
+      width: 100%;
+
+      display: flex;
+      flex-direction: row;
+      gap: 0 15px;
+    }
+
     .graph-container {
+      flex-basis: 45%;
+      flex-grow: 2;
+
       border: $panel-border;
       border-radius: $panel-border-radius;
 

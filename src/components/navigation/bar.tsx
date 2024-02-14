@@ -1,8 +1,9 @@
 import {NavLink, useLocation} from "react-router-dom";
-import {Breadcrumbs, IconButton} from "@mui/material";
+import {Breadcrumbs, IconButton, Skeleton} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import {ReactNode} from "react";
-import { observer } from "mobx-react-lite";
+import {ReactNode, useContext} from "react";
+import {observer} from "mobx-react-lite";
+import {Context} from "@/main.tsx";
 
 interface RootNavigationBarProps {
     setIsOpen: (status: boolean) => void
@@ -11,27 +12,36 @@ interface RootNavigationBarProps {
 function RootNavigationBar(props: RootNavigationBarProps) {
     const location = useLocation();
 
+    const {store} = useContext(Context)
+
     return <nav id={"navigation-bar"}>
-        <IconButton onClick={() => props.setIsOpen(true)}>
-            <MenuIcon/>
-        </IconButton>
-        <Breadcrumbs maxItems={4} aria-label="breadcrumb">
-            {parseHrefToBreadcrumbs(location.pathname)}
-            {/*<Link underline="hover" color="inherit" href="/">*/}
-            {/*    Домой*/}
-            {/*</Link>*/}
-            {/*<Link underline="hover"*/}
-            {/*      color="inherit"*/}
-            {/*      href="/blacklists">*/}
-            {/*    Блокировки*/}
-            {/*</Link>*/}
-            {/*<Link underline="hover"*/}
-            {/*      color="text.primary"*/}
-            {/*      href="/blacklists/view"*/}
-            {/*      aria-current="page">*/}
-            {/*    Просмотр*/}
-            {/*</Link>*/}
-        </Breadcrumbs>
+        <div className="navigation-bar_location">
+            <IconButton onClick={() => props.setIsOpen(true)}>
+                <MenuIcon/>
+            </IconButton>
+            <Breadcrumbs maxItems={4} aria-label="breadcrumb">
+                {parseHrefToBreadcrumbs(location.pathname)}
+                {/*<Link underline="hover" color="inherit" href="/">*/}
+                {/*    Домой*/}
+                {/*</Link>*/}
+                {/*<Link underline="hover"*/}
+                {/*      color="inherit"*/}
+                {/*      href="/blacklists">*/}
+                {/*    Блокировки*/}
+                {/*</Link>*/}
+                {/*<Link underline="hover"*/}
+                {/*      color="text.primary"*/}
+                {/*      href="/blacklists/view"*/}
+                {/*      aria-current="page">*/}
+                {/*    Просмотр*/}
+                {/*</Link>*/}
+            </Breadcrumbs>
+        </div>
+        <div className="navigation-bar_current-user">
+            {!store.isLoading && store.isLoggedIn ? <NavLink to={"/profile"}>
+                {store.userData.FullName}
+            </NavLink> : <Skeleton itemType={'text'} width={150} height={30}/>}
+        </div>
     </nav>
 }
 

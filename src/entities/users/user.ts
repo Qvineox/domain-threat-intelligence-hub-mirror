@@ -6,5 +6,5 @@ export interface IUser {
     FullName: string
     Email: string
     IsActive: boolean
-    Permission: Array<IPermission>
+    Permissions: Array<IPermission>
 }

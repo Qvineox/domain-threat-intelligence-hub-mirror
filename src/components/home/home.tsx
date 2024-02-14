@@ -31,7 +31,7 @@ export default function HomePage() {
                 <NavLink to={"/nodes/map"}>/ карта сети</NavLink>
             </div>
             <div className={"home-page_navigation_group"}>
-                <NavLink to={"/account/profile"}>/ профиль</NavLink>
+                <NavLink to={"/profile"}>/ профиль</NavLink>
             </div>
         </nav>
     </div>

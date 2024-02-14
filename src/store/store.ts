@@ -1,6 +1,7 @@
 import {makeAutoObservable} from "mobx";
 import AuthService from "@/services/authService.ts";
 import {IUser} from "@/entities/users/user.ts";
+import UserService from "@/services/userService.ts";
 
 export default class Store {
     isLoggedIn = false
@@ -29,7 +30,7 @@ export default class Store {
 
     async me() {
         try {
-            const response = await AuthService.me()
+            const response = await UserService.me()
             this.setUserData(response.data)
 
         } catch (e) {
@@ -40,6 +41,9 @@ export default class Store {
     async login(username: string, password: string) {
         try {
             const response = await AuthService.login(username, password)
+
+            console.warn("login access token: " + response.data.AccessToken)
+
             sessionStorage.setItem('access_token', response.data.AccessToken)
 
             this.setLoggedIn(true)
@@ -68,7 +72,9 @@ export default class Store {
 
         try {
             const response = await AuthService.refresh()
-            localStorage.setItem('access_token', response.data.AccessToken)
+            sessionStorage.setItem('access_token', response.data.AccessToken)
+
+            console.warn("refreshed access token:" + response.data.AccessToken)
 
             this.setLoggedIn(true)
         } finally {

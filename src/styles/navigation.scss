@@ -1,10 +1,11 @@
 nav#navigation-bar {
   position: fixed;
   top: 0;
+  padding: 0 40px 0 0;
 
   z-index: 999;
 
-  width: 100%;
+  width: 100vw;
   height: 4vh;
 
   display: flex;
@@ -12,7 +13,29 @@ nav#navigation-bar {
   gap: 0 10px;
 
   align-items: center;
+  justify-content: space-between;
 
   border-bottom: 1px solid #1b263b;
   background-color: whitesmoke;
+
+  .navigation-bar_location {
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    gap: 0 10px;
+  }
+
+  .navigation-bar_current-user {
+    justify-self: end;
+    flex-basis: 20%;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: end;
+
+    padding: 0 10px;
+  }
 }
+

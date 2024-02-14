@@ -6,8 +6,15 @@ export interface IBlacklistStatistics {
     TotalEmails: number
     TotalDomains: number
     TotalIPs: number
-    ByDate: {
-        Dates: Array<string>
+    CreatedByDate: {
+        Dates: Array<Dayjs>
+        IPs: Array<number>
+        Domains: Array<number>
+        URLs: Array<number>
+        Emails: Array<number>
+    }
+    DiscoveredByDate: {
+        Dates: Array<Dayjs>
         IPs: Array<number>
         Domains: Array<number>
         URLs: Array<number>

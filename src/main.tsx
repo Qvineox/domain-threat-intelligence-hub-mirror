@@ -15,6 +15,7 @@ import Login from "@/components/login/login.tsx";
 import Store from "@/store/store.ts";
 import {createContext} from "react";
 import Root from "@/components/root.tsx";
+import Profile from "@/components/profile/profile.tsx";
 
 const store = new Store()
 
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
             {
                 path: "/home",
                 element: <HomePage/>,
+            },
+            {
+                path: "/profile",
+                element: <Profile/>,
             },
             {
                 path: "/blacklists",

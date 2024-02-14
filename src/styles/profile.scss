@@ -1,0 +1,94 @@
+@import "colors";
+
+.my-profile {
+  &_actions {
+    height: 6vh;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: end;
+    gap: 0 10px;
+
+    padding-right: 10px;
+  }
+
+  &_info {
+    height: 20vh;
+
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: center;
+    //gap: 0 5vw;
+
+    &_icon {
+      width: 10vw;
+      height: 10vh;
+    }
+
+    &_about {
+      flex-basis: 30vw;
+      border-right: 2px solid $border-color;
+      padding: 0 20px;
+
+      h2 {
+        font-size: 3rem;
+      }
+
+      h3 {
+        font-size: 1.75rem;
+        opacity: 0.75;
+      }
+
+      h4 {
+        margin-top: 10px;
+        font-size: 1.25rem;
+        font-style: italic;
+        opacity: 0.75;
+      }
+    }
+
+    &_status {
+      padding: 0 20px;
+      width: 15vw;
+
+      h3 {
+        font-size: 1.5rem;
+        opacity: 0.75;
+
+        &.active {
+          color: #55b603;
+        }
+
+        &.not-active {
+          color: #ff3c31;
+        }
+
+        &.admin {
+          color: #bb34b9;
+        }
+      }
+    }
+  }
+
+  &_activity {
+
+  }
+}
+
+.password-change-dialog {
+  display: flex;
+  flex-direction: column;
+
+  margin-top: 20px;
+  gap: 20px 0;
+
+  &_strength {
+    p {
+      color: firebrick;
+      margin-top: 5px;
+      font-size: 0.75rem;
+    }
+  }
+}
