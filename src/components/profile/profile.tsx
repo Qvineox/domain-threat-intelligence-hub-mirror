@@ -237,7 +237,7 @@ function PasswordChangeDialog(props: IPasswordChangeDialogProps) {
     </Dialog>
 }
 
-const getPasswordProgressColor = (level: number) => {
+export const getPasswordProgressColor = (level: number) => {
     if (level < 2) {
         return "error"
     }
@@ -249,7 +249,7 @@ const getPasswordProgressColor = (level: number) => {
     return "warning"
 }
 
-const getPasswordHint = (length: number, level: number) => {
+export const getPasswordHint = (length: number, level: number) => {
     if (length < 8) {
         return "Новый пароль слишком короткий"
     }

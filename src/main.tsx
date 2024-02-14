@@ -16,6 +16,9 @@ import Store from "@/store/store.ts";
 import {createContext} from "react";
 import Root from "@/components/root.tsx";
 import Profile from "@/components/profile/profile.tsx";
+import AdminArea from "@/components/admin/adminArea.tsx";
+import Users from "@/components/admin/users/users.tsx";
+import AdminPanel from "@/components/admin/panel/adminPanel.tsx";
 
 const store = new Store()
 
@@ -80,6 +83,20 @@ const router = createBrowserRouter([
                     {
                         path: "/blacklists/export",
                         element: <BlacklistExporter/>
+                    }
+                ]
+            },
+            {
+                path: "/admin",
+                element: <AdminArea/>,
+                children: [
+                    {
+                        path: "/admin",
+                        element: <AdminPanel/>,
+                    },
+                    {
+                        path: "/admin/users",
+                        element: <Users/>,
                     }
                 ]
             },

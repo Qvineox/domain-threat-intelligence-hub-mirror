@@ -5,6 +5,7 @@ export interface IUser {
     Login: string
     FullName: string
     Email: string
+    Password?: string
     IsActive: boolean
     Permissions: Array<IPermission>
 }

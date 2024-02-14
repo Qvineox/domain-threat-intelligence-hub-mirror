@@ -37,8 +37,7 @@ export default function BlacklistsStats() {
                 <div className={"blacklists_stats_graphs_discovered"}>
                     <div className={"graph-container"}>
                         <h3>График обнаружения</h3>
-                        <LineChart width={1350}
-                                   height={300}
+                        <LineChart height={300}
                                    series={[
                                        {
                                            data: stats.DiscoveredByDate.IPs,

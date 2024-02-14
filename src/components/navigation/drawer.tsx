@@ -7,7 +7,7 @@ import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import LogoutIcon from "@mui/icons-material/Logout";
+import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 
 export interface RootNavigationDrawerProps {
     isOpen: boolean
@@ -74,20 +74,20 @@ export function RootNavigationDrawer(props: RootNavigationDrawerProps) {
                 </MenuItem>
             </NavLink>
             <Divider/>
-            <NavLink to={"/account/profile"} onClick={handleClose}>
+            <NavLink to={"/admin"} onClick={handleClose}>
+                <MenuItem>
+                    <SettingsRoundedIcon>
+                        <AccountCircleIcon fontSize="medium"/>
+                    </SettingsRoundedIcon>
+                    <ListItemText>Настройки</ListItemText>
+                </MenuItem>
+            </NavLink>
+            <NavLink to={"/profile"} onClick={handleClose}>
                 <MenuItem>
                     <ListItemIcon>
                         <AccountCircleIcon fontSize="medium"/>
                     </ListItemIcon>
                     <ListItemText>Профиль</ListItemText>
-                </MenuItem>
-            </NavLink>
-            <NavLink to={"/account/logout"} onClick={handleClose}>
-                <MenuItem>
-                    <ListItemIcon>
-                        <LogoutIcon fontSize="medium"/>
-                    </ListItemIcon>
-                    <ListItemText>Выйти</ListItemText>
                 </MenuItem>
             </NavLink>
         </MenuList>
