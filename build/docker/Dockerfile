@@ -6,7 +6,7 @@ COPY . /src
 RUN npm install
 RUN npm run build
 
-FROM nginx:3.25.2-alpine as web_server
+FROM nginx:1.25.3-alpine as web_server
 
 COPY --from=builder /src/dist /usr/share/nginx/html
 
