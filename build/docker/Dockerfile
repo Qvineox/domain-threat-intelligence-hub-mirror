@@ -4,7 +4,7 @@ WORKDIR /src
 COPY . /src
 
 RUN npm install
-RUN npm run build
+RUN vite build --mode staging
 
 FROM nginx:1.25.3-alpine as web_server
 
