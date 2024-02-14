@@ -4,8 +4,8 @@ LABEL authors="lysak.yaroslav00@yandex.ru"
 WORKDIR /src
 COPY . /src
 
+RUN npm install vite -g
 RUN npm install
-RUN npm install vite
 
 RUN vite build --mode=staging
 
