@@ -1,5 +1,4 @@
 import ReactDOM from 'react-dom/client'
-import {ObamiumInspector} from "@/components/map/obamiumInspector.tsx";
 import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
 import {WebMap} from "@/components/web_map/web_map.tsx";
 import "./styles/global.scss"
@@ -32,10 +31,6 @@ const router = createBrowserRouter([
     {
         path: "/web_map",
         element: <WebMap/>,
-    },
-    {
-        path: "/obamium",
-        element: <ObamiumInspector/>,
     },
     {
         path: "/login",

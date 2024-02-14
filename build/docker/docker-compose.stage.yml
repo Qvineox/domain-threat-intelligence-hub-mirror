@@ -1,0 +1,26 @@
+version: '3.9'
+
+name: dti
+
+networks:
+  internal:
+    external: false
+  web:
+    external: true
+
+services:
+  hub:
+    image: $IMAGE_TAG
+    container_name: domain_threat_intel_hub
+    hostname: dti_hub
+    restart: unless-stopped
+    networks:
+      - web
+      - internal
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.dti_api_web.service=dti_api_web
+      - traefik.http.routers.dti_api_web.rule=Host(`$TRAEFIK_HOST`)
+      - traefik.http.routers.dti_api_web.tls=true
+      - traefik.http.routers.dti_api_web.entrypoints=websec
+      - traefik.http.services.dti_api_web.loadbalancer.server.port=80

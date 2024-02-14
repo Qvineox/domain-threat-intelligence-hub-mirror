@@ -21,7 +21,6 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    // from step 3, ref: https://ui.shadcn.com/docs/installation/vite
     "baseUrl": ".",
     "paths": {
       "@/*": [

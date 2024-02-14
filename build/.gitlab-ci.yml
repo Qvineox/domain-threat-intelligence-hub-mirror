@@ -6,7 +6,6 @@ stages:
 include:
   - template: Security/SAST.gitlab-ci.yml
 
-
 .registry_setup:
   variables:
     IMAGE_TAG: $CI_REGISTRY_IMAGE/domain_threat_intel:$CI_COMMIT_REF_SLUG
@@ -14,9 +13,9 @@ include:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
   tags:
     - docker
-#  only:
-#    refs:
-#      - master
+  only:
+    refs:
+      - main
 
 #build gateway docker image:
 #  stage: build
@@ -54,7 +53,7 @@ deploy to staging:
   stage: deploy
   environment:
     name: Stage
-    url: https://domain-threat-intel-stage.qvineox.ru/
+    url: https://domain-threat-intel-hub-stage.qvineox.ru/
   script:
     - docker pull $IMAGE_TAG
     - docker compose -f build/docker/docker-compose.stage.yml up -d
