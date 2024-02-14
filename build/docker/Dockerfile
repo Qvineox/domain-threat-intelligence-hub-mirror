@@ -4,9 +4,10 @@ LABEL authors="lysak.yaroslav00@yandex.ru"
 WORKDIR /src
 COPY . /src
 
+RUN npm install
+RUN npm install vite
 
-RUN npm install --production=false
-RUN vite build --mode staging
+RUN vite build --mode=staging
 
 FROM nginx:1.25.3-alpine as web_server
 LABEL authors="lysak.yaroslav00@yandex.ru"
