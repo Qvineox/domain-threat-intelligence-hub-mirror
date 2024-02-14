@@ -3,7 +3,7 @@
 Masters thesis in cyber security on malicious domains detection. Operations Hub.
 Provides Web UI and user interface to interact with core API.
 
-This projecr is mirrored from GitLab.
+This project is mirrored from GitLab.
 
 Links:
 
@@ -31,9 +31,9 @@ Following variables are used in application. These variables are also mapped in 
 | VITE_API_VERSION     |               | API_VERSION         | Backend API version | v1                         |
 | VITE_APP_VERSION     | optional      | APP_VERSION         | Application version | v0.1.0                     |
 | VITE_APP_BRANCH      | optional      | APP_BRANCH          | Application branch  | test                       |
-| VITE_APP_NAME        | optional      | APP_NAME            | Application name    | Domain Threat Intelligence |
-| VITE_BUILD_ID        | optional      | BUILD_ID            | Git build ID        | d4e5c67d                   |
-| VITE_TITLE_NAME      | optional      | BUILD_ID            | Git build ID        | d4e5c67d                   |
+| VITE_BUILD_ID        | optional      | CI_COMMIT_SHORT_SHA | Git build ID        | d4e5c67d                   |
+| VITE_TITLE_NAME      | optional      | TITLE_NAME          | Page title name     | DTI                        |
+| VITE_HOME_NAME       | optional      | HOME_NAME           | Home page name      | Domain Threat Intelligence |
 
 ## Demo
 
