@@ -36,7 +36,7 @@ build docker image:
   image: docker:25.0.2
   extends: .registry_setup
   script:
-    - touch ./config/.env
+    - touch ./config/.env.production
     - echo "VITE_API_URL=$API_URL \
       VITE_API_VERSION=$API_VERSION \
       VITE_APP_VERSION=$APP_VERSION \
