@@ -47,7 +47,7 @@ build docker image:
       VITE_BUILD_ID=$CI_COMMIT_SHORT_SHA \
       VITE_TITLE_NAME=$TITLE_NAME \
       VITE_HOME_NAME=$HOME_NAME" >> ./config/.env.production
-    - ls ./config
+    - ls ./config -a
     - docker build . -t $IMAGE_TAG -f ./build/docker/Dockerfile
     - docker push $IMAGE_TAG
   tags:
