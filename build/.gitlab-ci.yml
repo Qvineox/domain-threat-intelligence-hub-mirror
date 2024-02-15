@@ -41,7 +41,7 @@ build docker image:
   script:
     - echo "" >> config/.env.staging
     - echo "VITE_APP_BRANCH=${CI_COMMIT_BRANCH}" >> config/.env.staging
-    - echo "VITE_BUILD_ID=${CI_COMMIT_SHA_SHORT}" >> config/.env.staging
+    - echo "VITE_BUILD_ID=${CI_COMMIT_SHORT_SHA}" >> config/.env.staging
     - mv config/.env.staging config/.env
     - docker build . -t $IMAGE_TAG -f ./build/docker/Dockerfile
     - docker push $IMAGE_TAG
