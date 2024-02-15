@@ -214,7 +214,7 @@ export default function UserEditDialog(props: IUserEditDialogProps) {
                     <Autocomplete disablePortal fullWidth multiple
                                   id="permissions"
                                   getOptionLabel={(option) => {
-                                      return option.Description
+                                      return `${option.ID} ${option.Description}`
                                   }}
                                   getOptionKey={(option) => {
                                       return option.ID
@@ -231,7 +231,7 @@ export default function UserEditDialog(props: IUserEditDialogProps) {
                                       return option.ID === value.ID
                                   }}
                                   options={permissions}
-                                  renderInput={(params) => <TextField {...params} label="Привилегии"/>}
+                                  renderInput={(params) => <TextField {...params} label={"Привилегии"}/>}
                     />
                 </div>
                 <div className="edit-dialog_security-info">

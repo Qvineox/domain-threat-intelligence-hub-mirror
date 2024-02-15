@@ -9,3 +9,9 @@ export interface IUser {
     IsActive: boolean
     Permissions: Array<IPermission>
 }
+
+export function doesUserHasRoleOrAdmin(user: IUser, roleID: number): boolean {
+    return user.Permissions.findIndex((value) => {
+        return value.ID === roleID || value.ID === 1002
+    }) != -1
+}
