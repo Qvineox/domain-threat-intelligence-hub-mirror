@@ -4,6 +4,8 @@ LABEL authors="lysak.yaroslav00@yandex.ru"
 WORKDIR /src
 COPY . /src
 
+RUN ls configs
+
 RUN npm install vite -g
 RUN npm install
 
