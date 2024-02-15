@@ -5,7 +5,7 @@ export default function AdminPanel() {
         <h2>Панель управления платформой</h2>
         <nav>
             <NavLink to={"/admin/users"}> / Пользователи</NavLink>
-            <NavLink to={"/admin/users"}> / Система</NavLink>
+            <NavLink to={"/admin/configuration"}> / Система</NavLink>
         </nav>
     </div>
 }

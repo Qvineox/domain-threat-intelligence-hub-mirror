@@ -1,7 +1,7 @@
 import axios from "axios";
-import AuthService from "@/services/authService.ts";
+import {IAccessToken} from "@/entities/auth/token.ts";
 
-const API_URL = '/api/' + import.meta.env.VITE_API_VERSION + "/"
+export const API_URL = (import.meta.env.VITE_API_URL === undefined ? "" : import.meta.env.VITE_API_URL) + '/api/' + import.meta.env.VITE_API_VERSION + "/"
 
 export const api = axios.create({
     withCredentials: true,
@@ -28,7 +28,11 @@ api.interceptors.response.use((config) => {
         originalRequest._isRetry = true
 
         try {
-            const response = await AuthService.refresh()
+            const response = await axios.post<IAccessToken>('auth/refresh', {}, {
+                baseURL: API_URL,
+                withCredentials: true
+            })
+
             sessionStorage.setItem("access_token", response.data.AccessToken)
 
             return api.request(originalRequest)

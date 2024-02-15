@@ -17,6 +17,12 @@ export default class UserService {
         })
     }
 
+    static async resetPassword(id: number): Promise<AxiosResponse> {
+        return api.post('users/password/reset', {
+            ID: id,
+        })
+    }
+
     static async getUsers(): Promise<AxiosResponse<Array<IUser>>> {
         return api.get<Array<IUser>>('users/users',)
     }

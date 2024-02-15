@@ -1,4 +1,4 @@
-import {Fragment, useContext, useEffect, useState} from "react";
+import {Fragment, useEffect, useState} from "react";
 import {
     Button,
     Dialog,
@@ -18,7 +18,6 @@ import {ApiError} from "@/http/api.ts";
 import {toast} from "react-toastify";
 import AuthService from "@/services/authService.ts";
 import {useNavigate} from "react-router-dom";
-import {Context} from "@/main.tsx";
 
 const defaultUser: IUser = {
     FullName: "Тест Тест Тест",
@@ -41,7 +40,6 @@ export default function Profile() {
     const [userData, setUserData] = useState<IUser>(defaultUser)
     const [showPasswordDialog, setShowPasswordDialog] = useState<boolean>(false)
 
-    const {store} = useContext(Context)
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -67,9 +65,7 @@ export default function Profile() {
 
     const logout = () => {
         AuthService.logout().then(() => {
-            store.logout().finally(() => {
-                navigate("/login")
-            })
+            navigate("/login")
         }).catch((error: AxiosError<ApiError>) => {
             console.error(error)
             toast.error("Ошибка получения данных о пользователе")
@@ -142,13 +138,10 @@ interface IPasswordChangeDialogProps {
     userID: number
 }
 
-function PasswordChangeDialog(props: IPasswordChangeDialogProps) {
+export function PasswordChangeDialog(props: IPasswordChangeDialogProps) {
     const [oldPassword, setOldPassword] = useState<string>("")
     const [newPassword, setNewPassword] = useState<string>("")
     const [passwordStrength, setPasswordStrength] = useState<number>(0)
-
-    const {store} = useContext(Context)
-    const navigate = useNavigate()
 
     useEffect(() => {
         if (newPassword.length >= 8) {
@@ -172,11 +165,7 @@ function PasswordChangeDialog(props: IPasswordChangeDialogProps) {
 
     const changePassword = () => {
         UserService.changePassword(props.userID, oldPassword, newPassword).then(() => {
-            AuthService.logout().then(() => {
-                store.logout().finally(() => {
-                    navigate("/login")
-                })
-            })
+            toast.success("Пароль изменен")
         }).catch((error: AxiosError<ApiError>) => {
             if (error.response) {
                 console.error(error.response.data.ErrorMessage)
@@ -193,7 +182,7 @@ function PasswordChangeDialog(props: IPasswordChangeDialogProps) {
         props.onClose()
     }}>
         <DialogTitle>
-            Смена пароля пользователя
+            Смена пароля пользователя ID#{props.userID}
         </DialogTitle>
         <DialogContent className={"password-change-dialog"}>
             <TextField id="old-password" autoFocus

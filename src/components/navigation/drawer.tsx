@@ -76,9 +76,9 @@ export function RootNavigationDrawer(props: RootNavigationDrawerProps) {
             <Divider/>
             <NavLink to={"/admin"} onClick={handleClose}>
                 <MenuItem>
-                    <SettingsRoundedIcon>
-                        <AccountCircleIcon fontSize="medium"/>
-                    </SettingsRoundedIcon>
+                    <ListItemIcon>
+                        <SettingsRoundedIcon fontSize="medium"/>
+                    </ListItemIcon>
                     <ListItemText>Настройки</ListItemText>
                 </MenuItem>
             </NavLink>

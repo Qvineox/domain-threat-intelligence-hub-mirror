@@ -5,7 +5,7 @@ import {
 } from "@mui/material";
 import "@/styles/root.scss"
 import "@/styles/navigation.scss"
-import {ToastContainer, Slide} from "react-toastify";
+import {toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import {Context} from "@/main.tsx";
 import {AxiosError} from "axios";
@@ -23,13 +23,19 @@ function Root() {
 
     useEffect(() => {
         store.checkAuth()
+            .then(() => {
+                console.info("requesting user profile")
+                store.me()
+            })
             .catch((error: AxiosError<ApiError>) => {
-                console.warn(error)
+                console.warn(error.response?.data.ErrorMessage)
+
+                if (error.response?.data.ErrorMessage === "token expired") {
+                    toast.warning("Токен сессии просрочен.")
+                }
 
                 navigate("/login")
-            })
-            .then(() => {
-                store.me()
+                return
             })
 
     }, []);
@@ -60,19 +66,6 @@ function Root() {
         <p id="version-footer">
             [{import.meta.env.VITE_APP_VERSION}_{import.meta.env.VITE_APP_BRANCH}_{import.meta.env.VITE_BUILD_ID}]
         </p>
-        <ToastContainer
-            position="bottom-left"
-            autoClose={1300}
-            hideProgressBar={false}
-            newestOnTop
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-            transition={Slide}
-        />
     </Fragment>
 }
 

@@ -28,12 +28,40 @@
     }
   }
 
+  .configuration {
+    display: flex;
+    flex-direction: row;
+
+    gap: 0 10px;
+
+    &_config-block {
+      display: flex;
+      flex-direction: column;
+      gap: 5px 0;
+
+      h2 {
+        margin: 0;
+      }
+
+      hr {
+        margin: 5px 0 10px 0;
+      }
+    }
+
+    button.save-configuration {
+      position: absolute;
+      bottom: 2vh;
+      right: 2vw;
+    }
+  }
+
   .users {
     ul {
       list-style: none;
 
       display: flex;
       flex-direction: row;
+      flex-wrap: wrap;
 
       gap: 10px 20px;
 
@@ -41,7 +69,7 @@
         border: 2px solid $border-color;
         border-radius: $panel-border-radius;
 
-        padding: 10px 15px;
+        padding: 10px 10px 8px 15px;
 
         display: flex;
         flex-direction: column;
@@ -62,10 +90,26 @@
       }
 
       li.user-card {
-        flex-basis: 15%;
+        flex-basis: 12%;
 
         &__inactive {
           opacity: 0.55;
+
+          hr {
+            color: firebrick;
+          }
+        }
+
+        &__active {
+          hr {
+            color: green;
+          }
+        }
+
+        hr {
+          align-self: end;
+          width: 20%;
+          margin: 5px 0 0 0;
         }
       }
 

@@ -1,9 +1,9 @@
-import {Button, FormControl, FormHelperText, Input, InputLabel} from "@mui/material";
+import {Button, FormControl, FormHelperText, TextField} from "@mui/material";
 import {useContext, useEffect, useState} from "react";
 import "@/styles/login.scss"
 import {AxiosError} from "axios";
 import {ApiError} from "@/http/api.ts";
-import {Slide, toast, ToastContainer} from "react-toastify";
+import {toast} from "react-toastify";
 import {Context} from "@/main.tsx";
 import {useNavigate} from "react-router-dom";
 
@@ -27,6 +27,11 @@ export default function Login() {
 
     const useLogin = () => {
         store.login(username, password)
+            .then(() => {
+                console.info("routing home...")
+
+                navigate("/home")
+            })
             .catch((error: AxiosError<ApiError>) => {
                 switch (error.response?.data.ErrorMessage) {
                     case "user not found": {
@@ -42,55 +47,47 @@ export default function Login() {
                     }
                 }
             })
-            .then(() => {
-                console.info("routing home...")
-
-                navigate("/home")
-            })
     }
 
     return <div className={"login-page"}>
-        <ToastContainer
-            position="bottom-left"
-            autoClose={2000}
-            hideProgressBar={false}
-            newestOnTop
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-            transition={Slide}
-        />
         <div className="login-page_form">
             <h1>// {import.meta.env.VITE_HOME_NAME}</h1>
-            <FormControl variant={'outlined'}>
-                <InputLabel htmlFor="username">Имя пользователя</InputLabel>
-                <Input required value={username}
-                       onChange={(event) => {
-                           setUsername(event.target.value)
-                       }}
-                       id="username"
-                       type={'login'}
-                       aria-describedby="username-helper"/>
+            <FormControl>
+                <TextField required
+                           id="username"
+                           label='Имя пользователя'
+                           variant={'filled'}
+                           value={username}
+                           onChange={(event) => {
+                               setUsername(event.target.value)
+                           }}
+                           type={'login'}
+                           aria-describedby="username-helper"/>
                 <FormHelperText id="username-helper">Логин пользователя в системе</FormHelperText>
             </FormControl>
-            <FormControl variant={'outlined'}>
-                <InputLabel htmlFor="password">Пароль</InputLabel>
-                <Input required value={password}
-                       onChange={(event) => {
-                           setPassword(event.target.value)
-                       }}
-                       id="password"
-                       type={'password'}
-                       aria-describedby="password-helper"/>
+            <FormControl>
+                <TextField required
+                           id="password"
+                           label='Пароль'
+                           variant={'filled'}
+                           value={password}
+                           onChange={(event) => {
+                               setPassword(event.target.value)
+                           }}
+                           type={'password'}
+                           aria-describedby="password-helper"
+                           onKeyUp={(e) => {
+                               if (e.key == 'Enter' && isEnabled) {
+                                   useLogin()
+                               }
+                           }}/>
                 <FormHelperText id="password-helper">Пароль пользователя</FormHelperText>
             </FormControl>
             <Button disabled={!isEnabled}
                     color={'success'}
                     onClick={useLogin}
-                    variant={'outlined'}>
+                    variant={'outlined'}
+            >
                 Войти
             </Button>
         </div>

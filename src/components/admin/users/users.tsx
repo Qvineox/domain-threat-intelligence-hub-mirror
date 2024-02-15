@@ -14,15 +14,7 @@ export default function Users() {
 
     useEffect(() => {
         document.title = `${import.meta.env.VITE_TITLE_NAME} | Пользователи`
-
-        UserService.getUsers().then((response) => {
-            if (response.data) {
-                setUsers(response.data)
-            }
-        }).catch((error: AxiosError<ApiError>) => {
-            console.error(error)
-            toast.error("Ошибка получения пользователей.")
-        })
+        fetchUsers()
     }, []);
 
     const onEdit = (id: number) => {
@@ -33,9 +25,23 @@ export default function Users() {
         setSelectedUserID(0)
     }
 
+    const fetchUsers = () => {
+        UserService.getUsers().then((response) => {
+            if (response.data) {
+                setUsers(response.data)
+            }
+        }).catch((error: AxiosError<ApiError>) => {
+            console.error(error)
+            toast.error("Ошибка получения пользователей.")
+        })
+    }
+
     return <div className={"users"}>
         <UserEditDialog userID={selectedUserID}
-                        onClose={() => setSelectedUserID(null)}/>
+                        onClose={() => {
+                            setSelectedUserID(null)
+                            fetchUsers()
+                        }}/>
         <h2>Управление пользователями</h2>
         {
             users ? <Fragment>

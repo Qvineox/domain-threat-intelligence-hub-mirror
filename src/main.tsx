@@ -13,12 +13,14 @@ import BlacklistImportEventViewer from "@/components/blacklists/importEvents/bla
 import PageNotFound from "@/components/fallbacks/pageNotFound.tsx";
 import Login from "@/components/login/login.tsx";
 import Store from "@/store/store.ts";
-import {createContext} from "react";
+import {createContext, Fragment} from "react";
 import Root from "@/components/root.tsx";
 import Profile from "@/components/profile/profile.tsx";
 import AdminArea from "@/components/admin/adminArea.tsx";
 import Users from "@/components/admin/users/users.tsx";
 import AdminPanel from "@/components/admin/panel/adminPanel.tsx";
+import Configuration from "@/components/admin/configuration/configuration.tsx";
+import {Slide, ToastContainer} from "react-toastify";
 
 const store = new Store()
 
@@ -97,6 +99,10 @@ const router = createBrowserRouter([
                     {
                         path: "/admin/users",
                         element: <Users/>,
+                    },
+                    {
+                        path: "/admin/configuration",
+                        element: <Configuration/>,
                     }
                 ]
             },
@@ -110,5 +116,19 @@ const router = createBrowserRouter([
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <RouterProvider router={router}/>
+    <Fragment>
+        <RouterProvider router={router}/>
+        <ToastContainer position="bottom-left"
+                        autoClose={1300}
+                        hideProgressBar={false}
+                        newestOnTop
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        theme="light"
+                        transition={Slide}
+        />
+    </Fragment>
 )

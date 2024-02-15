@@ -2,6 +2,9 @@ import {makeAutoObservable} from "mobx";
 import AuthService from "@/services/authService.ts";
 import {IUser} from "@/entities/users/user.ts";
 import UserService from "@/services/userService.ts";
+import {IAccessToken} from "@/entities/auth/token.ts";
+import axios from "axios";
+import {API_URL} from "@/http/api.ts";
 
 export default class Store {
     isLoggedIn = false
@@ -34,21 +37,18 @@ export default class Store {
             this.setUserData(response.data)
 
         } catch (e) {
-            console.error(e)
+            throw e
         }
     }
 
     async login(username: string, password: string) {
         try {
             const response = await AuthService.login(username, password)
-
-            console.warn("login access token: " + response.data.AccessToken)
-
             sessionStorage.setItem('access_token', response.data.AccessToken)
 
             this.setLoggedIn(true)
         } catch (e) {
-            console.error(e)
+            throw e
         } finally {
             this.setLoading(false)
         }
@@ -71,12 +71,19 @@ export default class Store {
         this.setLoading(true)
 
         try {
-            const response = await AuthService.refresh()
+            const response = await axios.post<IAccessToken>('auth/refresh', {}, {
+                baseURL: API_URL,
+                withCredentials: true
+            })
+
             sessionStorage.setItem('access_token', response.data.AccessToken)
 
-            console.warn("refreshed access token:" + response.data.AccessToken)
-
             this.setLoggedIn(true)
+        } catch (e) {
+            sessionStorage.removeItem('access_token')
+            console.error("refresh failed")
+
+            throw e
         } finally {
             this.setLoading(false)
         }

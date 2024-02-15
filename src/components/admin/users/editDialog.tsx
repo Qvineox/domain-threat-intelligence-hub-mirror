@@ -1,6 +1,6 @@
 import {
     AppBar, Autocomplete, Backdrop,
-    Button,
+    Button, ButtonGroup,
     CircularProgress,
     Dialog,
     DialogActions,
@@ -21,7 +21,7 @@ import {AxiosError} from "axios";
 import {toast} from "react-toastify";
 import RestartAltRoundedIcon from '@mui/icons-material/RestartAltRounded';
 import {IPermission} from "@/entities/users/permission.ts";
-import {getPasswordHint, getPasswordProgressColor} from "@/components/profile/profile";
+import {getPasswordHint, getPasswordProgressColor, PasswordChangeDialog} from "@/components/profile/profile";
 import AuthService from "@/services/authService.ts";
 
 const Transition = forwardRef(function Transition(
@@ -54,6 +54,7 @@ export default function UserEditDialog(props: IUserEditDialogProps) {
     const [permissions, setPermissions] = useState<Array<IPermission>>([])
 
     const [isLoading, setIsLoading] = useState<boolean>(true)
+    const [showPasswordDialog, setShowPasswordDialog] = useState<boolean>(false)
 
     const [passwordRepeat, setPasswordRepeat] = useState<string>("")
     const [passwordStrength, setPasswordStrength] = useState<number>(0)
@@ -275,7 +276,20 @@ export default function UserEditDialog(props: IUserEditDialogProps) {
                                                 value={passwordStrength != 0 ? (passwordStrength * 100) / 4 : 5}/>
                                 <p>{getPasswordHint(passwordRepeat.length, passwordStrength)}</p>
                             </div>
-                        </Fragment> : <Fragment/>
+                        </Fragment> : <Fragment>
+                            <PasswordChangeDialog show={showPasswordDialog} userID={editUserData.ID}
+                                                  onClose={() => {
+                                                      setShowPasswordDialog(false)
+                                                  }}/>
+                            <ButtonGroup>
+                                <Button color={'warning'} onClick={() => UserService.resetPassword(editUserData.ID)}>
+                                    Сбросить пароль
+                                </Button>
+                                <Button color={'warning'} onClick={() => setShowPasswordDialog(true)}>
+                                    Сменить пароль
+                                </Button>
+                            </ButtonGroup>
+                        </Fragment>
                     }
                 </div>
             </DialogContent> : <Backdrop
