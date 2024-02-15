@@ -39,7 +39,7 @@ build docker image:
     url: https://domain-threat-intel-stage.qvineox.ru/
   extends: .registry_setup
   script:
-    - echo "VITE_APP_BRANCH=$CI_COMMIT_BRANCH \
+    - echo "\ VITE_APP_BRANCH=$CI_COMMIT_BRANCH \
             VITE_BUILD_ID=$CI_COMMIT_SHA_SHORT" >> config/.env.staging
     - mv config/.env.staging config/.env
     - docker build . -t $IMAGE_TAG -f ./build/docker/Dockerfile
