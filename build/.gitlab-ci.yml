@@ -34,6 +34,9 @@ include:
 build docker image:
   stage: build
   image: docker:25.0.2
+  environment:
+    name: Stage
+    url: https://domain-threat-intel-stage.qvineox.ru/
   extends: .registry_setup
   script:
     - touch ./config/.env.production
