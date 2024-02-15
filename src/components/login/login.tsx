@@ -16,6 +16,10 @@ export default function Login() {
     const [isEnabled, setIsEnabled] = useState<boolean>(false)
 
     useEffect(() => {
+        document.title = `${import.meta.env.VITE_TITLE_NAME} | Вход`
+    }, [])
+
+    useEffect(() => {
         if (username.length > 0 && password.length > 0) {
             setIsEnabled(true)
         }
@@ -60,6 +64,7 @@ export default function Login() {
             transition={Slide}
         />
         <div className="login-page_form">
+            <h1>// {import.meta.env.VITE_HOME_NAME}</h1>
             <FormControl variant={'outlined'}>
                 <InputLabel htmlFor="username">Имя пользователя</InputLabel>
                 <Input required value={username}

@@ -1,6 +1,14 @@
 @import "colors";
 
 .login-page {
+  h1 {
+    position: fixed;
+    top: 6vh;
+    left: 2vw;
+    font-weight: normal;
+    font-size: 3rem;
+  }
+
   &_form {
     position: fixed;
     top: 50vh;
