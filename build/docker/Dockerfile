@@ -16,7 +16,7 @@ RUN echo "VITE_API_URL=$API_URL \
 RUN npm install vite -g
 RUN npm install
 
-RUN npm run build_staging
+RUN npm run build_stage
 
 FROM nginx:1.25.3-alpine as web_server
 LABEL authors="lysak.yaroslav00@yandex.ru"
