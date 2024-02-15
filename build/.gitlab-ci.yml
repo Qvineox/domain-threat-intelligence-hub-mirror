@@ -39,6 +39,7 @@ build docker image:
     url: https://domain-threat-intel-stage.qvineox.ru/
   extends: .registry_setup
   script:
+    - mv config/.env.staging config/.env
     - docker build . -t $IMAGE_TAG -f ./build/docker/Dockerfile
     - docker push $IMAGE_TAG
   tags:
