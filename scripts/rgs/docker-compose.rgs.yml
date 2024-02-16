@@ -1,0 +1,25 @@
+version: '3.9'
+
+name: dti
+
+networks:
+  web:
+    external: true
+
+services:
+  hub:
+    build:
+      context: ../../.
+      dockerfile: scripts/rgs/Dockerfile
+    container_name: domain_threat_intel_hub
+    hostname: dti_hub
+    restart: unless-stopped
+    networks:
+      - web
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.dti_hub.service=dti_hub
+      - traefik.http.routers.dti_hub.rule=Host(`domain-threat-intel.rgs.ru`)
+      - traefik.http.routers.dti_hub.tls=true
+      - traefik.http.routers.dti_hub.entrypoints=websecure
+      - traefik.http.services.dti_hub.loadbalancer.server.port=80
