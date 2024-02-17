@@ -8,7 +8,7 @@ import {IBlacklistedHost} from "@/entities/blacklists/host.ts";
 import {IDatabaseResponse} from "@/http/responses.ts";
 import {IBlacklistStatistics} from "@/entities/blacklists/statistics.ts";
 import {IBlacklistImportEvent} from "@/entities/blacklists/importEvent.ts";
-import { api } from "@/http/api";
+import {api} from "@/http/api";
 
 export default class BlacklistService {
     static async getURLsByFilter(filter: IBlacklistedSearchFilter): Promise<AxiosResponse<Array<IBlacklistedURL>>> {
@@ -140,7 +140,9 @@ export default class BlacklistService {
             form.append("file_upload", value)
         })
 
-        return api.post<IBlacklistImportEvent>('blacklists/import/stix', form)
+        return api.post<IBlacklistImportEvent>('blacklists/import/stix', form, {
+            timeout: 30000
+        })
     }
 
     static async postImportCSV(files: Array<File>, extractAll: boolean): Promise<AxiosResponse<IBlacklistImportEvent>> {
@@ -152,13 +154,16 @@ export default class BlacklistService {
             form.append("file_upload", value)
         })
 
-        return api.post<IBlacklistImportEvent>('blacklists/import/csv', form)
+        return api.post<IBlacklistImportEvent>('blacklists/import/csv', form, {
+            timeout: 30000
+        })
     }
 
     static async postExportCSV(filter: IBlacklistedExportFilter): Promise<AxiosResponse<Blob>> {
         return api.post<Blob>('blacklists/export/csv', {
             responseType: 'blob',
         }, {
+            timeout: 20000,
             params: {
                 'source_id': filter.SourceIDs,
                 'import_event_id': filter.ImportEventID,
@@ -172,6 +177,7 @@ export default class BlacklistService {
 
     static async postExportNSD(filter: IBlacklistedExportFilter): Promise<AxiosResponse<Blob>> {
         return api.post<Blob>('blacklists/export/naumen', {
+            timeout: 20000,
             params: {
                 'source_id': filter.SourceIDs,
                 'import_event_id': filter.ImportEventID,
