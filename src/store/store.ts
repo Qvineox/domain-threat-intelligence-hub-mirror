@@ -10,6 +10,7 @@ export default class Store {
     isLoggedIn = false
     isLoading = false
     userData = {} as IUser
+    permissionIDs: Array<number> = []
 
     constructor() {
         makeAutoObservable(this)
@@ -19,8 +20,32 @@ export default class Store {
         this.isLoggedIn = value
     }
 
+    hasPermissionOrAdmin(id: number): boolean {
+        if (this.permissionIDs !== undefined) {
+            return (this.permissionIDs.findIndex(value => {
+                return value === 1002 || value === id
+            })) !== -1
+        }
+
+        return false
+    }
+
+    hasAnyOfPermissionsOrAdmin(ids: Array<number>): boolean {
+        if (this.isLoggedIn && !this.isLoading && this.userData.Permissions !== undefined) {
+            return (this.permissionIDs.findIndex(value => {
+                return value === 1002 || ids.includes(value)
+            })) !== -1
+        }
+
+        return false
+    }
+
     setUserData(value: IUser) {
         this.userData = value
+
+        this.permissionIDs = value.Permissions.map(value => {
+            return value.ID
+        })
     }
 
     // setUserData(value: IUser) {

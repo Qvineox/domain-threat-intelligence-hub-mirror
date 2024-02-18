@@ -7,12 +7,12 @@ import "@/styles/root.scss"
 import "@/styles/navigation.scss"
 import {toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import {Context} from "@/main.tsx";
+import {Context} from "@/context.ts";
 import {AxiosError} from "axios";
 import {ApiError} from "@/http/api.ts";
-import {RootNavigationDrawer} from "@/components/navigation/drawer.tsx";
 import {observer} from "mobx-react-lite";
 import RootNavigationBar from "@/components/navigation/bar.tsx";
+import RootNavigationDrawer from "@/components/navigation/drawer.tsx";
 
 
 function Root() {
@@ -54,7 +54,7 @@ function Root() {
             <CircularProgress color="inherit"/>
             <p>Авторизация...</p>
         </Backdrop>
-        <RootNavigationDrawer isOpen={isOpen} setIsOpen={setIsOpen}/>
+        <RootNavigationDrawer isOpen={isOpen} store={store} setIsOpen={setIsOpen}/>
         <RootNavigationBar setIsOpen={setIsOpen}/>
         {
             !store.isLoading && store.isLoggedIn ? <Fragment>

@@ -12,8 +12,7 @@ import BlacklistImportEventsViewer from "@/components/blacklists/importEvents/bl
 import BlacklistImportEventViewer from "@/components/blacklists/importEvents/blacklistImportEventViewer.tsx";
 import PageNotFound from "@/components/fallbacks/pageNotFound.tsx";
 import Login from "@/components/login/login.tsx";
-import Store from "@/store/store.ts";
-import {createContext, Fragment} from "react";
+import {Fragment} from "react";
 import Root from "@/components/root.tsx";
 import Profile from "@/components/profile/profile.tsx";
 import AdminArea from "@/components/admin/adminArea.tsx";
@@ -21,17 +20,6 @@ import Users from "@/components/admin/users/users.tsx";
 import AdminPanel from "@/components/admin/panel/adminPanel.tsx";
 import Configuration from "@/components/admin/configuration/configuration.tsx";
 import {Slide, ToastContainer} from "react-toastify";
-
-const store = new Store()
-
-interface State {
-    store: Store
-}
-
-export const Context = createContext<State>({
-    store: store
-})
-
 
 const router = createBrowserRouter([
     {
@@ -114,7 +102,6 @@ const router = createBrowserRouter([
     },
 ]);
 
-
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <Fragment>
         <RouterProvider router={router}/>
@@ -132,3 +119,4 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         />
     </Fragment>
 )
+
