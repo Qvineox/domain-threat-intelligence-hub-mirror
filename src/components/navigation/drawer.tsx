@@ -55,9 +55,9 @@ function RootNavigationDrawer(props: RootNavigationDrawerProps) {
                             <ListItemText>Карта сети</ListItemText>
                         </MenuItem>
                     </NavLink>
-                    <Divider/>
                 </MenuList> : null
             }
+            <Divider/>
             {
                 props.store.hasPermissionOrAdmin(4001) ? <MenuList dense>
                     <NavLink to={"/blacklists"} onClick={handleClose}>

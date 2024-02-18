@@ -23,6 +23,7 @@ import RestartAltRoundedIcon from '@mui/icons-material/RestartAltRounded';
 import {IPermission} from "@/entities/users/permission.ts";
 import {getPasswordHint, getPasswordProgressColor, PasswordChangeDialog} from "@/components/profile/profile";
 import AuthService from "@/services/authService.ts";
+import {observer} from "mobx-react-lite";
 
 const Transition = forwardRef(function Transition(
     props: TransitionProps & {
@@ -47,7 +48,7 @@ const defaultUser: IUser = {
     Permissions: []
 }
 
-export default function UserEditDialog(props: IUserEditDialogProps) {
+function UserEditDialog(props: IUserEditDialogProps) {
     const [defaultUserData, setDefaultUserData] = useState<IUser>()
     const [editUserData, setEditUserData] = useState<IUser>()
 
@@ -341,6 +342,6 @@ const validateUserForm = (user: IUser, passwordRepeat: string, passwordStrength:
     }
 
     return !(user.FullName === "" || user.Login === "");
-
-
 }
+
+export default observer(UserEditDialog)
