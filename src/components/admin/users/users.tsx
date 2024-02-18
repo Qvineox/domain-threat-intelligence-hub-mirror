@@ -8,8 +8,9 @@ import UserCard from "@/components/admin/users/userCard.tsx";
 import UserEditDialog from "@/components/admin/users/editDialog.tsx";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import {Context} from "@/context.ts";
+import {observer} from "mobx-react-lite";
 
-export default function Users() {
+function Users() {
     const {store} = useContext(Context)
 
     const [users, setUsers] = useState<Array<IUser>>([])
@@ -77,3 +78,5 @@ export default function Users() {
         }
     </div>
 }
+
+export default observer(Users)

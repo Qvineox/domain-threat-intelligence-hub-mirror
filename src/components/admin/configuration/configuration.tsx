@@ -6,6 +6,7 @@ import {ApiError} from "@/http/api.ts";
 import {toast} from "react-toastify";
 import {AxiosError} from "axios";
 import {Context} from "@/context.ts";
+import {observer} from "mobx-react-lite";
 
 const defaultDynamicConfig: IDynamicConfig = {
     SMTP: {
@@ -33,7 +34,7 @@ const defaultDynamicConfig: IDynamicConfig = {
     }
 }
 
-export default function Configuration() {
+function Configuration() {
     const [editSystemState, setEditSystemState] = useState<IDynamicConfig>(defaultDynamicConfig)
     const [isLoading, setIsLoading] = useState<boolean>(true)
 
@@ -441,3 +442,5 @@ export default function Configuration() {
         </Button>
     </div>
 }
+
+export default observer(Configuration)
