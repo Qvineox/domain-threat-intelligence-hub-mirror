@@ -11,7 +11,7 @@ networks:
 services:
   hub:
     image: $IMAGE_TAG
-    container_name: domain_threat_intel_hub
+    container_name: domain_threat_intel_hub_stage
     hostname: dti_hub_stage
     restart: unless-stopped
     networks:
@@ -19,8 +19,8 @@ services:
       - internal
     labels:
       - traefik.enable=true
-      - traefik.http.routers.dti_hub.service=dti_hub
-      - traefik.http.routers.dti_hub.rule=Host(`$TRAEFIK_HOST`)
-      - traefik.http.routers.dti_hub.tls=true
-      - traefik.http.routers.dti_hub.entrypoints=websec
-      - traefik.http.services.dti_hub.loadbalancer.server.port=80
+      - traefik.http.routers.dti_hub_stage.service=dti_hub_stage
+      - traefik.http.routers.dti_hub_stage.rule=Host(`$TRAEFIK_HOST`)
+      - traefik.http.routers.dti_hub_stage.tls=true
+      - traefik.http.routers.dti_hub_stage.entrypoints=websec
+      - traefik.http.services.dti_hub_stage.loadbalancer.server.port=80

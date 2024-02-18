@@ -156,6 +156,6 @@ deploy to production:
     - shell
   only:
     refs:
-      - stage
+      - main
 
 
