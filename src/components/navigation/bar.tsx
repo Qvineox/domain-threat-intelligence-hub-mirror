@@ -3,7 +3,7 @@ import {Breadcrumbs, IconButton, Skeleton} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import {ReactNode, useContext} from "react";
 import {observer} from "mobx-react-lite";
-import {Context} from "@/main.tsx";
+import {Context} from "@/context.ts";
 
 interface RootNavigationBarProps {
     setIsOpen: (status: boolean) => void

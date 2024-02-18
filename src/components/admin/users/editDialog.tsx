@@ -314,9 +314,10 @@ export default function UserEditDialog(props: IUserEditDialogProps) {
                 <RestartAltRoundedIcon/>
             </IconButton>
             {
-                editUserData ? <Button disabled={!validateUserForm(editUserData, passwordRepeat, passwordStrength)}
-                                       variant={'outlined'}
-                                       onClick={handleSubmit}>
+                editUserData ? <Button
+                    disabled={!validateUserForm(editUserData, passwordRepeat, passwordStrength)}
+                    variant={'outlined'}
+                    onClick={handleSubmit}>
                     Сохранить
                 </Button> : <Fragment/>
             }
