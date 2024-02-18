@@ -1,6 +1,6 @@
 version: '3.9'
 
-name: dti_stage
+name: dti_production
 
 networks:
   internal:
@@ -12,7 +12,7 @@ services:
   hub:
     image: $IMAGE_TAG
     container_name: domain_threat_intel_hub
-    hostname: dti_hub_stage
+    hostname: dti_hub_production
     restart: unless-stopped
     networks:
       - web
