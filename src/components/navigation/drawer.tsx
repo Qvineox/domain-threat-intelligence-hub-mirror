@@ -8,13 +8,16 @@ import UploadFileIcon from "@mui/icons-material/UploadFile";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
+import {observer} from "mobx-react-lite";
+import Store from "@/store/store.ts";
 
 export interface RootNavigationDrawerProps {
     isOpen: boolean
     setIsOpen: (status: boolean) => void
+    store: Store
 }
 
-export function RootNavigationDrawer(props: RootNavigationDrawerProps) {
+function RootNavigationDrawer(props: RootNavigationDrawerProps) {
     const handleClose = () => {
         props.setIsOpen(false)
     }
@@ -23,73 +26,94 @@ export function RootNavigationDrawer(props: RootNavigationDrawerProps) {
                    onClose={() => props.setIsOpen(false)}
                    open={props.isOpen}>
         <MenuList dense>
-            <NavLink to={"/home"} onClick={handleClose}>
-                <MenuItem>
-                    <ListItemIcon>
-                        <HomeIcon fontSize="medium"/>
-                    </ListItemIcon>
-                    <ListItemText>Домашняя страница</ListItemText>
-                </MenuItem>
-            </NavLink>
+            <MenuList dense>
+                <NavLink to={"/home"} onClick={handleClose}>
+                    <MenuItem>
+                        <ListItemIcon>
+                            <HomeIcon fontSize="medium"/>
+                        </ListItemIcon>
+                        <ListItemText>Домашняя страница</ListItemText>
+                    </MenuItem>
+                </NavLink>
+            </MenuList>
             <Divider/>
-            <NavLink to={"/nodes/view"} onClick={handleClose}>
-                <MenuItem>
-                    <ListItemIcon>
-                        <ViewListIcon fontSize="medium"/>
-                    </ListItemIcon>
-                    <ListItemText>Сетевые узлы</ListItemText>
-                </MenuItem>
-            </NavLink>
-            <NavLink to={"/nodes/map"} onClick={handleClose}>
-                <MenuItem>
-                    <ListItemIcon>
-                        <HubIcon fontSize="medium"/>
-                    </ListItemIcon>
-                    <ListItemText>Карта сети</ListItemText>
-                </MenuItem>
-            </NavLink>
+            {
+                props.store.hasPermissionOrAdmin(5001) ? <MenuList dense>
+                    <NavLink to={"/nodes/view"} onClick={handleClose}>
+                        <MenuItem>
+                            <ListItemIcon>
+                                <ViewListIcon fontSize="medium"/>
+                            </ListItemIcon>
+                            <ListItemText>Сетевые узлы</ListItemText>
+                        </MenuItem>
+                    </NavLink>
+                    <NavLink to={"/nodes/map"} onClick={handleClose}>
+                        <MenuItem>
+                            <ListItemIcon>
+                                <HubIcon fontSize="medium"/>
+                            </ListItemIcon>
+                            <ListItemText>Карта сети</ListItemText>
+                        </MenuItem>
+                    </NavLink>
+                    <Divider/>
+                </MenuList> : null
+            }
+            {
+                props.store.hasPermissionOrAdmin(4001) ? <MenuList dense>
+                    <NavLink to={"/blacklists"} onClick={handleClose}>
+                        <MenuItem>
+                            <ListItemIcon>
+                                <LocalFireDepartmentIcon/>
+                            </ListItemIcon>
+                            <ListItemText>Блокировки</ListItemText>
+                        </MenuItem>
+                    </NavLink>
+                    <NavLink to={"/blacklists/import"} onClick={handleClose}>
+                        <MenuItem>
+                            <ListItemIcon>
+                                <UploadFileIcon fontSize="medium"/>
+                            </ListItemIcon>
+                            <ListItemText>Импорт</ListItemText>
+                        </MenuItem>
+                    </NavLink>
+                    <NavLink to={"/blacklists/export"} onClick={handleClose}>
+                        <MenuItem>
+                            <ListItemIcon>
+                                <FileDownloadIcon fontSize="medium"/>
+                            </ListItemIcon>
+                            <ListItemText>Экспорт</ListItemText>
+                        </MenuItem>
+                    </NavLink>
+                </MenuList> : null
+            }
             <Divider/>
-            <NavLink to={"/blacklists"} onClick={handleClose}>
-                <MenuItem>
-                    <ListItemIcon>
-                        <LocalFireDepartmentIcon/>
-                    </ListItemIcon>
-                    <ListItemText>Блокировки</ListItemText>
-                </MenuItem>
-            </NavLink>
-            <NavLink to={"/blacklists/import"} onClick={handleClose}>
-                <MenuItem>
-                    <ListItemIcon>
-                        <UploadFileIcon fontSize="medium"/>
-                    </ListItemIcon>
-                    <ListItemText>Импорт</ListItemText>
-                </MenuItem>
-            </NavLink>
-            <NavLink to={"/blacklists/export"} onClick={handleClose}>
-                <MenuItem>
-                    <ListItemIcon>
-                        <FileDownloadIcon fontSize="medium"/>
-                    </ListItemIcon>
-                    <ListItemText>Экспорт</ListItemText>
-                </MenuItem>
-            </NavLink>
+            {
+                props.store.hasAnyOfPermissionsOrAdmin([2001, 6001]) ? <MenuList dense>
+                    <NavLink to={"/admin"} onClick={handleClose}>
+                        <MenuItem>
+                            <ListItemIcon>
+                                <SettingsRoundedIcon fontSize="medium"/>
+                            </ListItemIcon>
+                            <ListItemText>Настройки</ListItemText>
+                        </MenuItem>
+                    </NavLink>
+                </MenuList> : null
+            }
             <Divider/>
-            <NavLink to={"/admin"} onClick={handleClose}>
-                <MenuItem>
-                    <ListItemIcon>
-                        <SettingsRoundedIcon fontSize="medium"/>
-                    </ListItemIcon>
-                    <ListItemText>Настройки</ListItemText>
-                </MenuItem>
-            </NavLink>
-            <NavLink to={"/profile"} onClick={handleClose}>
-                <MenuItem>
-                    <ListItemIcon>
-                        <AccountCircleIcon fontSize="medium"/>
-                    </ListItemIcon>
-                    <ListItemText>Профиль</ListItemText>
-                </MenuItem>
-            </NavLink>
+            <MenuList dense>
+                <NavLink to={"/profile"} onClick={handleClose}>
+                    <MenuItem>
+                        <ListItemIcon>
+                            <AccountCircleIcon fontSize="medium"/>
+                        </ListItemIcon>
+                        <ListItemText>Профиль</ListItemText>
+                    </MenuItem>
+                </NavLink>
+            </MenuList>
+
+
         </MenuList>
     </Drawer>
 }
+
+export default observer(RootNavigationDrawer)

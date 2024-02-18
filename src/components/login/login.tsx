@@ -4,7 +4,7 @@ import "@/styles/login.scss"
 import {AxiosError} from "axios";
 import {ApiError} from "@/http/api.ts";
 import {toast} from "react-toastify";
-import {Context} from "@/main.tsx";
+import {Context} from "@/context.ts";
 import {useNavigate} from "react-router-dom";
 
 export default function Login() {

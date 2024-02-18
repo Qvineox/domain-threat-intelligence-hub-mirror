@@ -1,9 +1,12 @@
 import solarSvg from "/images/solar.svg"
 import "@/styles/home.scss"
 import {NavLink} from "react-router-dom";
-import {useEffect} from "react";
+import {Fragment, useContext, useEffect} from "react";
+import {Context} from "@/context.ts";
 
 export default function HomePage() {
+    const {store} = useContext(Context)
+
     useEffect(() => {
         document.title = `${import.meta.env.VITE_TITLE_NAME} | Домашняя страница`
     }, [])
@@ -14,22 +17,22 @@ export default function HomePage() {
              src={solarSvg}
              alt="spinning-orbit"/>
         <nav className={"home-page_navigation"}>
-            <div className={"home-page_navigation_group"}>
+            {store.hasPermissionOrAdmin(4001) ? <div className={"home-page_navigation_group"}>
                 <NavLink to={"/blacklists"}>/ блокировки</NavLink>
                 <NavLink to={"/blacklists/view"}>/ просмотр</NavLink>
                 <NavLink to={"/blacklists/imports"}>/ события</NavLink>
                 <NavLink to={"/blacklists/import"}>/ импорт</NavLink>
                 <NavLink to={"/blacklists/export"}>/ экспорт</NavLink>
-            </div>
-            <div className={"home-page_navigation_group"}>
+            </div> : <Fragment/>}
+            {store.hasPermissionOrAdmin(3001) ? <div className={"home-page_navigation_group"}>
+                <NavLink to={"/nodes/view"}>/ сетевые узлы</NavLink>
+                <NavLink to={"/nodes/map"}>/ карта сети</NavLink>
+            </div> : <Fragment/>}
+            {store.hasPermissionOrAdmin(5001) ? <div className={"home-page_navigation_group"}>
                 <NavLink to={"/scan/view"}>/ сканирование</NavLink>
                 <NavLink to={"/scan/agents"}>/ агенты</NavLink>
                 <NavLink to={"/nodes/jobs"}>/ задачи</NavLink>
-            </div>
-            <div className={"home-page_navigation_group"}>
-                <NavLink to={"/nodes/view"}>/ сетевые узлы</NavLink>
-                <NavLink to={"/nodes/map"}>/ карта сети</NavLink>
-            </div>
+            </div> : <Fragment/>}
             <div className={"home-page_navigation_group"}>
                 <NavLink to={"/profile"}>/ профиль</NavLink>
             </div>

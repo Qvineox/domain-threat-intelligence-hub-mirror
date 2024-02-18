@@ -1,4 +1,4 @@
-import {Fragment, useEffect, useState} from "react";
+import {Fragment, useContext, useEffect, useState} from "react";
 import UserService from "@/services/userService.ts";
 import {IUser} from "@/entities/users/user.ts";
 import {AxiosError} from "axios";
@@ -7,8 +7,11 @@ import {toast} from "react-toastify";
 import UserCard from "@/components/admin/users/userCard.tsx";
 import UserEditDialog from "@/components/admin/users/editDialog.tsx";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import {Context} from "@/context.ts";
 
 export default function Users() {
+    const {store} = useContext(Context)
+
     const [users, setUsers] = useState<Array<IUser>>([])
     const [selectedUserID, setSelectedUserID] = useState<number | null>(null)
 
@@ -18,7 +21,11 @@ export default function Users() {
     }, []);
 
     const onEdit = (id: number) => {
-        setSelectedUserID(id)
+        if (store.hasPermissionOrAdmin(2003)) {
+            setSelectedUserID(id)
+        } else {
+            toast.info("Для редактирования недостаточно прав")
+        }
     }
 
     const handleNewUser = () => {
@@ -51,9 +58,12 @@ export default function Users() {
                     }).map((v, index) => {
                         return <UserCard key={index} user={v} onEdit={onEdit}/>
                     })}
-                    <li className="new-user" onClick={handleNewUser}>
-                        <PersonAddIcon/>
-                    </li>
+                    {
+                        store.hasPermissionOrAdmin(2002) ?
+                            <li className="new-user" onClick={handleNewUser}>
+                                <PersonAddIcon/>
+                            </li> : <Fragment/>
+                    }
                 </ul>
                 <hr/>
                 <ul>

@@ -1,12 +1,11 @@
-import {Backdrop, Button, CircularProgress, FormControlLabel, Switch, TextField} from "@mui/material";
+import {Backdrop, Button, CircularProgress, FormControlLabel, Switch, TextField, Tooltip} from "@mui/material";
 import {Fragment, useContext, useEffect, useState} from "react";
 import {IDynamicConfig} from "@/entities/dynamicConfig/dynamicConfig.ts";
 import SystemStateService from "@/services/systemStateService.ts";
 import {ApiError} from "@/http/api.ts";
 import {toast} from "react-toastify";
 import {AxiosError} from "axios";
-import {Context} from "@/main.tsx";
-import {doesUserHasRoleOrAdmin} from "@/entities/users/user.ts";
+import {Context} from "@/context.ts";
 
 const defaultDynamicConfig: IDynamicConfig = {
     SMTP: {
@@ -224,8 +223,11 @@ export default function Configuration() {
                                                                    }}
                                                                    checked={editSystemState.SMTP.SSL}/>}
                     />
-                    <Button sx={{marginTop: "10px"}} variant={'outlined'} onClick={handleSMTPConfigUpdate}>
-                        Обновить
+                    <Button sx={{marginTop: "10px"}}
+                            variant={'outlined'}
+                            disabled={store.hasPermissionOrAdmin(6002)}
+                            onClick={handleSMTPConfigUpdate}>
+                        {store.hasPermissionOrAdmin(6002) ? "Недостаточно прав для изменения" : "Обновить"}
                     </Button>
                 </div>
                 <div className="configuration_config-block">
@@ -324,8 +326,9 @@ export default function Configuration() {
                                size={'small'} fullWidth/>
                     <Button sx={{marginTop: "10px", marginBottom: "30px"}}
                             variant={'outlined'}
+                            disabled={store.hasPermissionOrAdmin(6002)}
                             onClick={handleNaumenConfigUpdate}>
-                        Обновить
+                        {store.hasPermissionOrAdmin(6002) ? "Недостаточно прав для изменения" : "Обновить"}
                     </Button>
 
                     <h2>Параметры заявки</h2>
@@ -417,14 +420,20 @@ export default function Configuration() {
                                placeholder={"id, domain, url, email"}
                                variant={'filled'}
                                size={'small'} fullWidth/>
-                    <Button sx={{marginTop: "10px"}} variant={'outlined'} onClick={handleNaumenServiceConfigUpdate}>
-                        Обновить
-                    </Button>
+                    <Tooltip title={"Недостаточно прав для изменения"} placement={"bottom-start"}>
+                        <Button sx={{marginTop: "10px"}}
+                                variant={'outlined'}
+                                disabled={store.hasPermissionOrAdmin(6002)}
+                                onClick={handleNaumenServiceConfigUpdate}>
+                            {store.hasPermissionOrAdmin(6002) ? "Недостаточно прав для изменения" : "Обновить"}
+                        </Button>
+                    </Tooltip>
+
                 </div>
             </Fragment> : <Fragment/>
         }
         <Button onClick={handleConfigReset}
-                disabled={!doesUserHasRoleOrAdmin(store.userData, 6003)}
+                disabled={!store.hasPermissionOrAdmin(6003)}
                 className={'save-configuration'}
                 color={'warning'}
                 variant={'outlined'}>
