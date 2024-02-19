@@ -9,7 +9,7 @@ import {
     FormControl,
     FormControlLabel,
     Switch,
-    TextField
+    TextField, Tooltip
 } from "@mui/material";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
 import {AxiosError} from "axios";
@@ -20,7 +20,8 @@ import {toast} from "react-toastify";
 interface IBlacklistExportFilterProps {
     filter: IBlacklistedExportFilter
     setFilter: Dispatch<SetStateAction<IBlacklistedExportFilter>>
-    onExport: () => void
+    onExportCSV: () => void
+    onExportNSD: () => void
 }
 
 export default function BlacklistExportFilter(props: IBlacklistExportFilterProps) {
@@ -149,12 +150,15 @@ export default function BlacklistExportFilter(props: IBlacklistExportFilterProps
                                       }))
                                   }}
                 />
-                <Button onClick={props.onExport} variant={"outlined"} color={"info"}>
+                <Button onClick={props.onExportCSV} variant={"outlined"} color={"info"}>
                     Экспортировать в CSV
                 </Button>
-                <Button variant={"outlined"} color={"info"} disabled>
-                    Отправить в Naumen
-                </Button>
+                <Tooltip placement={'right'}
+                         title={'В Наумен будут отправлены только категории хостов, указанные в настройках системы.'}>
+                    <Button onClick={props.onExportNSD} variant={"outlined"} color={"info"}>
+                        Отправить в Naumen
+                    </Button>
+                </Tooltip>
             </FormControl>
         </LocalizationProvider>
     </div>

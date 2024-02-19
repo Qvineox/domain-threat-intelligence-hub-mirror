@@ -175,8 +175,8 @@ export default class BlacklistService {
         })
     }
 
-    static async postExportNSD(filter: IBlacklistedExportFilter): Promise<AxiosResponse<Blob>> {
-        return api.post<Blob>('blacklists/export/naumen', {
+    static async postExportNSD(filter: IBlacklistedExportFilter): Promise<AxiosResponse<INaumenExportTicket>> {
+        return api.post<INaumenExportTicket>('blacklists/export/naumen', {}, {
             timeout: 20000,
             params: {
                 'source_id': filter.SourceIDs,
@@ -222,6 +222,16 @@ export interface IBlacklistImportEventsFilter {
     CreatedBefore: Dayjs | null
     Type?: string
     Offset: number
+}
+
+export interface INaumenExportTicket {
+    Data: Array<string>
+    System: string
+    TicketID: number
+
+    CreatedAt: Dayjs
+    DeletedAt: Dayjs | null
+    UpdatedAt: Dayjs | null
 }
 
 export const HostTypes: Array<{ label: string, value: number, host: "domain" | "url" | "ip" }> = [

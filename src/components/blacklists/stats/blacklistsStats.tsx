@@ -31,7 +31,7 @@ export default function BlacklistsStats() {
             <h2>Панель управления блокировками</h2>
             <nav>
                 <NavLink to={"/blacklists/view"}> / Просмотр</NavLink>
-                <NavLink to={"/blacklists/imports"}> / События импорта</NavLink>
+                <NavLink to={"/blacklists/imports"}> / События</NavLink>
                 <NavLink to={"/blacklists/import"}> / Импорт</NavLink>
                 <NavLink to={"/blacklists/export"}> / Экспорт</NavLink>
             </nav>

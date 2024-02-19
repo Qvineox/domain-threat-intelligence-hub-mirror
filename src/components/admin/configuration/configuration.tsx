@@ -226,9 +226,9 @@ function Configuration() {
                     />
                     <Button sx={{marginTop: "10px"}}
                             variant={'outlined'}
-                            disabled={store.hasPermissionOrAdmin(6002)}
+                            disabled={!store.hasPermissionOrAdmin(6002)}
                             onClick={handleSMTPConfigUpdate}>
-                        {store.hasPermissionOrAdmin(6002) ? "Недостаточно прав для изменения" : "Обновить"}
+                        {store.hasPermissionOrAdmin(6002) ? "Обновить" : "Недостаточно прав для изменения"}
                     </Button>
                 </div>
                 <div className="configuration_config-block">
@@ -249,26 +249,28 @@ function Configuration() {
                     }
                                       label="Активен"/>
                     <hr/>
-                    <TextField label={'Адрес сервера'}
-                               disabled={!editSystemState.Integrations.Naumen.Enabled}
-                               value={editSystemState.Integrations.Naumen.URL}
-                               onChange={(event) => {
-                                   setEditSystemState(prevState => ({
-                                       ...prevState,
-                                       Integrations: {
-                                           ...prevState.Integrations,
-                                           Naumen: {
-                                               ...prevState.Integrations.Naumen,
-                                               URL: event.target.value
+                    <Tooltip title={"Полный адрес сервера со схемой, например: https://naumen.example.ru"}
+                             placement={"right"}>
+                        <TextField label={'Адрес сервера'}
+                                   disabled={!editSystemState.Integrations.Naumen.Enabled}
+                                   value={editSystemState.Integrations.Naumen.URL}
+                                   onChange={(event) => {
+                                       setEditSystemState(prevState => ({
+                                           ...prevState,
+                                           Integrations: {
+                                               ...prevState.Integrations,
+                                               Naumen: {
+                                                   ...prevState.Integrations.Naumen,
+                                                   URL: event.target.value
+                                               }
                                            }
-                                       }
-                                   }))
-                               }}
-                               sx={{marginBottom: '20px'}}
-                               variant={'filled'}
-                               size={'small'}
-                               fullWidth/>
-
+                                       }))
+                                   }}
+                                   sx={{marginBottom: '20px'}}
+                                   variant={'filled'}
+                                   size={'small'}
+                                   fullWidth/>
+                    </Tooltip>
                     <TextField label={'ID клиента'}
                                disabled={!editSystemState.Integrations.Naumen.Enabled}
                                type={'number'}
@@ -327,14 +329,12 @@ function Configuration() {
                                size={'small'} fullWidth/>
                     <Button sx={{marginTop: "10px", marginBottom: "30px"}}
                             variant={'outlined'}
-                            disabled={store.hasPermissionOrAdmin(6002)}
+                            disabled={!store.hasPermissionOrAdmin(6002)}
                             onClick={handleNaumenConfigUpdate}>
-                        {store.hasPermissionOrAdmin(6002) ? "Недостаточно прав для изменения" : "Обновить"}
+                        {store.hasPermissionOrAdmin(6002) ? "Обновить" : "Недостаточно прав для изменения"}
                     </Button>
-
                     <h2>Параметры заявки</h2>
                     <hr/>
-
                     <TextField label={'ID согласования'}
                                disabled={!editSystemState.Integrations.Naumen.Enabled}
                                type={'number'}
@@ -421,14 +421,12 @@ function Configuration() {
                                placeholder={"id, domain, url, email"}
                                variant={'filled'}
                                size={'small'} fullWidth/>
-                    <Tooltip title={"Недостаточно прав для изменения"} placement={"bottom-start"}>
-                        <Button sx={{marginTop: "10px"}}
-                                variant={'outlined'}
-                                disabled={store.hasPermissionOrAdmin(6002)}
-                                onClick={handleNaumenServiceConfigUpdate}>
-                            {store.hasPermissionOrAdmin(6002) ? "Недостаточно прав для изменения" : "Обновить"}
-                        </Button>
-                    </Tooltip>
+                    <Button sx={{marginTop: "10px"}}
+                            variant={'outlined'}
+                            disabled={!store.hasPermissionOrAdmin(6002)}
+                            onClick={handleNaumenServiceConfigUpdate}>
+                        {store.hasPermissionOrAdmin(6002) ? "Обновить" : "Недостаточно прав для изменения"}
+                    </Button>
 
                 </div>
             </Fragment> : <Fragment/>

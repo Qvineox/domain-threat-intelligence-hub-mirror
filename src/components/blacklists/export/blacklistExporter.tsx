@@ -94,13 +94,7 @@ export default function BlacklistExporter() {
     }
 
     // TODO
-    // const handleNSDExport = () => {
-    //
-    // }
-
     const handleCSVExport = () => {
-        setLoading(true)
-
         BlacklistService.postExportCSV(filter).then((response) => {
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const link = document.createElement('a');
@@ -122,6 +116,28 @@ export default function BlacklistExporter() {
         })
     }
 
+    const handleNSDExport = () => {
+        setLoading(true)
+
+        BlacklistService.postExportNSD(filter).then((response) => {
+            if (response.data) {
+                toast.success(`Заявка подана. Кликните здесь, чтобы перейти к ней.`, {
+                    autoClose: 10000,
+                    onClick: () => {
+                        window.open(`${import.meta.env.VITE_NAUMEN_URL}/sd/operator/#uuid:${response.data.TicketID}`, '_blank', 'noopener');
+                    }
+                })
+            }
+
+        }).catch((error: AxiosError<ApiError>) => {
+            console.error(error)
+            toast.error("Ошибка создания заявки.")
+        }).finally(() => {
+            setSearchParamsFromFilter(filter, setSearchParams)
+            setLoading(false)
+        })
+    }
+
     return <div className={"blacklists_exporter"}>
         <Backdrop
             sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
@@ -131,13 +147,15 @@ export default function BlacklistExporter() {
         </Backdrop>
         <BlacklistExportFilter filter={filter}
                                setFilter={setFilter}
-                               onExport={handleCSVExport}/>
+                               onExportCSV={handleCSVExport}
+                               onExportNSD={handleNSDExport}
+        />
         <div className={"blacklists_exporter_content"}>
             {
                 preloadedInfo ? <Fragment>
                     <h2>Будет экспортировано</h2>
                     {
-                        preloadedInfo.Total === 5000 ? <p>Лимит предпросмотра: 5000</p> : <Fragment/>
+                        preloadedInfo.Total === 5000 ? <p>5000+</p> : <Fragment/>
                     }
                     <table className={"hosts"}>
                         <thead>
