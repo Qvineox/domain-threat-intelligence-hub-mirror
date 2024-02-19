@@ -2,6 +2,8 @@ export interface IDynamicConfig {
     SMTP: {
         Enabled: boolean
         Host: string
+        From: string
+        UseAuth: boolean
         User: string
         Password: string
         Port: number

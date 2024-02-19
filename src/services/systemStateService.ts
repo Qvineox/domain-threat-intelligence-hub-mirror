@@ -26,12 +26,14 @@ export default class SystemStateService {
         })
     }
 
-    static updateSMTPConfig(enabled: boolean, host: string, port: number, user: string, password: string, ssl: boolean): Promise<AxiosResponse> {
+    static updateSMTPConfig(enabled: boolean, host: string, port: number, user: string, from: string, password: string, ssl: boolean, auth: boolean): Promise<AxiosResponse> {
         return api.post('system/dynamic/smtp', {
             Enabled: enabled,
+            UseAuth: auth,
             Host: host,
             Port: port,
             User: user,
+            From: from,
             Password: password,
             SSL: ssl,
         })

@@ -13,6 +13,8 @@ const defaultDynamicConfig: IDynamicConfig = {
         Enabled: false,
         Host: "",
         Port: 25,
+        From: "",
+        UseAuth: false,
         User: "",
         Password: "",
         SSL: false,
@@ -67,8 +69,10 @@ function Configuration() {
             editSystemState.SMTP.Host,
             editSystemState.SMTP.Port,
             editSystemState.SMTP.User,
+            editSystemState.SMTP.From,
             editSystemState.SMTP.Password,
             editSystemState.SMTP.SSL,
+            editSystemState.SMTP.UseAuth,
         ).then(() => {
             toast.success("Конфигурация SMTP обновлена")
         }).catch((error: AxiosError<ApiError>) => {
@@ -180,8 +184,33 @@ function Configuration() {
                                variant={'filled'}
                                size={'small'}
                                fullWidth/>
-                    <TextField label={'Пользователь'}
+                    <TextField label={'Отправитель'}
                                disabled={!editSystemState.SMTP.Enabled}
+                               value={editSystemState.SMTP.From}
+                               onChange={(event) => {
+                                   setEditSystemState(prevState => ({
+                                       ...prevState,
+                                       SMTP: {
+                                           ...prevState.SMTP,
+                                           From: event.target.value
+                                       }
+                                   }))
+                               }}
+                               variant={'filled'}
+                               size={'small'}
+                               sx={{marginBottom: '20px'}}
+                               fullWidth required/>
+                    <FormControlLabel control={<Switch onChange={(event) => {
+                        setEditSystemState(prevState => ({
+                            ...prevState,
+                            SMTP: {
+                                ...prevState.SMTP,
+                                UseAuth: event.target.checked
+                            }
+                        }))
+                    }} checked={editSystemState.SMTP.UseAuth}/>} label="Авторизация"/>
+                    <TextField label={'Пользователь'}
+                               disabled={!editSystemState.SMTP.Enabled || !editSystemState.SMTP.UseAuth}
                                value={editSystemState.SMTP.User}
                                onChange={(event) => {
                                    setEditSystemState(prevState => ({
@@ -196,7 +225,7 @@ function Configuration() {
                                size={'small'}
                                fullWidth/>
                     <TextField label={'Пароль'} type={'password'}
-                               disabled={!editSystemState.SMTP.Enabled}
+                               disabled={!editSystemState.SMTP.Enabled || !editSystemState.SMTP.UseAuth}
                                value={editSystemState.SMTP.Password}
                                onChange={(event) => {
                                    setEditSystemState(prevState => ({
