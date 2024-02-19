@@ -1,15 +1,18 @@
 FROM artifactory.rgs.ru:5000/docker/node:21-alpine3.18 as builder
 LABEL authors="lysak.yaroslav00@yandex.ru"
 
-WORKDIR /src
-COPY . /src
-
 RUN npm config set proxy 'http://proxy-h.rgs.ru:3128'
 RUN npm config set https-proxy 'http://proxy-h.rgs.ru:3128'
 RUN npm config set strict-ssl false
 
 RUN npm install vite -g
+
+WORKDIR /src
+COPY ./package.json /src/package.json
+
 RUN npm install
+
+COPY . /src
 
 RUN npm run build
 
