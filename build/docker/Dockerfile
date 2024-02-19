@@ -1,11 +1,14 @@
 FROM node:21-alpine3.18 as builder
 LABEL authors="lysak.yaroslav00@yandex.ru"
 
-WORKDIR /src
-COPY . /src
+RUN npm install vite -g --log-level verbose
 
-RUN npm install vite -g
-RUN npm install
+WORKDIR /src
+COPY ./package.json /src/package.json
+
+RUN npm install --log-level verbose
+
+COPY . /src
 
 RUN npm run build
 

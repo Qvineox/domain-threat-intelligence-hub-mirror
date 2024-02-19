@@ -5,12 +5,12 @@ RUN npm config set proxy 'http://proxy-h.rgs.ru:3128'
 RUN npm config set https-proxy 'http://proxy-h.rgs.ru:3128'
 RUN npm config set strict-ssl false
 
-RUN npm install vite -g
+RUN npm install vite -g --log-level verbose
 
 WORKDIR /src
 COPY ./package.json /src/package.json
 
-RUN npm install
+RUN npm install --log-level verbose
 
 COPY . /src
 
