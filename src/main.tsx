@@ -20,6 +20,10 @@ import Users from "@/components/admin/users/users.tsx";
 import AdminPanel from "@/components/admin/panel/adminPanel.tsx";
 import Configuration from "@/components/admin/configuration/configuration.tsx";
 import {Slide, ToastContainer} from "react-toastify";
+import Scanning from "@/components/scanning/scanning.tsx";
+import Scanner from "@/components/scanning/scanner/scanner.tsx";
+import JobsViewer from "@/components/scanning/jobs/jobsViewer.tsx";
+import AgentsViewer from "@/components/scanning/agents/agentsViewer.tsx";
 
 const router = createBrowserRouter([
     {
@@ -74,6 +78,28 @@ const router = createBrowserRouter([
                         path: "/blacklists/export",
                         element: <BlacklistExporter/>
                     }
+                ]
+            },
+            {
+                path: "/scanning",
+                element: <Scanning/>,
+                children: [
+                    {
+                        path: "/scanning",
+                        element: <Navigate to="/scanning/scanner" replace/>,
+                    },
+                    {
+                        path: "/scanning/scanner",
+                        element: <Scanner/>,
+                    },
+                    {
+                        path: "/scanning/jobs",
+                        element: <JobsViewer/>,
+                    },
+                    {
+                        path: "/scanning/agents",
+                        element: <AgentsViewer/>,
+                    },
                 ]
             },
             {
