@@ -77,6 +77,8 @@ export default function Scanner() {
 }
 
 const defaultJob: IJob = {
+    Private: false,
+    UseHomeBound: false,
     Type: JobType.JOB_TYPE_OSS,
     Priority: JobPriority.JOB_PRIORITY_MEDIUM,
     Providers: [OpenSourceProviders.OSS_PROVIDER_VIRUS_TOTAL],
@@ -85,5 +87,5 @@ const defaultJob: IJob = {
     Timout: 5000,
     Retries: 3,
     Targets: [],
-    Exceptions: [],
+    Exceptions: []
 }

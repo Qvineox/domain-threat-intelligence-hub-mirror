@@ -39,12 +39,14 @@ function RootNavigationBar(props: RootNavigationBarProps) {
             </Breadcrumbs>
         </div>
         <div className="navigation-bar_queue-state">
-            <QueueState/>
+            {!store.isLoading && store.isLoggedIn ? <NavLink to={"/scanning"}>
+                <QueueState/>
+            </NavLink> : <Skeleton itemType={'text'} width={50} height={30}/>}
         </div>
         <div className="navigation-bar_current-user">
             {!store.isLoading && store.isLoggedIn ? <NavLink to={"/profile"}>
                 {store.userData.FullName}
-            </NavLink> : <Skeleton itemType={'text'} width={150} height={30}/>}
+            </NavLink> : <Skeleton itemType={'text'} width={50} height={30}/>}
         </div>
     </nav>
 }
