@@ -1,6 +1,6 @@
 import {ChangeEvent, Dispatch, SetStateAction, useEffect, useState} from "react";
 import {IJobTarget, TargetType} from "@/entities/queue/dialerJob.ts";
-import {Popover, TextareaAutosize, Tooltip} from "@mui/material";
+import {TextareaAutosize, Tooltip} from "@mui/material";
 import TargetsPreview from "@/components/scanning/scanner/targets/targetsPreview.tsx";
 import {useSearchParams} from "react-router-dom";
 
@@ -20,8 +20,6 @@ export default function TargetsInput(props: ITargetsInputProps) {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [targetsString, setTargetsString] = useState<string>("")
-
-    const [showHelper, setShowHelper] = useState<boolean>(false)
 
     useEffect(() => {
         const t = searchParams.get("targets")
