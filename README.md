@@ -1,40 +1,40 @@
 # Domain Threat Intelligence HUB
 
-Masters thesis in cyber security on malicious domains detection. Operations Hub.
-Provides Web UI and user interface to interact with core API.
+Магистерская диссертация по кибербезопасности на тему обнаружения вредоносных доменов. Единая точка для управления и
+проведения всех операций.
+Предоставляет пользовательский интерфейс для взаимодействия с основным API.
 
-This project is mirrored from GitLab.
+Ссылки:
 
-Links:
+- [Основной проект на GitLab](https://gitlab.qvineox.ru/masters/domain-threat-intelligence-hub)
+- [Зеркало на GitHub](https://github.com/Qvineox/domain-threat-intelligence-hub-mirror)
 
-- [Main project on GitLab](https://gitlab.qvineox.ru/masters/domain-threat-intelligence-hub)
-- [Mirror on GitHub](https://github.com/Qvineox/domain-threat-intelligence-hub-mirror)
+## Установка и разработка
 
-## Setup and deployment
+### Сборка и запуск
 
-### Building and running
-
-Following commands should be executed to build and run the application. Note that required environment variables should
-be in ./config/.env.development file or in environment to start the application. Runs from project root.
+Для сборки и запуска приложения необходимо выполнить следующие команды. Обратите внимание, что необходимые переменные
+окружения должны
+находиться в файле ./config/.env.development или в окружении для запуска приложения. Запускается из корня проекта.
 
 ```shell
 npm run dev --host
 ```
 
-### Environment
+### Окружение
 
-Following variables are used in application. These variables are also mapped in automated GitLab CI/CD:
+В приложении используются следующие переменные. Эти переменные также отображаются в автоматизированном GitLab CI/CD:
 
-| Environment Variable | 	Is Required? | 	GitLab CI Variable | 	Description        | 	Example values            |
-|----------------------|---------------|---------------------|---------------------|----------------------------|
-| VITE_API_URL         |               | API_URL             | Backend API URL     | http://localhost:7090      |
-| VITE_API_VERSION     |               | API_VERSION         | Backend API version | v1                         |
-| VITE_APP_VERSION     | optional      | APP_VERSION         | Application version | v0.1.0                     |
-| VITE_APP_BRANCH      | optional      | APP_BRANCH          | Application branch  | test                       |
-| VITE_BUILD_ID        | optional      | CI_COMMIT_SHORT_SHA | Git build ID        | d4e5c67d                   |
-| VITE_TITLE_NAME      | optional      | TITLE_NAME          | Page title name     | DTI                        |
-| VITE_HOME_NAME       | optional      | HOME_NAME           | Home page name      | Domain Threat Intelligence |
+| Переменная       | 	Необходимость | 	GitLab CI переменная | 	Описание           | 	Пример                    |
+|------------------|----------------|-----------------------|---------------------|----------------------------|
+| VITE_API_URL     |                | API_URL               | Backend API URL     | http://localhost:7090      |
+| VITE_API_VERSION |                | API_VERSION           | Backend API version | v1                         |
+| VITE_APP_VERSION | optional       | APP_VERSION           | Application version | v0.1.0                     |
+| VITE_APP_BRANCH  | optional       | APP_BRANCH            | Application branch  | test                       |
+| VITE_BUILD_ID    | optional       | CI_COMMIT_SHORT_SHA   | Git build ID        | d4e5c67d                   |
+| VITE_TITLE_NAME  | optional       | TITLE_NAME            | Page title name     | DTI                        |
+| VITE_HOME_NAME   | optional       | HOME_NAME             | Home page name      | Domain Threat Intelligence |
 
-## Demo
+## Демо
 
 > TODO: coming soon...

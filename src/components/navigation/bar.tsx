@@ -4,6 +4,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import {ReactNode, useContext} from "react";
 import {observer} from "mobx-react-lite";
 import {Context} from "@/context.ts";
+import QueueState from "@/components/navigation/queue/queueState.tsx";
 
 interface RootNavigationBarProps {
     setIsOpen: (status: boolean) => void
@@ -36,6 +37,9 @@ function RootNavigationBar(props: RootNavigationBarProps) {
                 {/*    Просмотр*/}
                 {/*</Link>*/}
             </Breadcrumbs>
+        </div>
+        <div className="navigation-bar_queue-state">
+            <QueueState/>
         </div>
         <div className="navigation-bar_current-user">
             {!store.isLoading && store.isLoggedIn ? <NavLink to={"/profile"}>
