@@ -38,7 +38,7 @@ nav#navigation-bar {
     align-items: center;
     justify-content: end;
 
-    padding: 0 10px 0 10px;
+    padding: 5px 10px 0 10px;
 
     border-left: 1.5px solid $border-color;
     min-width: 50px;
@@ -55,15 +55,113 @@ nav#navigation-bar {
       align-items: center;
     }
 
+    p {
+      margin: 0 2px 0 15px;
+      padding: 4px 0 0 0;
+    }
+
     &__connected {
-      p {
-        margin: 0 2px 0 15px;
-      }
+
     }
 
     &__failed {
       color: $color-danger;
       opacity: 0.55;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .queue-jobs {
+    z-index: 999;
+
+    position: fixed;
+    right: 2vw;
+    top: 5vh;
+
+    min-height: 100px;
+    min-width: 500px;
+
+    border: 1px solid $border-color;
+    border-radius: 15px;
+    box-shadow: $popup-box-shadow;
+
+    background-color: whitesmoke;
+
+    visibility: visible;
+    opacity: 1;
+
+    transition: visibility 0s, opacity 0.25s ease-in-out;
+
+    &__hidden {
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    &_container {
+      h2 {
+        display: block;
+
+        padding: 2px 0 5px 10px;
+        background-color: #d6d9de;
+
+        font-size: 1.2rem;
+      }
+
+      p.empty-placeholder {
+        padding: 10px 0;
+      }
+
+      &:first-child > h2 {
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+      }
+
+      ul {
+        list-style: none;
+
+        li {
+          padding: 10px 15px;
+
+          h4, p {
+            margin: 0;
+          }
+
+          h4 {
+            font-size: 0.9rem;
+          }
+
+
+          p {
+            font-size: 0.85rem;
+          }
+
+          .info {
+            display: flex;
+
+          }
+
+          .statuses {
+            margin: 10px 0 0 0;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+
+            font-size: 0.8rem;
+          }
+
+          &:not(:last-child ) {
+            border-bottom: 1px solid $border-color;
+          }
+        }
+      }
+    }
+
+    &:hover {
+      cursor: default;
     }
   }
 }

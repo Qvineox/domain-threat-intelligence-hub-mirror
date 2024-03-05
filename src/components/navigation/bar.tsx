@@ -39,9 +39,8 @@ function RootNavigationBar(props: RootNavigationBarProps) {
             </Breadcrumbs>
         </div>
         <div className="navigation-bar_queue-state">
-            {!store.isLoading && store.isLoggedIn ? <NavLink to={"/scanning"}>
-                <QueueState/>
-            </NavLink> : <Skeleton itemType={'text'} width={50} height={30}/>}
+            {!store.isLoading && store.isLoggedIn ? <QueueState/> :
+                <Skeleton itemType={'text'} width={50} height={30}/>}
         </div>
         <div className="navigation-bar_current-user">
             {!store.isLoading && store.isLoggedIn ? <NavLink to={"/profile"}>
@@ -117,6 +116,14 @@ function parseHrefToBreadcrumbs(location: string): Array<ReactNode> {
             case "configuration":
                 name = "Конфигурация"
                 href += "/configuration"
+                break
+            case "scanning":
+                name = "Сканирование"
+                href += "/scanning"
+                break
+            case "scanner":
+                name = "Сканер"
+                href += "/scanner"
                 break
             case "":
                 name = "Домашняя страница"

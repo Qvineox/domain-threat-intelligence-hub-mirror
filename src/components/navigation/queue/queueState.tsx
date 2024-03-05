@@ -1,11 +1,12 @@
 import {Fragment, useEffect, useState} from "react";
 import {IDialerJob} from "@/entities/queue/dialerJob.ts";
+import QueueJobs from "@/components/navigation/queue/queueJobs.tsx";
 
 const SOCKET_URL = (import.meta.env.VITE_WS_URL === undefined ? "" : import.meta.env.VITE_WS_URL) + '/api/' + import.meta.env.VITE_API_VERSION + '/ws'
 
 const socket = new WebSocket(`${SOCKET_URL}/queue`);
 
-interface IQueueState {
+export interface IQueueState {
     queued: Array<IDialerJob>
     sent: Array<IDialerJob>
     latest: Array<IDialerJob>
@@ -21,6 +22,8 @@ export default function QueueState() {
         latest: [],
     })
 
+    const [isHidden, setIsHidden] = useState<boolean>(true)
+
     useEffect(() => {
         socket.onopen = function () {
             setIsConnected(true)
@@ -30,7 +33,12 @@ export default function QueueState() {
         };
 
         socket.onmessage = function (event) {
+            setIsConnected(true)
+            setIsLoading(false)
+
             setQueueState(JSON.parse(event.data) as IQueueState)
+
+            console.log('ws: message received');
         };
 
         socket.onclose = function () {
@@ -52,10 +60,11 @@ export default function QueueState() {
 
     return <div className={'queue-state'}>
         {
-            !isLoading ? <Fragment>
+            !isLoading && queueState ? <Fragment>
                 {
                     isConnected ? <Fragment>
-                        <div className={'queue-state queue-state__connected'}>
+                        <div onClick={() => setIsHidden(false)}
+                             className={'queue-state queue-state__connected'}>
                             <p>
                                 {queueState.queued.length}
                             </p>
@@ -75,13 +84,17 @@ export default function QueueState() {
                                 <circle r="5" cx="10" cy="10" fill={statusBubbleColor(queueState.latest)}/>
                             </svg>
                         </div>
+                        <QueueJobs state={queueState}
+                                   hidden={isHidden}
+                                   onHide={() => {
+                                       setIsHidden(true)
+                                   }}/>
                     </Fragment> : <p className={'queue-state queue-state__failed'}>
                         Ошибка соединения с планировщиком!
                     </p>
                 }
             </Fragment> : <p>подключение...</p>
         }
-
     </div>
 }
 

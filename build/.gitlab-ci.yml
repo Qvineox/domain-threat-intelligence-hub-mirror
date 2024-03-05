@@ -40,6 +40,8 @@ build staging docker image:
   extends: .registry_setup
   script:
     - echo "" >> config/.env.staging
+    - echo "VITE_API_URL=${API_URL}" >> config/.env.staging
+    - echo "VITE_WS_URL=${WS_URL}" >> config/.env.staging
     - echo "VITE_APP_BRANCH=${CI_COMMIT_BRANCH}" >> config/.env.staging
     - echo "VITE_BUILD_ID=${CI_COMMIT_SHORT_SHA}" >> config/.env.staging
     - mv config/.env.staging config/.env
@@ -59,9 +61,11 @@ build production docker image:
     url: https://domain-threat-intel.qvineox.ru/
   extends: .registry_setup
   script:
-    - echo "" >> config/.env.staging
-    - echo "VITE_APP_BRANCH=${CI_COMMIT_BRANCH}" >> config/.env.staging
-    - echo "VITE_BUILD_ID=${CI_COMMIT_SHORT_SHA}" >> config/.env.staging
+    - echo "" >> config/.env.production
+    - echo "VITE_API_URL=${API_URL}" >> config/.env.production
+    - echo "VITE_WS_URL=${WS_URL}" >> config/.env.production
+    - echo "VITE_APP_BRANCH=${CI_COMMIT_BRANCH}" >> config/.env.production
+    - echo "VITE_BUILD_ID=${CI_COMMIT_SHORT_SHA}" >> config/.env.production
     - mv config/.env.staging config/.env
     - docker build . -t $IMAGE_TAG -f ./build/docker/Dockerfile
     - docker push $IMAGE_TAG
