@@ -32,9 +32,9 @@ function HomePage() {
                         <NavLink to={"/nodes/map"}>/ карта сети</NavLink>
                     </div> : <Fragment/>}
                     {store.hasPermissionOrAdmin(5001) ? <div className={"home-page_navigation_group"}>
-                        <NavLink to={"/scan/view"}>/ сканирование</NavLink>
-                        <NavLink to={"/scan/agents"}>/ агенты</NavLink>
-                        <NavLink to={"/nodes/jobs"}>/ задачи</NavLink>
+                        <NavLink to={"/scanning"}>/ сканирование</NavLink>
+                        <NavLink to={"/scanning/agents"}>/ агенты</NavLink>
+                        <NavLink to={"/scanning/jobs"}>/ задачи</NavLink>
                     </div> : <Fragment/>}
                     <div className={"home-page_navigation_group"}>
                         <NavLink to={"/profile"}>/ профиль</NavLink>

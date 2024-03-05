@@ -1,3 +1,5 @@
+@import "colors";
+
 nav#navigation-bar {
   position: fixed;
   top: 0;
@@ -13,12 +15,14 @@ nav#navigation-bar {
   gap: 0 10px;
 
   align-items: center;
-  justify-content: space-between;
 
   border-bottom: 1px solid #1b263b;
   background-color: whitesmoke;
 
   .navigation-bar_location {
+    flex-basis: 40%;
+    flex-grow: 1;
+
     display: flex;
     flex-direction: row;
 
@@ -28,14 +32,39 @@ nav#navigation-bar {
 
   .navigation-bar_current-user {
     justify-self: end;
-    flex-basis: 20%;
 
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: end;
 
-    padding: 0 10px;
+    padding: 0 10px 0 10px;
+
+    border-left: 1.5px solid $border-color;
+    min-width: 50px;
+  }
+
+  .queue-state {
+    flex-basis: 10%;
+
+    align-self: end;
+
+    &__connected, &__failed {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    &__connected {
+      p {
+        margin: 0 2px 0 15px;
+      }
+    }
+
+    &__failed {
+      color: $color-danger;
+      opacity: 0.55;
+    }
   }
 }
 
