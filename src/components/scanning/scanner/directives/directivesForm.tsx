@@ -203,7 +203,8 @@ export default function DirectivesForm(props: IDirectivesFormProps) {
                 </div> : <Fragment/>
         }
         <ButtonGroup fullWidth variant={'outlined'}>
-            <Button onClick={props.onQueue} endIcon={<PlayArrowOutlinedIcon/>}>
+            <Button disabled={props.jobSettings.Targets.length === 0} onClick={props.onQueue}
+                    endIcon={<PlayArrowOutlinedIcon/>}>
                 Запуск
             </Button>
             <Button onClick={handleSettingsSave} endIcon={<SaveAsOutlinedIcon/>}>

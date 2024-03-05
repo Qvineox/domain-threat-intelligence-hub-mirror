@@ -15,12 +15,12 @@ export interface IQueuedJobs {
 }
 
 export interface IDirectives {
-    DNSDirectives: IDNSDirectives
-    DiscoveryDirectives: IDiscoveryDirectives
-    NMAPDirectives: INMAPDirectives
-    OpenSourceScanDirectives: OpenSourceScanDirectives
-    SpiderDirectives: SpiderDirectives
-    WhoISDirectives: IWhoIsDirectives
+    DNSDirectives?: IDNSDirectives
+    DiscoveryDirectives?: IDiscoveryDirectives
+    NMAPDirectives?: INMAPDirectives
+    OpenSourceScanDirectives?: OpenSourceScanDirectives
+    SpiderDirectives?: SpiderDirectives
+    WhoISDirectives?: IWhoIsDirectives
 }
 
 export interface IDNSDirectives {

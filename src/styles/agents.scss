@@ -1,0 +1,76 @@
+@import "colors";
+
+.agents-viewer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+
+  ul.agent-cards-list {
+    margin: 20px 0;
+
+    width: 90vw;
+
+    list-style: none;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
+    gap: 10px;
+
+    .agent-card {
+      flex-basis: 20%;
+
+      border: 1px solid $border-color;
+      border-radius: 5px;
+
+      padding: 5px 10px;
+
+      &_identity {
+        h3 {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        p {
+          font-size: 0.8rem;
+          opacity: 0.65;
+        }
+      }
+
+      &_net {
+        margin-top: 10px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid $border-color;
+
+        p {
+          font-size: 0.8rem;
+          opacity: 0.65;
+        }
+      }
+
+      &_tags {
+        margin-top: 10px;
+
+        table {
+          width: 100%;
+
+          td.keys {
+            text-align: start;
+            opacity: 0.85;
+          }
+
+          td.values {
+            text-align: end;
+            font-weight: bold;
+          }
+        }
+
+
+      }
+    }
+  }
+}

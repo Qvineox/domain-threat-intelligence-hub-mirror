@@ -109,10 +109,10 @@ function statusBubbleColor(jobs: Array<IDialerJob>): string {
         return '#1fa21f'
     }
 
-    if (jobs.findIndex((value) => {
-        return value.Meta.Status === 5
-    }) !== -1) {
-        return '#B22222FF'
+    if (jobs.every((value) => {
+        return value.Meta.Status >= 5
+    })) {
+        return '#d33939'
     }
 
     return '#fcaf53'

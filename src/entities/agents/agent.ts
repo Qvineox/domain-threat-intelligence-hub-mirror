@@ -13,6 +13,7 @@ export interface IAgent {
     IsActive: boolean
     IsHomeBound: boolean
     IsPrivate: boolean
+    IsConnected: boolean
 
     MinPriority: JobPriority
 
@@ -26,9 +27,9 @@ export interface IAgent {
 }
 
 export interface IIPAddress {
-    ipnet: {
-        ip: number[]
-        mask: number[]
+    IPNet: {
+        IP: string
+        Mask: string
     }
     status: number
 }
