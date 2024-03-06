@@ -3,15 +3,20 @@ import {JobPriority} from "@/entities/queue/job.ts";
 import {Fragment} from "react";
 import {Tooltip} from "@mui/material";
 
-export default function AgentCard(props: IAgent) {
+interface IAgentCardProps {
+    agent: IAgent
+    onClick: (uuid: string) => void
+}
+
+export default function AgentCard(props: IAgentCardProps) {
     let priority: string
     let statusColor: string
     let statusMessage: string
 
-    if (props.IsActive) {
+    if (props.agent.IsActive) {
         statusColor = '#fcaf53'
 
-        if (props.IsConnected) {
+        if (props.agent.IsConnected) {
             statusColor = '#1fa21f'
             statusMessage = "Агент активен и подключен."
         } else {
@@ -23,7 +28,7 @@ export default function AgentCard(props: IAgent) {
         statusMessage = "Агент не активен. Статус подключения неизвестен."
     }
 
-    switch (props.MinPriority) {
+    switch (props.agent.MinPriority) {
         case JobPriority.JOB_PRIORITY_CRITICAL:
             priority = "срочный"
             break
@@ -37,9 +42,9 @@ export default function AgentCard(props: IAgent) {
             priority = "низкий"
     }
 
-    return <li className={'agent-card'}>
+    return <li onClick={() => props.onClick(props.agent.UUID)} className={'agent-card'}>
         <div className={'agent-card_identity'}>
-            <h3>{props.Name}
+            <h3>{props.agent.Name}
                 <Tooltip placement={'right-end'} title={statusMessage}>
                     <svg height="10" width="10" xmlns="http://www.w3.org/2000/svg">
                         <circle r="5" cx="5" cy="5" fill={statusColor}/>
@@ -47,11 +52,11 @@ export default function AgentCard(props: IAgent) {
                 </Tooltip>
 
             </h3>
-            <p>{props.UUID}</p>
+            <p>{props.agent.UUID}</p>
         </div>
         <div className={'agent-card_net'}>
-            <h4>{props.Host}</h4>
-            <p>{props.IPAddress.IPNet.IP}</p>
+            <h4>{props.agent.Host}</h4>
+            <p>{props.agent.IPAddress.IPNet.IP}</p>
         </div>
         <div className={'agent-card_tags'}>
             <table>
@@ -61,7 +66,7 @@ export default function AgentCard(props: IAgent) {
                         доступность
                     </td>
                     <td className={'values'}>
-                        {props.IsPrivate ? 'приватный' : 'публичный'}
+                        {props.agent.IsPrivate ? 'приватный' : 'публичный'}
                     </td>
                 </tr>
                 <tr>
@@ -69,7 +74,7 @@ export default function AgentCard(props: IAgent) {
                         размещение
                     </td>
                     <td className={'values'}>
-                        {props.IsHomeBound ? 'домашний (NAT)' : 'в интернете'}
+                        {props.agent.IsHomeBound ? 'домашний (NAT)' : 'в интернете'}
                     </td>
                 </tr>
                 <tr>
@@ -81,12 +86,12 @@ export default function AgentCard(props: IAgent) {
                     </td>
                 </tr>
                 {
-                    props.Owner ? <tr>
+                    props.agent.Owner ? <tr>
                         <td className={'keys'}>
                             владелец
                         </td>
                         <td className={'values'}>
-                            {props.Owner?.Login}
+                            {props.agent.Owner?.Login}
                         </td>
                     </tr> : <Fragment/>
                 }

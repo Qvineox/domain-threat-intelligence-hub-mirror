@@ -8,7 +8,7 @@ export default class AgentService {
     }
 
     static async getAgentByUUID(uuid: string): Promise<AxiosResponse<IAgent>> {
-        return api.post<IAgent>(`scanning/agents/agent/${uuid}`)
+        return api.get<IAgent>(`scanning/agents/agent/${uuid}`)
     }
 
     static async deleteAgentByUUID(uuid: string): Promise<AxiosResponse> {

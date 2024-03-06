@@ -20,18 +20,18 @@ export interface IAgent {
     Owner?: IUser
     OwnerID?: number
 
-    config: Config
+    config?: Config
 
-    CreatedAt: Dayjs
-    UpdatedAt: Dayjs
+    CreatedAt?: Dayjs
+    UpdatedAt?: Dayjs
 }
 
 export interface IIPAddress {
     IPNet: {
         IP: string
-        Mask: string
+        Mask?: string
     }
-    status: number
+    status?: number
 }
 
 export interface Config {
@@ -42,6 +42,7 @@ export interface IAgentUpdateParams {
 
     Name: string
     Host: string
+    IP: string
     Description: string
 
     IsActive: boolean
@@ -50,5 +51,5 @@ export interface IAgentUpdateParams {
 
     MinPriority: number
 
-    OwnerID: string
+    OwnerID?: number
 }
