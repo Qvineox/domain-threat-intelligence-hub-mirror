@@ -56,6 +56,8 @@ export default function QueueJobs(props: IQueueJobsProps) {
 
 function JobCardListItem(props: IDialerJob) {
     let status: string = "неизвестно"
+    let message: string = status
+
     let type: string = "не определено"
     let color: string = "#979797"
     let additionalData: string = ""
@@ -76,33 +78,40 @@ function JobCardListItem(props: IDialerJob) {
     switch (props.Meta.Status) {
         case JobStatus.JOB_STATUS_PENDING:
             status = "в очереди"
+            message = "в очереди, число повторных попыток запуска: " + props.DequeuedTimes
             break
         case JobStatus.JOB_STATUS_STARTING:
             status = "инициализация"
+            message = "в очереди, число повторных попыток запуска: " + props.DequeuedTimes
             color = "#fcaf53"
             break
         case JobStatus.JOB_STATUS_WORKING:
-            status = "в работе"
+            status = message = "в работе"
             color = "#fcaf53"
             break
         case JobStatus.JOB_STATUS_FINISHING:
             status = "завершение"
+            message = "сохранение в базу данных, учистка контекста и освобождение ресурсов"
             color = "#1fa21f"
             break
         case JobStatus.JOB_STATUS_DONE:
             status = "успешно"
+            message = "задача завершено успешно"
             color = "#1fa21f"
             break
         case JobStatus.JOB_STATUS_CANCELLED:
             status = "отменена"
+            message = "задача была отменена пользователем"
             color = "#d33939"
             break
         case JobStatus.JOB_STATUS_ERROR:
             status = "ошибка"
+            message = props.Meta.Error !== undefined ? props.Meta.Error : "неизвестная ошибка"
             color = "#d33939"
             break
         case JobStatus.JOB_STATUS_PANIC:
             status = "крит. ошибка"
+            message = props.Meta.Error !== undefined ? props.Meta.Error : "неизвестная ошибка"
             color = "#d33939"
             break
     }
@@ -143,7 +152,7 @@ function JobCardListItem(props: IDialerJob) {
         }
         <div className={'statuses'}>
             <p>{`${props.Meta.StartedAt ? dayjs(props.Meta.StartedAt).format("DD.MM.YY HH:mm:ss") : '...'} - ${props.Meta.FinishedAt ? dayjs(props.Meta.FinishedAt).format("DD.MM.YY HH:mm:ss") : '...'}`}</p>
-            <i>{status}</i>
+            <i title={message}>{status}</i>
             <svg height="10" width="10" xmlns="http://www.w3.org/2000/svg">
                 <circle r="5" cx="5" cy="5" fill={color}/>
             </svg>

@@ -122,7 +122,7 @@ nav#navigation-bar {
       ul {
         list-style: none;
 
-        max-height: 30vh;
+        max-height: 40vh;
         overflow-y: scroll;
 
         li {
@@ -169,6 +169,10 @@ nav#navigation-bar {
               flex-basis: 30%;
               text-align: end;
               margin: 0 10px 0 10px;
+
+              &:hover {
+                cursor: help;
+              }
             }
 
             svg {

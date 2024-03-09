@@ -6,10 +6,15 @@
   align-items: flex-start;
   padding: 20px;
 
-  ul.agent-cards-list {
-    margin: 20px 0;
+  h1 {
+    margin: 0 0 2vh 0;
+    border-bottom: 1px solid $border-color;
+  }
 
-    width: 90vw;
+  ul.agent-cards-list {
+    margin: 10px 0;
+
+    width: 100%;
 
     list-style: none;
 
@@ -20,8 +25,13 @@
 
     gap: 10px;
 
-    .agent-card {
+    &__idle {
+      opacity: 0.75;
+    }
 
+    .agent-card {
+      flex-basis: 18%;
+      width: 350px;
 
       border: 1px solid $border-color;
       border-radius: 5px;
@@ -53,6 +63,24 @@
       }
 
       &_tags {
+        margin-top: 10px;
+
+        table {
+          width: 100%;
+
+          td.keys {
+            text-align: start;
+            opacity: 0.85;
+          }
+
+          td.values {
+            text-align: end;
+            font-weight: bold;
+          }
+        }
+      }
+
+      &_jobs {
         margin-top: 10px;
 
         table {

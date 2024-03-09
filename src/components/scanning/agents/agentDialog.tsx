@@ -17,7 +17,7 @@ import {
     Tooltip
 } from "@mui/material";
 import {IAgent, IAgentUpdateParams} from "@/entities/agents/agent.ts";
-import {Fragment, useEffect, useState} from "react";
+import {Dispatch, Fragment, SetStateAction, useEffect, useState} from "react";
 import AgentService from "@/services/agentsService.ts";
 import {AxiosError} from "axios";
 import {ApiError} from "@/http/api.ts";
@@ -30,6 +30,8 @@ import RestartAltOutlinedIcon from '@mui/icons-material/RestartAltOutlined';
 interface IAgentDialog {
     uuid: string | null
     onHide: () => void
+    isLoading: boolean
+    setIsLoading: Dispatch<SetStateAction<boolean>>
 }
 
 const defaultAgent: IAgent = {
@@ -41,6 +43,7 @@ const defaultAgent: IAgent = {
     IsHomeBound: true,
     MinPriority: JobPriority.JOB_PRIORITY_MEDIUM,
     Name: "",
+    OwnerID: 0,
     Host: "example.com",
     IPAddress: {
         IPNet: {
@@ -52,8 +55,6 @@ const defaultAgent: IAgent = {
 export default function AgentDialog(props: IAgentDialog) {
     const [originalAgent, setOriginalAgent] = useState<IAgent>(defaultAgent)
     const [agent, setAgent] = useState<IAgent>(defaultAgent)
-
-    const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const [availableUsers, setAvailableUsers] = useState<Array<IUser>>([])
 
@@ -70,7 +71,7 @@ export default function AgentDialog(props: IAgentDialog) {
 
     useEffect(() => {
         if (props.uuid) {
-            setIsLoading(true)
+            props.setIsLoading(true)
 
             AgentService.getAgentByUUID(props.uuid).then((response) => {
                 if (response.data) {
@@ -81,7 +82,7 @@ export default function AgentDialog(props: IAgentDialog) {
                 console.error(error.message)
                 toast.error("Ошибка получения данных об агенте")
             }).finally(() => {
-                setIsLoading(false)
+                props.setIsLoading(false)
             })
         } else if (props.uuid == "") {
             setOriginalAgent(defaultAgent)
@@ -109,17 +110,79 @@ export default function AgentDialog(props: IAgentDialog) {
             }
 
             AgentService.patchAgent(params).then((response) => {
-                setIsLoading(true)
+                props.setIsLoading(true)
 
                 if (response.data) {
                     setAgent(response.data)
                     setOriginalAgent(response.data)
                 }
+
+                toast.success("Агент обновлен.")
             }).catch((error: AxiosError<ApiError>) => {
                 console.error(error.message)
-                toast.error("Ошибка обновления агенте")
+
+                if (error.message === "agent is busy") {
+                    toast.error("Ошибка обновления. В данный момент агент занят.")
+                }
+
+                toast.error("Ошибка обновления агента.")
             }).finally(() => {
-                setIsLoading(false)
+                props.setIsLoading(false)
+            })
+        }
+    }
+
+    const handleDelete = () => {
+        AgentService.deleteAgentByUUID(agent.UUID).then((response) => {
+            props.setIsLoading(true)
+
+            if (response.data) {
+                setAgent(response.data)
+                setOriginalAgent(response.data)
+            }
+
+            toast.success(`Агент ${agent.Name} успешно удален.`)
+        }).catch((error: AxiosError<ApiError>) => {
+            console.error(error.message)
+
+            if (error.message === "agent is busy") {
+                toast.error("Ошибка удаления. В данный момент агент занят.")
+            }
+
+            toast.error("Ошибка удаления агента.")
+        }).finally(() => {
+            props.setIsLoading(false)
+        })
+    }
+
+    const handleCreate = () => {
+        if (agent) {
+            let params: IAgentUpdateParams = {
+                Name: agent.Name,
+                Description: agent.Description,
+                Host: agent.Host,
+                IP: agent.IPAddress.IPNet.IP,
+                IsActive: agent.IsActive,
+                IsPrivate: agent.IsPrivate,
+                IsHomeBound: agent.IsHomeBound,
+                MinPriority: agent.MinPriority,
+                OwnerID: agent.OwnerID,
+            }
+
+            AgentService.putAgent(params).then((response) => {
+                props.setIsLoading(true)
+
+                if (response.data) {
+                    setAgent(response.data)
+                    setOriginalAgent(response.data)
+                }
+
+                toast.success(`Агент ${params.Name} успешно создан.`)
+            }).catch((error: AxiosError<ApiError>) => {
+                console.error(error.message)
+                toast.error("Ошибка создания агента.")
+            }).finally(() => {
+                props.setIsLoading(false)
             })
         }
     }
@@ -145,14 +208,9 @@ export default function AgentDialog(props: IAgentDialog) {
     }
 
     return <div className={'agent-dialog'}>
-        <Backdrop
-            sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
-            open={isLoading}
-        >
-            <CircularProgress color="inherit"/>
-        </Backdrop>
+
         {
-            !isLoading && agent ? <Dialog open={props.uuid === "" || props.uuid != null}
+            !props.isLoading && agent ? <Dialog open={props.uuid === "" || props.uuid != null}
                                           fullWidth
                                           onClose={() => {
                                               setOriginalAgent(defaultAgent)
@@ -161,11 +219,17 @@ export default function AgentDialog(props: IAgentDialog) {
                 <DialogTitle>
                     {
                         agent.UUID !== "" ? <Fragment>
-                            <h4>Настройка агента</h4>
-                            <p className={'agent-uuid'}>{agent.UUID}</p>
-                        </Fragment> : <h4>Создание агента</h4>
+                            Настройка агента
+                        </Fragment> : <Fragment>
+                            Создание агента
+                        </Fragment>
                     }
-                    <p className={'agent-status'}>Статус: {getStatusValue()}</p>
+                    {
+                        agent.UUID !== "" ? <Fragment>
+                            <p className={'agent-uuid'}>{agent.UUID}</p>
+                            <p className={'agent-status'}>Статус: {getStatusValue()}</p>
+                        </Fragment> : <Fragment/>
+                    }
                 </DialogTitle>
                 <DialogContent>
                     <Grid container rowSpacing={2} columnSpacing={1}>
@@ -276,8 +340,11 @@ export default function AgentDialog(props: IAgentDialog) {
                                                 OwnerID: event.target.value as number
                                             }))
                                         }}>
-                                    {availableUsers.map((value) => {
-                                        return <MenuItem value={value.ID}>
+                                    <MenuItem value={0}>
+                                        <p className={'user-option'}>Нет владельца</p>
+                                    </MenuItem>
+                                    {availableUsers.map((value, index) => {
+                                        return <MenuItem key={index} value={value.ID}>
                                             <p className={'user-option'}>{value.FullName} <i>{value.Login}</i></p>
                                         </MenuItem>
                                     })}
@@ -339,10 +406,19 @@ export default function AgentDialog(props: IAgentDialog) {
                     {/*        </Button> :*/}
                     {/*        <Fragment/>*/}
                     {/*}*/}
-                    <Button disabled={agent.UUID === ""} color={'error'} variant={'outlined'}>Удалить</Button>
+                    {
+                        agent.UUID !== "" ?
+                            <Button onClick={handleDelete} disabled={agent.UUID === ""} color={'error'}
+                                    variant={'outlined'}>Удалить</Button> :
+                            <Fragment/>
+                    }
+
                     <Button disabled={agent.UUID === ""} startIcon={<RestartAltOutlinedIcon/>} variant={'outlined'}
                             onClick={handleReset}>Вернуть</Button>
-                    <Button variant={'outlined'} onClick={handleUpdate}>Сохранить</Button>
+                    {
+                        agent.UUID !== "" ? <Button variant={'outlined'} onClick={handleUpdate}>Сохранить</Button> :
+                            <Button color={'success'} variant={'outlined'} onClick={handleCreate}>Создать</Button>
+                    }
                 </DialogActions>
             </Dialog> : <Fragment/>
         }
