@@ -129,6 +129,10 @@ function parseHrefToBreadcrumbs(location: string): Array<ReactNode> {
                 name = "Агенты"
                 href += "/agents"
                 break
+            case "jobs":
+                name = "Задачи"
+                href += "/jobs"
+                break
             case "":
                 name = "Домашняя страница"
                 href = ""

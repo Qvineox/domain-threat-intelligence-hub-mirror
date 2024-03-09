@@ -10,6 +10,9 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import {observer} from "mobx-react-lite";
 import Store from "@/store/store.ts";
+import SmartToyRoundedIcon from '@mui/icons-material/SmartToyRounded';
+import TrackChangesRoundedIcon from '@mui/icons-material/TrackChangesRounded';
+import FormatListBulletedRoundedIcon from '@mui/icons-material/FormatListBulletedRounded';
 
 export interface RootNavigationDrawerProps {
     isOpen: boolean
@@ -53,6 +56,35 @@ function RootNavigationDrawer(props: RootNavigationDrawerProps) {
                                 <HubIcon fontSize="medium"/>
                             </ListItemIcon>
                             <ListItemText>Карта сети</ListItemText>
+                        </MenuItem>
+                    </NavLink>
+                </MenuList> : null
+            }
+            <Divider/>
+            {
+                props.store.hasAnyOfPermissionsOrAdmin([5001, 5006]) ? <MenuList dense>
+                    <NavLink to={"/scanning/scanner"} onClick={handleClose}>
+                        <MenuItem>
+                            <ListItemIcon>
+                                <TrackChangesRoundedIcon/>
+                            </ListItemIcon>
+                            <ListItemText>Сканер</ListItemText>
+                        </MenuItem>
+                    </NavLink>
+                    <NavLink to={"/scanning/jobs"} onClick={handleClose}>
+                        <MenuItem>
+                            <ListItemIcon>
+                                <FormatListBulletedRoundedIcon fontSize="medium"/>
+                            </ListItemIcon>
+                            <ListItemText>Задачи</ListItemText>
+                        </MenuItem>
+                    </NavLink>
+                    <NavLink to={"/scanning/agents"} onClick={handleClose}>
+                        <MenuItem>
+                            <ListItemIcon>
+                                <SmartToyRoundedIcon fontSize="medium"/>
+                            </ListItemIcon>
+                            <ListItemText>Агенты</ListItemText>
                         </MenuItem>
                     </NavLink>
                 </MenuList> : null
@@ -110,8 +142,6 @@ function RootNavigationDrawer(props: RootNavigationDrawerProps) {
                     </MenuItem>
                 </NavLink>
             </MenuList>
-
-
         </MenuList>
     </Drawer>
 }
