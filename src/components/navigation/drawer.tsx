@@ -9,7 +9,7 @@ import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import {observer} from "mobx-react-lite";
-import Store from "@/store/store.ts";
+import AuthStore from "@/store/authStore.ts";
 import SmartToyRoundedIcon from '@mui/icons-material/SmartToyRounded';
 import TrackChangesRoundedIcon from '@mui/icons-material/TrackChangesRounded';
 import FormatListBulletedRoundedIcon from '@mui/icons-material/FormatListBulletedRounded';
@@ -17,7 +17,7 @@ import FormatListBulletedRoundedIcon from '@mui/icons-material/FormatListBullete
 export interface RootNavigationDrawerProps {
     isOpen: boolean
     setIsOpen: (status: boolean) => void
-    store: Store
+    store: AuthStore
 }
 
 function RootNavigationDrawer(props: RootNavigationDrawerProps) {

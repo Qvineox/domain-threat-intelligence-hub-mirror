@@ -4,7 +4,7 @@ import {Fragment, useContext, useEffect} from "react";
 import {Context} from "@/context.ts";
 
 function AdminPanel() {
-    const {store} = useContext(Context)
+    const {auth} = useContext(Context)
 
     useEffect(() => {
         document.title = `${import.meta.env.VITE_TITLE_NAME} | Панель администратора`
@@ -14,11 +14,11 @@ function AdminPanel() {
         <h2>Панель управления платформой</h2>
         <nav>
             {
-                store.hasPermissionOrAdmin(2001) ?
+                auth.hasPermissionOrAdmin(2001) ?
                     <NavLink to={"/admin/users"}> / Пользователи</NavLink> : <Fragment/>
             }
             {
-                store.hasPermissionOrAdmin(6001) ?
+                auth.hasPermissionOrAdmin(6001) ?
                     <NavLink to={"/admin/configuration"}> / Система</NavLink> : <Fragment/>
             }
         </nav>

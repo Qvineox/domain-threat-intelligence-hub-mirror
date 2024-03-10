@@ -1,12 +1,16 @@
-import Store from "@/store/store.ts";
+import AuthStore from "@/store/authStore.ts";
 import {createContext} from "react";
+import QueueStore from "@/store/queueStore.ts";
 
-const store = new Store()
+const authStore = new AuthStore()
+const queueStore = new QueueStore()
 
 interface State {
-    store: Store
+    auth: AuthStore
+    queue: QueueStore
 }
 
 export const Context = createContext<State>({
-    store: store
+    auth: authStore,
+    queue: queueStore,
 })

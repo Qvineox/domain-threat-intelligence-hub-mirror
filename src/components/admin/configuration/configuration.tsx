@@ -40,7 +40,7 @@ function Configuration() {
     const [editSystemState, setEditSystemState] = useState<IDynamicConfig>(defaultDynamicConfig)
     const [isLoading, setIsLoading] = useState<boolean>(true)
 
-    const {store} = useContext(Context)
+    const {auth} = useContext(Context)
 
     useEffect(() => {
         document.title = `${import.meta.env.VITE_TITLE_NAME} | Параметры`
@@ -255,9 +255,9 @@ function Configuration() {
                     />
                     <Button sx={{marginTop: "10px"}}
                             variant={'outlined'}
-                            disabled={!store.hasPermissionOrAdmin(6002)}
+                            disabled={!auth.hasPermissionOrAdmin(6002)}
                             onClick={handleSMTPConfigUpdate}>
-                        {store.hasPermissionOrAdmin(6002) ? "Обновить" : "Недостаточно прав для изменения"}
+                        {auth.hasPermissionOrAdmin(6002) ? "Обновить" : "Недостаточно прав для изменения"}
                     </Button>
                 </div>
                 <div className="configuration_config-block">
@@ -358,9 +358,9 @@ function Configuration() {
                                size={'small'} fullWidth/>
                     <Button sx={{marginTop: "10px", marginBottom: "30px"}}
                             variant={'outlined'}
-                            disabled={!store.hasPermissionOrAdmin(6002)}
+                            disabled={!auth.hasPermissionOrAdmin(6002)}
                             onClick={handleNaumenConfigUpdate}>
-                        {store.hasPermissionOrAdmin(6002) ? "Обновить" : "Недостаточно прав для изменения"}
+                        {auth.hasPermissionOrAdmin(6002) ? "Обновить" : "Недостаточно прав для изменения"}
                     </Button>
                     <h2>Параметры заявки</h2>
                     <hr/>
@@ -452,16 +452,16 @@ function Configuration() {
                                size={'small'} fullWidth/>
                     <Button sx={{marginTop: "10px"}}
                             variant={'outlined'}
-                            disabled={!store.hasPermissionOrAdmin(6002)}
+                            disabled={!auth.hasPermissionOrAdmin(6002)}
                             onClick={handleNaumenServiceConfigUpdate}>
-                        {store.hasPermissionOrAdmin(6002) ? "Обновить" : "Недостаточно прав для изменения"}
+                        {auth.hasPermissionOrAdmin(6002) ? "Обновить" : "Недостаточно прав для изменения"}
                     </Button>
 
                 </div>
             </Fragment> : <Fragment/>
         }
         <Button onClick={handleConfigReset}
-                disabled={!store.hasPermissionOrAdmin(6003)}
+                disabled={!auth.hasPermissionOrAdmin(6003)}
                 className={'save-configuration'}
                 color={'warning'}
                 variant={'outlined'}>

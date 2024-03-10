@@ -8,7 +8,7 @@ import {Context} from "@/context.ts";
 import {useNavigate} from "react-router-dom";
 
 export default function Login() {
-    const {store} = useContext(Context)
+    const {auth} = useContext(Context)
     const navigate = useNavigate()
 
     const [username, setUsername] = useState<string>("")
@@ -26,7 +26,7 @@ export default function Login() {
     }, [username, password])
 
     const useLogin = () => {
-        store.login(username, password)
+        auth.login(username, password)
             .then(() => {
                 console.info("routing home...")
 

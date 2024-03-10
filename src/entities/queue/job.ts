@@ -1,4 +1,6 @@
-export interface IJob {
+import {Dayjs} from "dayjs";
+
+export interface IJobCreateParams {
     Type: JobType
 
     Priority: JobPriority
@@ -38,7 +40,8 @@ export enum JobPriority {
     JOB_PRIORITY_CRITICAL,
     JOB_PRIORITY_HIGH,
     JOB_PRIORITY_MEDIUM,
-    JOB_PRIORITY_LOW
+    JOB_PRIORITY_LOW,
+    JOB_PRIORITY_ANY = 99
 }
 
 export enum JobStatus {
@@ -50,8 +53,24 @@ export enum JobStatus {
     JOB_STATUS_ERROR,
     JOB_STATUS_PANIC,
     JOB_STATUS_CANCELLED,
+    JOB_STATUS_ANY = 99
 }
 
 export interface IJobUUID {
     UUID: string
+}
+
+export interface IJobSearchFilter {
+    Limit: number
+    Offset: number
+
+    Status?: JobStatus
+    Priority?: JobPriority
+    TypeIDs?: Array<JobType>
+    IsFinished?: boolean
+
+    CreatedByID?: number
+
+    CreatedAfter: Dayjs | null
+    CreatedBefore: Dayjs | null
 }

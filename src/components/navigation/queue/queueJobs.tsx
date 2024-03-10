@@ -1,7 +1,6 @@
-import {IQueueState} from "@/components/navigation/queue/queueState.tsx";
 import {Fragment} from "react";
 import {JobPriority, JobStatus, JobType} from "@/entities/queue/job.ts";
-import {IDialerJob} from "@/entities/queue/dialerJob.ts";
+import {IDialerJob, IQueueState} from "@/entities/queue/dialerJob.ts";
 import dayjs from "dayjs";
 import {NavLink} from "react-router-dom";
 
@@ -40,7 +39,9 @@ export default function QueueJobs(props: IQueueJobsProps) {
             <h2>завершенные</h2>
             <ul>
                 {props.state.latest.map((value, index) => {
-                    return <JobCardListItem key={index} {...value}/>
+                    return <NavLink key={index} to={`/scanning/job/${value.Meta.UUID}`}>
+                        <JobCardListItem {...value}/>
+                    </NavLink>
                 })}
             </ul>
         </div> : <Fragment/>
@@ -144,7 +145,7 @@ function JobCardListItem(props: IDialerJob) {
 
     return <li>
         <h4>Задача {props.Meta.UUID} <i>{priority}</i></h4>
-        <p>Сбор данных о <b>{props.Payload.Targets.length}</b> целях <b>{type}. </b><br/>{additionalData}</p>
+        <p>Сбор данных о <b>{props.Payload.Targets.length}</b> хостах <b>{type}. </b><br/>{additionalData}</p>
         {
             props.Meta.TasksLeft != undefined && props.Meta.TasksLeft > 0 ?
                 <p>{`осталось задач: ${props.Meta.TasksLeft}...`}</p> :

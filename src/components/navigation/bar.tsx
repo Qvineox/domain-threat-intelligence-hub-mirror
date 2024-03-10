@@ -13,7 +13,7 @@ interface RootNavigationBarProps {
 function RootNavigationBar(props: RootNavigationBarProps) {
     const location = useLocation();
 
-    const {store} = useContext(Context)
+    const {auth} = useContext(Context)
 
     return <nav id={"navigation-bar"}>
         <div className="navigation-bar_location">
@@ -39,12 +39,12 @@ function RootNavigationBar(props: RootNavigationBarProps) {
             </Breadcrumbs>
         </div>
         <div className="navigation-bar_queue-state">
-            {!store.isLoading && store.isLoggedIn ? <QueueState/> :
+            {!auth.isLoading && auth.hasPermissionOrAdmin(5006) ? <QueueState/> :
                 <Skeleton itemType={'text'} width={50} height={30}/>}
         </div>
         <div className="navigation-bar_current-user">
-            {!store.isLoading && store.isLoggedIn ? <NavLink to={"/profile"}>
-                {store.userData.FullName}
+            {!auth.isLoading && auth.isLoggedIn ? <NavLink to={"/profile"}>
+                {auth.userData.FullName}
             </NavLink> : <Skeleton itemType={'text'} width={50} height={30}/>}
         </div>
     </nav>
@@ -132,6 +132,10 @@ function parseHrefToBreadcrumbs(location: string): Array<ReactNode> {
             case "jobs":
                 name = "Задачи"
                 href += "/jobs"
+                break
+            case "job":
+                name = "Просмотр задачи"
+                href += "/job"
                 break
             case "":
                 name = "Домашняя страница"

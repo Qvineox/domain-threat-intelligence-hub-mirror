@@ -1,10 +1,10 @@
 import {AxiosResponse} from "axios";
 import {api} from "@/http/api.ts";
-import {IJob, IJobUUID} from "@/entities/queue/job.ts";
+import {IJobCreateParams, IJobUUID} from "@/entities/queue/job.ts";
 import {IQueuedJobs} from "@/entities/queue/dialerJob.ts";
 
 export default class QueueService {
-    static async postEnqueueJob(job: IJob): Promise<AxiosResponse<IJobUUID>> {
+    static async postEnqueueJob(job: IJobCreateParams): Promise<AxiosResponse<IJobUUID>> {
         return api.post<IJobUUID>('scanning/queue/job', job)
     }
 

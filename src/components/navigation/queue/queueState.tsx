@@ -1,90 +1,41 @@
-import {Fragment, useEffect, useState} from "react";
+import {Fragment, useContext, useState} from "react";
 import {IDialerJob} from "@/entities/queue/dialerJob.ts";
 import QueueJobs from "@/components/navigation/queue/queueJobs.tsx";
+import {Context} from "@/context.ts";
+import {observer} from "mobx-react-lite";
 
-const SOCKET_URL = (import.meta.env.VITE_WS_URL === undefined ? "" : import.meta.env.VITE_WS_URL) + '/api/' + import.meta.env.VITE_API_VERSION + '/ws'
-
-const socket = new WebSocket(`${SOCKET_URL}/queue`);
-
-export interface IQueueState {
-    queued: Array<IDialerJob>
-    sent: Array<IDialerJob>
-    latest: Array<IDialerJob>
-}
-
-export default function QueueState() {
-    const [isConnected, setIsConnected] = useState<boolean>(false)
-    const [isLoading, setIsLoading] = useState<boolean>(true)
-
-    const [queueState, setQueueState] = useState<IQueueState>({
-        queued: [],
-        sent: [],
-        latest: [],
-    })
+function QueueState() {
+    const {queue} = useContext(Context)
 
     const [isHidden, setIsHidden] = useState<boolean>(true)
 
-    useEffect(() => {
-        socket.onopen = function () {
-            setIsConnected(true)
-            setIsLoading(false)
-
-            console.log('ws: connection established');
-        };
-
-        socket.onmessage = function (event) {
-            setIsConnected(true)
-            setIsLoading(false)
-
-            setQueueState(JSON.parse(event.data) as IQueueState)
-
-            console.log('ws: message received');
-        };
-
-        socket.onclose = function () {
-            setIsConnected(false)
-            setIsLoading(false)
-
-            console.log('ws: connection closed');
-        };
-
-        socket.onerror = function (error) {
-            setIsConnected(false)
-            setIsLoading(false)
-
-            if (error instanceof ErrorEvent) {
-                console.error(`ws: error ${error.message}`);
-            }
-        };
-    }, [])
-
     return <div className={'queue-state'}>
         {
-            !isLoading && queueState ? <Fragment>
+            !queue.isLoading && queue.state ? <Fragment>
                 {
-                    isConnected ? <Fragment>
+                    queue.isConnected ? <Fragment>
                         <div onClick={() => setIsHidden(false)}
                              className={'queue-state queue-state__connected'}>
                             <p>
-                                {queueState.queued.length}
+                                {queue.state.queued.length}
                             </p>
                             <svg height="20" width="20" xmlns="http://www.w3.org/2000/svg">
-                                <circle r="5" cx="10" cy="10" fill={statusBubbleColor(queueState.queued)}/>
+                                <circle r="5" cx="10" cy="10" fill={statusBubbleColor(queue.state.queued)}/>
                             </svg>
                             <p>
-                                {queueState.sent.length}
+                                {queue.state.sent.length}
                             </p>
                             <svg height="20" width="20" xmlns="http://www.w3.org/2000/svg">
-                                <circle r="5" cx="10" cy="10" fill={statusBubbleColor(queueState.sent)}/>
+                                <circle r="5" cx="10" cy="10" fill={statusBubbleColor(queue.state.sent)}/>
                             </svg>
                             <p>
-                                {queueState.latest.length}
+                                {queue.state.latest.length}
                             </p>
                             <svg height="20" width="20" xmlns="http://www.w3.org/2000/svg">
-                                <circle r="5" cx="10" cy="10" fill={statusBubbleColor(queueState.latest)}/>
+                                <circle r="5" cx="10" cy="10" fill={statusBubbleColor(queue.state.latest)}/>
                             </svg>
                         </div>
-                        <QueueJobs state={queueState}
+                        <QueueJobs state={queue.state}
                                    hidden={isHidden}
                                    onHide={() => {
                                        setIsHidden(true)
@@ -117,3 +68,5 @@ function statusBubbleColor(jobs: Array<IDialerJob>): string {
 
     return '#fcaf53'
 }
+
+export default observer(QueueState)

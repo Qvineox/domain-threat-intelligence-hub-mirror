@@ -144,13 +144,11 @@ export default function BlacklistsViewer() {
                                 onSearch={handleSearch}
                                 resetFilter={handleReset}
         />
-        <div className={"blacklists_viewer_content"}>
-            <BlacklistTable rows={rows}
-                            onDelete={handleDelete}
-                            isLoading={isLoading}
-                            onPaginationChange={handlePaginationChange}
-            />
-        </div>
+        <BlacklistTable rows={rows}
+                        onDelete={handleDelete}
+                        isLoading={isLoading}
+                        onPaginationChange={handlePaginationChange}
+        />
     </div>
 }
 

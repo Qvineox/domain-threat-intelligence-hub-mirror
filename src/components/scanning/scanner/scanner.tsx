@@ -2,16 +2,17 @@ import {useEffect, useState} from "react";
 import {IJobTarget} from "@/entities/queue/dialerJob.ts";
 import TargetsInput from "@/components/scanning/scanner/targets/targetsInput.tsx";
 import DirectivesForm from "@/components/scanning/scanner/directives/directivesForm.tsx";
-import {IJob, JobPriority, JobType, OpenSourceProviders} from "@/entities/queue/job.ts";
+import {IJobCreateParams, JobPriority, JobType, OpenSourceProviders} from "@/entities/queue/job.ts";
 import {toast} from "react-toastify";
 import {Backdrop, CircularProgress} from "@mui/material";
 import QueueService from "@/services/queueService.ts";
 import {ApiError} from "@/http/api.ts";
 import {AxiosError} from "axios";
+import LatestJobs from "@/components/scanning/scanner/latestJobs/latestJobs.tsx";
 
 export default function Scanner() {
     const [targets, setTargets] = useState<Array<IJobTarget>>([])
-    const [jobSettings, setJobSettings] = useState<IJob>(defaultJob)
+    const [jobSettings, setJobSettings] = useState<IJobCreateParams>(defaultJob)
     const [isLoading, setIsLoading] = useState<boolean>(true)
 
     useEffect(() => {
@@ -73,10 +74,11 @@ export default function Scanner() {
                             onQueue={handleQueueJob}
                             onChange={setJobSettings}/>
         </div>
+        <LatestJobs/>
     </div>
 }
 
-const defaultJob: IJob = {
+const defaultJob: IJobCreateParams = {
     Private: false,
     UseHomeBound: false,
     Type: JobType.JOB_TYPE_OSS,

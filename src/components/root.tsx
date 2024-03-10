@@ -16,16 +16,16 @@ import RootNavigationDrawer from "@/components/navigation/drawer.tsx";
 
 
 function Root() {
-    const {store} = useContext(Context)
+    const {auth} = useContext(Context)
     const navigate = useNavigate()
 
     const [isOpen, setIsOpen] = useState<boolean>(false)
 
     useEffect(() => {
-        store.checkAuth()
+        auth.checkAuth()
             .then(() => {
                 console.info("requesting user profile")
-                store.me()
+                auth.me()
             })
             .catch((error: AxiosError<ApiError>) => {
                 console.warn(error.response?.data.ErrorMessage)
@@ -49,15 +49,15 @@ function Root() {
                 backgroundColor: 'rgba(235,237,238,0.2)',
                 zIndex: (theme) => theme.zIndex.drawer + 1
             }}
-            open={store.isLoading}
+            open={auth.isLoading}
         >
             <CircularProgress color="inherit"/>
             <p>Авторизация...</p>
         </Backdrop>
-        <RootNavigationDrawer isOpen={isOpen} store={store} setIsOpen={setIsOpen}/>
+        <RootNavigationDrawer isOpen={isOpen} store={auth} setIsOpen={setIsOpen}/>
         <RootNavigationBar setIsOpen={setIsOpen}/>
         {
-            !store.isLoading && store.isLoggedIn ? <Fragment>
+            !auth.isLoading && auth.isLoggedIn ? <Fragment>
                 <div id={"root-content-outlet"}>
                     <Outlet/>
                 </div>

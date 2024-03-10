@@ -6,7 +6,7 @@ import {IAccessToken} from "@/entities/auth/token.ts";
 import axios from "axios";
 import {API_URL} from "@/http/api.ts";
 
-export default class Store {
+export default class AuthStore {
     isLoggedIn = false
     isLoading = false
     userData = {} as IUser

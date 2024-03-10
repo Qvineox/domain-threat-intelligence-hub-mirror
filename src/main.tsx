@@ -24,6 +24,8 @@ import Scanning from "@/components/scanning/scanning.tsx";
 import Scanner from "@/components/scanning/scanner/scanner.tsx";
 import JobsViewer from "@/components/scanning/jobs/jobsViewer.tsx";
 import AgentsViewer from "@/components/scanning/agents/agentsViewer.tsx";
+import JobViewer from "@/components/scanning/jobs/job/jobViewer.tsx";
+import {createTheme, ThemeProvider} from "@mui/material";
 
 const router = createBrowserRouter([
     {
@@ -97,6 +99,10 @@ const router = createBrowserRouter([
                         element: <JobsViewer/>,
                     },
                     {
+                        path: "/scanning/job/:uuid",
+                        element: <JobViewer/>,
+                    },
+                    {
                         path: "/scanning/agents",
                         element: <AgentsViewer/>,
                     },
@@ -128,21 +134,32 @@ const router = createBrowserRouter([
     },
 ]);
 
+const theme = createTheme({
+    typography: {
+        allVariants: {
+            fontFamily: 'Bahnschrift',
+            textTransform: 'none',
+        },
+    },
+});
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <Fragment>
-        <RouterProvider router={router}/>
-        <ToastContainer position="bottom-left"
-                        autoClose={1300}
-                        hideProgressBar={false}
-                        newestOnTop
-                        closeOnClick
-                        rtl={false}
-                        pauseOnFocusLoss
-                        draggable
-                        pauseOnHover
-                        theme="light"
-                        transition={Slide}
-        />
+        <ThemeProvider theme={theme}>
+            <RouterProvider router={router}/>
+            <ToastContainer position="bottom-left"
+                            autoClose={1300}
+                            hideProgressBar={false}
+                            newestOnTop
+                            closeOnClick
+                            rtl={false}
+                            pauseOnFocusLoss
+                            draggable
+                            pauseOnHover
+                            theme="light"
+                            transition={Slide}
+            />
+        </ThemeProvider>
     </Fragment>
 )
 

@@ -10,14 +10,14 @@ import {
     TextField, Tooltip
 } from "@mui/material";
 import {Dispatch, Fragment, SetStateAction} from "react";
-import {IJob, JobPriority, JobType, OpenSourceProviders} from "@/entities/queue/job.ts";
+import {IJobCreateParams, JobPriority, JobType, OpenSourceProviders} from "@/entities/queue/job.ts";
 import {toast} from "react-toastify";
 import PlayArrowOutlinedIcon from '@mui/icons-material/PlayArrowOutlined';
 import SaveAsOutlinedIcon from '@mui/icons-material/SaveAsOutlined';
 
 interface IDirectivesFormProps {
-    jobSettings: IJob
-    onChange: Dispatch<SetStateAction<IJob>>
+    jobSettings: IJobCreateParams
+    onChange: Dispatch<SetStateAction<IJobCreateParams>>
     onQueue: () => void
 }
 

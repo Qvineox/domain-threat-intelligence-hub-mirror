@@ -14,6 +14,12 @@ export interface IQueuedJobs {
     sent: Array<IDialerJob>
 }
 
+export interface IQueueState {
+    queued: Array<IDialerJob>
+    sent: Array<IDialerJob>
+    latest: Array<IDialerJob>
+}
+
 export interface IDirectives {
     DNSDirectives?: IDNSDirectives
     DiscoveryDirectives?: IDiscoveryDirectives

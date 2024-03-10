@@ -16,16 +16,84 @@
 
 }
 
-.job-card {
-
-}
-
 .jobs-viewer {
+  height: 100%;
 
+  display: flex;
+  flex-direction: row;
+
+  &_filter {
+    width: 20vw;
+    min-width: 250px;
+    max-width: 400px;
+
+    height: 100%;
+
+    padding: 0 15px;
+
+    border-right: 1px solid #1b263b;
+
+    &_form {
+      display: flex;
+      gap: 15px;
+
+      hr {
+        border: 1px solid #1b263b;
+        margin: 10px 0;
+        width: 60%;
+        align-self: center;
+      }
+
+      p.user-option {
+        i {
+          font-size: 0.85rem;
+          opacity: 0.55;
+        }
+      }
+    }
+
+    .search-buttons {
+      display: flex;
+      flex-direction: row;
+    }
+  }
 }
 
 .job-viewer {
 
+}
+
+.job-card {
+  width: 100%;
+  border: 1px solid $border-color;
+  border-radius: 10px;
+  padding: 5px 10px 0 10px;
+
+  min-height: 75px;
+
+  transition: .25s ease-in-out;
+
+  h5 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  p {
+    font-size: 0.85rem;
+  }
+
+  i {
+    font-size: 0.85rem;
+    border-bottom: 0.5px solid $border-color;
+    margin: 2rem 0;
+  }
+
+  &:hover {
+    scale: 1.025;
+    box-shadow: #1b263b;
+    cursor: pointer;
+  }
 }
 
 .scanner {
@@ -155,5 +223,14 @@
     }
   }
 
+  .latest-jobs {
+    margin: 4vh 0;
+    width: 90vw;
 
+    h3 {
+      font-size: 1.4rem;
+      border-bottom: 1px solid $border-color;
+      margin-bottom: 1rem;
+    }
+  }
 }

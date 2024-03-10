@@ -11,7 +11,7 @@ import {Context} from "@/context.ts";
 import {observer} from "mobx-react-lite";
 
 function Users() {
-    const {store} = useContext(Context)
+    const {auth} = useContext(Context)
 
     const [users, setUsers] = useState<Array<IUser>>([])
     const [selectedUserID, setSelectedUserID] = useState<number | null>(null)
@@ -22,7 +22,7 @@ function Users() {
     }, []);
 
     const onEdit = (id: number) => {
-        if (store.hasPermissionOrAdmin(2003)) {
+        if (auth.hasPermissionOrAdmin(2003)) {
             setSelectedUserID(id)
         } else {
             toast.info("Для редактирования недостаточно прав")
@@ -60,7 +60,7 @@ function Users() {
                         return <UserCard key={index} user={v} onEdit={onEdit}/>
                     })}
                     {
-                        store.hasPermissionOrAdmin(2002) ?
+                        auth.hasPermissionOrAdmin(2002) ?
                             <li className="new-user" onClick={handleNewUser}>
                                 <PersonAddIcon/>
                             </li> : <Fragment/>
