@@ -40,6 +40,9 @@ export default function AgentCard(props: IAgentCardProps) {
             break
         case JobPriority.JOB_PRIORITY_LOW:
             priority = "низкий"
+            break
+        default:
+            priority = "неизвестно"
     }
 
     return <li onClick={() => props.onClick(props.agent.UUID)} className={'agent-card'}>
