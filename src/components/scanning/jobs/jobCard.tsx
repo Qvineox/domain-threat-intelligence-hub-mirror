@@ -70,7 +70,7 @@ export default function JobCard(props: IJobCard) {
             </svg>
         </h5>
         <p>Поиск <b>{type}</b>.<br/>{additionalData}</p>
-        <i>Хостов: {props.data.Payload.Targets.length}.</i>
+        <i>Хостов: {props.data.Payload.Targets.length}</i>
         {
             props.data.Meta.TasksLeft != undefined && props.data.Meta.TasksLeft > 0 ?
                 <p>{`осталось задач: ${props.data.Meta.TasksLeft}...`}</p> :

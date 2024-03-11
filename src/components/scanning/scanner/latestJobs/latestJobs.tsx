@@ -17,7 +17,14 @@ function LatestJobs() {
                 {
                     queue.state.latest.length > 0 ? <Fragment>
                         {queue.state.latest.map((value, index) => {
-                            return <Grid key={index} item xs={2}>
+                            return <Grid key={index} item xs={3}>
+                                <NavLink to={`/scanning/job/${value.Meta.UUID}`}>
+                                    <JobCard data={value}/>
+                                </NavLink>
+                            </Grid>
+                        })}
+                        {queue.state.sent.map((value, index) => {
+                            return <Grid key={index} item xs={3}>
                                 <NavLink to={`/scanning/job/${value.Meta.UUID}`}>
                                     <JobCard data={value}/>
                                 </NavLink>

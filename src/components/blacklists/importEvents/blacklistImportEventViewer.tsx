@@ -24,7 +24,7 @@ export default function BlacklistImportEventViewer() {
         if (id) {
             setIsLoading(true)
 
-            const eventID = parseInt(id)
+                const eventID = parseInt(id)
 
             if (isNaN(eventID)) {
                 toast.error("Ошибка параметров запроса")

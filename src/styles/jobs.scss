@@ -1,0 +1,56 @@
+@import "colors";
+@import "root";
+
+.job-viewer {
+  width: 100%;
+
+  &_meta {
+    padding: 2vh 2vw;
+    height: 5vh;
+
+    border-bottom: 2px solid $border-color;
+
+    .info-block {
+      display: flex;
+      flex-direction: row;
+      justify-items: center;
+      align-content: space-evenly;
+
+      gap: 1rem;
+
+      flex-wrap: nowrap;
+
+      p {
+        font-size: 0.85rem;
+        opacity: 0.75;
+        font-style: italic;
+      }
+    }
+
+    p {
+      opacity: 0.75;
+    }
+  }
+
+  &_content {
+    display: flex;
+    flex-direction: row;
+    height: 86vh;
+
+    &_nodes {
+      flex-basis: 27vw;
+      height: 100%;
+      padding: 5px;
+
+      border-right: 2px solid $border-color;
+    }
+
+    &_node-data {
+      flex-basis: 80vw;
+      height: 100%;
+      padding: 5px;
+    }
+  }
+
+
+}

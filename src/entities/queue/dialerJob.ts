@@ -1,12 +1,14 @@
 import {JobPriority, JobStatus, JobType, OpenSourceProviders} from "@/entities/queue/job.ts";
 import {IUser} from "@/entities/users/user.ts";
 import {Dayjs} from "dayjs";
+import {INetworkNodeScan} from "@/entities/nodes/networkNodeScan.ts";
 
 export interface IDialerJob {
     DequeuedTimes: number
     Directives: IDirectives
-    Meta: Meta
-    Payload: Payload
+    Meta: IJobMeta
+    Payload: IJobPayload
+    NodeScans?: Array<INetworkNodeScan>
 }
 
 export interface IQueuedJobs {
@@ -63,7 +65,7 @@ export interface IWhoIsDirectives {
     Timings: ITimings
 }
 
-export interface Meta {
+export interface IJobMeta {
     UUID: string
     Type: JobType
 
@@ -84,7 +86,7 @@ export interface Meta {
     Error?: string
 }
 
-export interface Payload {
+export interface IJobPayload {
     Exceptions: IJobTarget[]
     Targets: IJobTarget[]
 }
