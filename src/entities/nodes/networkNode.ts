@@ -12,3 +12,5 @@ export interface INetworkNode {
     UpdatedAt: Dayjs
     DeletedAt: Dayjs
 }
+
+

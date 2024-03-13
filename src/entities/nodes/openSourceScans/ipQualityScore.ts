@@ -1,0 +1,110 @@
+
+export interface IIPQualityScorePrivacyScan {
+    ASN: number
+    ISP: string
+    tor: boolean
+    vpn: boolean
+    city: string
+    host: string
+    proxy: boolean
+    mobile: boolean
+    region: string
+    browser: string
+    message: string
+    success: boolean
+    latitude: number
+    timezone: string
+    zip_code: string
+    longitude: number
+    is_crawler: boolean
+    request_id: string
+    fraud_score: number
+    country_code: string
+    device_brand: string
+    device_model: string
+    organization: string
+    recent_abuse: boolean
+    operating_system: string
+    transaction_details: {
+        bin_type: string
+        risk_score: number
+        bin_country: string
+        risk_factors: any
+        bin_bank_name: string
+        user_activity: string
+        risky_username: boolean
+        is_prepaid_card: boolean
+        leaked_user_data: boolean
+        fraudulent_behavior: boolean
+        risky_billing_phone: boolean
+        valid_billing_email: boolean
+        valid_billing_phone: boolean
+        ShippingPhoneCarrier: string
+        leaked_billing_email: boolean
+        risky_shipping_phone: boolean
+        valid_shipping_email: boolean
+        valid_shipping_phone: boolean
+        billing_phone_carrier: string
+        billing_phone_country: string
+        leaked_shipping_email: boolean
+        valid_billing_address: boolean
+        shipping_phone_country: string
+        valid_shipping_address: boolean
+        billing_phone_line_type: string
+        shipping_phone_line_type: string
+        email_name_identity_match: string
+        phone_name_identity_match: string
+        billing_phone_country_code: string
+        phone_email_identity_match: string
+        name_address_identity_match: string
+        shipping_phone_country_code: string
+        address_email_identity_match: string
+        phone_address_identity_match: string
+    }
+}
+
+export interface IIPQualityScoreMaliciousScan {
+    adult: boolean
+    domain: string
+    server: string
+    unsafe: boolean
+    malware: boolean
+    message: string
+    parking: boolean
+    success: boolean
+    category: string
+    phishing: boolean
+    spamming: boolean
+    a_records: string[]
+    dns_valid: boolean
+    final_url: string
+    page_size: number
+    risky_tld: boolean
+    domain_age: DomainAge
+    ip_address: string
+    mx_records: string[]
+    ns_records: string[]
+    page_title: string
+    redirected: boolean
+    request_id: string
+    risk_score: number
+    spf_record: boolean
+    suspicious: boolean
+    domain_rank: number
+    root_domain: string
+    status_code: number
+    content_type: string
+    country_code: string
+    dmarc_record: boolean
+    domain_trust: string
+    technologies: string[]
+    language_code: string
+    hosted_content: boolean
+    short_link_redirect: boolean
+}
+
+export interface DomainAge {
+    iso: string
+    human: string
+    timestamp: number
+}

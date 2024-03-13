@@ -11,12 +11,14 @@ import "@/styles/jobs.scss"
 import JobNodeScans from "@/components/scanning/jobs/job/jobNodeScans.tsx";
 import JobNodeScanData from "@/components/scanning/jobs/job/jobNodeScanData.tsx";
 import {INetworkNodeScan} from "@/entities/nodes/networkNodeScan.ts";
+import JobSummary from "@/components/scanning/jobs/job/jobSummary.tsx";
 
 export default function JobViewer() {
     const {uuid} = useParams();
 
     const [jobData, setJobData] = useState<IDialerJob>()
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    // const [selectedNodeScanUUID, setSelectedNodeScanUUID] = useState<string>()
     const [selectedNodeScan, setSelectedNodeScan] = useState<INetworkNodeScan>()
 
     useEffect(() => {
@@ -44,6 +46,17 @@ export default function JobViewer() {
         }
     }, [uuid]);
 
+    const handleScanSelect = (id: number) => {
+        if (jobData?.NodeScans) {
+            let index = jobData.NodeScans.findIndex((value) => {
+                return value.ID === id
+            })
+
+            if (index !== -1) {
+                setSelectedNodeScan(jobData?.NodeScans[index])
+            }
+        }
+    }
 
     return <div className={'job-viewer'}>
         <Backdrop
@@ -54,10 +67,12 @@ export default function JobViewer() {
         </Backdrop>
         {jobData ? <Fragment>
             <JobMetadata {...jobData.Meta} />
+            <JobSummary nodes={jobData.NodeScans ? jobData.NodeScans : []} isLoading={isLoading}
+                        setSelectedNodeScanID={handleScanSelect}/>
             <div className={'job-viewer_content'}>
                 <JobNodeScans nodes={jobData.NodeScans ? jobData.NodeScans : []} isLoading={isLoading}
-                              setSelectedNodeScan={setSelectedNodeScan}/>
-                <JobNodeScanData data={selectedNodeScan}/>
+                              setSelectedNodeScanID={handleScanSelect}/>
+                <JobNodeScanData scans={selectedNodeScan ? [selectedNodeScan] : []}/>
             </div>
         </Fragment> : <Fragment/>}
     </div>

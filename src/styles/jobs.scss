@@ -4,6 +4,10 @@
 .job-viewer {
   width: 100%;
 
+  display: flex;
+  flex-direction: column;
+  gap: 5px 0;
+
   &_meta {
     padding: 2vh 2vw;
     height: 5vh;
@@ -32,23 +36,98 @@
     }
   }
 
+  &_summary {
+    padding: 10px 20px 15px 20px;
+    border-bottom: 2px solid $border-color;
+
+    ul {
+      list-style: none;
+
+      display: flex;
+      flex-direction: column;
+
+      align-content: flex-start;
+      align-items: flex-end;
+
+      flex-wrap: wrap;
+
+      max-height: 15vh;
+
+      gap: 5px 10px;
+
+      li.host-summary {
+        flex-basis: 25%;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        gap: 0 5px;
+
+        padding: 2px 2px 2px 6px;
+        border-radius: 5px;
+        border: 1px solid $border-color;
+
+        p {
+          display: inline-block;
+
+          &.risk-score {
+            padding: 2px 6px;
+            border-radius: 4px;
+
+            &_danger {
+              background-color: $color-danger;
+              color: whitesmoke;
+            }
+
+            &_warning {
+              background-color: $color-warning;
+              color: #1b263b;
+            }
+
+            &_neutral {
+              background-color: $color-empty;
+              color: #1b263b;
+            }
+
+            &_good {
+              background-color: #4cd964;
+              color: #1b263b;
+            }
+
+            &_proven {
+              background-color: $color-success;
+              color: whitesmoke;
+            }
+          }
+        }
+
+        transition: .25s ease-in-out;
+        &:hover {
+          cursor: pointer;
+          transform: scale(1.05);
+        }
+      }
+    }
+  }
+
   &_content {
     display: flex;
     flex-direction: row;
-    height: 86vh;
 
     &_nodes {
-      flex-basis: 27vw;
-      height: 100%;
-      padding: 5px;
+      flex-basis: 30vw;
+      padding: 5px 10px;
 
       border-right: 2px solid $border-color;
     }
 
     &_node-data {
-      flex-basis: 80vw;
-      height: 100%;
-      padding: 5px;
+      flex-basis: 70vw;
+      padding: 5px 10px;
+
+      display: flex;
+      flex-direction: column;
     }
   }
 
