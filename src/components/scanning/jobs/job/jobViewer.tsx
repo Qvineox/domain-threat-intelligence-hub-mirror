@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {useParams, useSearchParams} from "react-router-dom";
 import {Fragment, useEffect, useState} from "react";
 import {Backdrop, CircularProgress} from "@mui/material";
 import JobsService from "@/services/jobsService.ts";
@@ -14,7 +14,8 @@ import {INetworkNodeScan} from "@/entities/nodes/networkNodeScan.ts";
 import JobSummary from "@/components/scanning/jobs/job/jobSummary.tsx";
 
 export default function JobViewer() {
-    const {uuid} = useParams();
+    const {job_uuid} = useParams();
+    let [searchParams, setSearchParams] = useSearchParams();
 
     const [jobData, setJobData] = useState<IDialerJob>()
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -22,14 +23,31 @@ export default function JobViewer() {
     const [selectedNodeScans, setSelectedNodeScans] = useState<Array<INetworkNodeScan>>([])
 
     useEffect(() => {
-        document.title = `${import.meta.env.VITE_TITLE_NAME} | Задача ${uuid}`
-    }, [uuid])
+        document.title = `${import.meta.env.VITE_TITLE_NAME} | Задача ${job_uuid}`
+    }, [job_uuid])
 
     useEffect(() => {
-        if (uuid) {
+        if (!isLoading) {
+            const scanID = searchParams.get("scan_id")
+            if (scanID != null && jobData?.NodeScans) {
+                const id = parseInt(scanID)
+
+                const index = jobData.NodeScans.findIndex((value) => {
+                    return value.ID === id
+                })
+
+                if (index !== -1) {
+                    setSelectedNodeScans([jobData?.NodeScans[index]])
+                }
+            }
+        }
+    }, [searchParams, isLoading])
+
+    useEffect(() => {
+        if (job_uuid) {
             setIsLoading(true)
 
-            JobsService.getJobByUUID(uuid).then((response) => {
+            JobsService.getJobByUUID(job_uuid).then((response) => {
                 if (response.data) {
                     setJobData(response.data)
                 }
@@ -44,18 +62,16 @@ export default function JobViewer() {
                 setIsLoading(false)
             })
         }
-    }, [uuid]);
+    }, [job_uuid]);
 
     const handleScanSelect = (id: number) => {
-        if (jobData?.NodeScans) {
-            const index = jobData.NodeScans.findIndex((value) => {
-                return value.ID === id
-            })
-
-            if (index !== -1) {
-                setSelectedNodeScans([jobData?.NodeScans[index]])
-            }
+        if (id == 0) {
+            return
         }
+
+        let params = new URLSearchParams
+        params.set("scan_id", id.toString())
+        setSearchParams(params)
     }
 
     const handleNodeSelect = (uuid: string) => {
@@ -65,6 +81,8 @@ export default function JobViewer() {
             }).sort((a, b) => {
                 return b.RiskScore - a.RiskScore
             }))
+
+            setSearchParams()
         }
     }
 

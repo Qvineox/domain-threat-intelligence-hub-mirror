@@ -3,6 +3,7 @@ import {getRiskScoreColorClass, INetworkNodeScan} from "@/entities/nodes/network
 import {IShodanScanData} from "@/entities/nodes/openSourceScans/shodan";
 import {Fragment} from "react";
 import {NavLink} from "react-router-dom";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 export function ShodanIPScan(props: INetworkNodeScan) {
     const data = props.Data as IShodanScanData
@@ -12,8 +13,8 @@ export function ShodanIPScan(props: INetworkNodeScan) {
             <div className="scan-item_metadata">
                 <div className="scan-item_metadata_id">
                     <h3>Сканирование IP Shodan
-                        <NavLink to={`https://www.shodan.io/host/${props.Node?.Identity}`}>
-                            ссылка
+                        <NavLink target="_blank" rel="noopener noreferrer" to={`https://www.shodan.io/host/${props.Node?.Identity}`}>
+                            <OpenInNewIcon/>
                         </NavLink>
                     </h3>
                     <h4>{props.NodeUUID}</h4>

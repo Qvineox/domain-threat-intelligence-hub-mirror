@@ -2,6 +2,8 @@ import {Grid} from "@mui/material";
 import {getRiskScoreColorClass, INetworkNodeScan} from "@/entities/nodes/networkNodeScan.ts";
 import {ICrowdSecIPScanData} from "@/entities/nodes/openSourceScans/crowdSec.ts";
 import {Fragment} from "react";
+import {NavLink} from "react-router-dom";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 export function CrowdSecIPScan(props: INetworkNodeScan) {
     const data = props.Data as ICrowdSecIPScanData
@@ -10,7 +12,12 @@ export function CrowdSecIPScan(props: INetworkNodeScan) {
         <div className={'scan-item scan-item__vt'}>
             <div className="scan-item_metadata">
                 <div className="scan-item_metadata_id">
-                    <h3>Сканирование IP CrowdSec CTI</h3>
+                    <h3>Сканирование IP CrowdSec CTI
+                        <NavLink target="_blank" rel="noopener noreferrer"
+                                 to={`https://app.crowdsec.net/cti/${props.Node?.Identity}`}>
+                            <OpenInNewIcon/>
+                        </NavLink>
+                    </h3>
                     <h4>{props.NodeUUID}</h4>
                     <p>{data.ip}</p>
                 </div>

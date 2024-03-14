@@ -178,6 +178,7 @@ export default function JobsTable(props: IJobsTableProps) {
                 },
             },
         }}
+        onRowClick={(row) => navigate(`/scanning/job/${row.id}`)}
         pageSizeOptions={[50, 100]}
         onPaginationModelChange={(model) => {
             props.onPaginationChange(model.pageSize, model.page)

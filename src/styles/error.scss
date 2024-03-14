@@ -1,0 +1,21 @@
+.error-page {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 30vh 0;
+
+  h2 {
+    margin: 5vh 0;
+  }
+
+  p {
+    margin: 5vh 0;
+    padding: 20px;
+
+    background-color: #f8caca;
+    border-radius: 10px;
+  }
+}

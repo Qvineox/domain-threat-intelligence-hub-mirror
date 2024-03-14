@@ -2,6 +2,8 @@ import {IVirusTotalDomainScanData, IVirusTotalIPScanData} from "@/entities/nodes
 import {Grid} from "@mui/material";
 import {getRiskScoreColorClass, INetworkNodeScan} from "@/entities/nodes/networkNodeScan.ts";
 import {Fragment} from "react";
+import {NavLink} from "react-router-dom";
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
 export function VirusTotalIPScan(props: INetworkNodeScan) {
     const data = props.Data as IVirusTotalIPScanData
@@ -13,7 +15,11 @@ export function VirusTotalIPScan(props: INetworkNodeScan) {
         <div className={'scan-item scan-item__vt'}>
             <div className="scan-item_metadata">
                 <div className="scan-item_metadata_id">
-                    <h3>Сканирование IP VirusTotal</h3>
+                    <h3>Сканирование IP VirusTotal
+                        <NavLink target="_blank" rel="noopener noreferrer" to={`https://www.virustotal.com/gui/ip-address/${props.Node?.Identity}`}>
+                            <OpenInNewIcon/>
+                        </NavLink>
+                    </h3>
                     <h4>{props.NodeUUID}</h4>
                     <p>{data.id}</p>
                 </div>
@@ -59,16 +65,25 @@ export function VirusTotalIPScan(props: INetworkNodeScan) {
                             <tbody>
                             <tr>
                                 <td>Вредоносный</td>
-                                <td>{data.attributes.last_analysis_stats.malicious}</td>
+                                <td>{data.attributes.last_analysis_stats.malicious > 0 ?
+                                    <b className={'warning'}>{data.attributes.last_analysis_stats.malicious}</b> :
+                                    data.attributes.last_analysis_stats.malicious}
+                                </td>
                             </tr>
                             <tr>
                                 <td>Подозрительный</td>
-                                <td>{data.attributes.last_analysis_stats.suspicious}</td>
+                                <td>{data.attributes.last_analysis_stats.suspicious > 0 ?
+                                    <b className={'warning'}>{data.attributes.last_analysis_stats.suspicious}</b> :
+                                    data.attributes.last_analysis_stats.suspicious}
+                                </td>
                             </tr>
                             <tr className="break"></tr>
                             <tr>
                                 <td>Безопасный</td>
-                                <td>{data.attributes.last_analysis_stats.harmless}</td>
+                                <td>{data.attributes.last_analysis_stats.harmless > 0 ?
+                                    <b className={'safe'}>{data.attributes.last_analysis_stats.harmless}</b> :
+                                    data.attributes.last_analysis_stats.harmless}
+                                </td>
                             </tr>
                             <tr className="break"></tr>
                             <tr>
@@ -133,7 +148,11 @@ export function VirusTotalDomainScan(props: INetworkNodeScan) {
         <div className={'scan-item scan-item__vt'}>
             <div className="scan-item_metadata">
                 <div className="scan-item_metadata_id">
-                    <h3>Сканирование домена VirusTotal</h3>
+                    <h3>Сканирование домена VirusTotal
+                        <NavLink target="_blank" rel="noopener noreferrer" to={`https://www.virustotal.com/gui/domain/${props.Node?.Identity}`}>
+                            <OpenInNewIcon/>
+                        </NavLink>
+                    </h3>
                     <h4>{props.NodeUUID}</h4>
                     <p>{data.id}</p>
                 </div>
@@ -144,7 +163,7 @@ export function VirusTotalDomainScan(props: INetworkNodeScan) {
             </div>
             <div className="scan-item_content">
                 <Grid container spacing={4}>
-                    <Grid item xs={4}>
+                    <Grid item xs={3}>
                         <p><b>Инфо</b></p>
                         <table>
                             <tbody>
@@ -204,16 +223,25 @@ export function VirusTotalDomainScan(props: INetworkNodeScan) {
                             <tbody>
                             <tr>
                                 <td>Вредоносный</td>
-                                <td>{data.attributes.last_analysis_stats.malicious}</td>
+                                <td>{data.attributes.last_analysis_stats.malicious > 0 ?
+                                    <b className={'warning'}>{data.attributes.last_analysis_stats.malicious}</b> :
+                                    data.attributes.last_analysis_stats.malicious}
+                                </td>
                             </tr>
                             <tr>
                                 <td>Подозрительный</td>
-                                <td>{data.attributes.last_analysis_stats.suspicious}</td>
+                                <td>{data.attributes.last_analysis_stats.suspicious > 0 ?
+                                    <b className={'warning'}>{data.attributes.last_analysis_stats.suspicious}</b> :
+                                    data.attributes.last_analysis_stats.suspicious}
+                                </td>
                             </tr>
                             <tr className="break"></tr>
                             <tr>
                                 <td>Безопасный</td>
-                                <td>{data.attributes.last_analysis_stats.harmless}</td>
+                                <td>{data.attributes.last_analysis_stats.harmless > 0 ?
+                                    <b className={'safe'}>{data.attributes.last_analysis_stats.harmless}</b> :
+                                    data.attributes.last_analysis_stats.harmless}
+                                </td>
                             </tr>
                             <tr className="break"></tr>
                             <tr>
@@ -229,7 +257,8 @@ export function VirusTotalDomainScan(props: INetworkNodeScan) {
                             </tr>
                             <tr>
                                 <td>Репутация сообщества</td>
-                                <td>{data.attributes.reputation}</td>
+                                <td>{data.attributes.reputation < 0 ?
+                                    <b className={'warning'}>{data.attributes.reputation}</b> : data.attributes.reputation}</td>
                             </tr>
                             <tr className="break"></tr>
                             <tr>

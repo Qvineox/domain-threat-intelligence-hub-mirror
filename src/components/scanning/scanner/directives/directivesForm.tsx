@@ -9,11 +9,13 @@ import {
     Switch,
     TextField, Tooltip
 } from "@mui/material";
-import {Dispatch, Fragment, SetStateAction} from "react";
+import {Dispatch, Fragment, SetStateAction, useContext} from "react";
 import {IJobCreateParams, JobPriority, JobType, OpenSourceProviders} from "@/entities/queue/job.ts";
 import {toast} from "react-toastify";
 import PlayArrowOutlinedIcon from '@mui/icons-material/PlayArrowOutlined';
 import SaveAsOutlinedIcon from '@mui/icons-material/SaveAsOutlined';
+import {Context} from "@/context.ts";
+import {observer} from "mobx-react-lite";
 
 interface IDirectivesFormProps {
     jobSettings: IJobCreateParams
@@ -21,7 +23,9 @@ interface IDirectivesFormProps {
     onQueue: () => void
 }
 
-export default function DirectivesForm(props: IDirectivesFormProps) {
+function DirectivesForm(props: IDirectivesFormProps) {
+    const {auth} = useContext(Context)
+
     const handleSettingsSave = () => {
         localStorage.setItem("latest_job_settings", JSON.stringify(props.jobSettings))
 
@@ -154,12 +158,16 @@ export default function DirectivesForm(props: IDirectivesFormProps) {
                      title={"Будут использованы в том числе агенты, находящиеся в домашней сети. " +
                          "Могут находиться за NAT. Используйте данную функцию с осторожностью."}
                      placement="bottom">
-                <FormControlLabel control={<Switch onChange={(event) => {
-                    props.onChange((prevState) => ({
-                        ...prevState,
-                        UseHomeBound: event.target.checked
-                    }))
-                }} checked={props.jobSettings.UseHomeBound}/>} label="Использовать домашние агенты"/>
+                <FormControlLabel
+                    control={<Switch onChange={(event) => {
+                        props.onChange((prevState) => ({
+                            ...prevState,
+                            UseHomeBound: event.target.checked
+                        }))
+                    }}
+                                     checked={props.jobSettings.UseHomeBound}
+                                     disabled={!auth.hasPermissionOrAdmin(5004)}/>}
+                    label="Использовать домашние агенты"/>
             </Tooltip>
             <Tooltip className={'hint-tooltip'}
                      title={"Будут использованы только Ваши персональные агенты. " +
@@ -203,7 +211,9 @@ export default function DirectivesForm(props: IDirectivesFormProps) {
                 </div> : <Fragment/>
         }
         <ButtonGroup fullWidth variant={'outlined'}>
-            <Button disabled={props.jobSettings.Targets.length === 0} onClick={props.onQueue}
+            <Button title={!auth.hasPermissionOrAdmin(5001) ? "Недостаточно прав." : ""}
+                    disabled={props.jobSettings.Targets.length === 0 && auth.hasPermissionOrAdmin(5001)}
+                    onClick={props.onQueue}
                     endIcon={<PlayArrowOutlinedIcon/>}>
                 Запуск
             </Button>
@@ -213,3 +223,5 @@ export default function DirectivesForm(props: IDirectivesFormProps) {
         </ButtonGroup>
     </div>
 }
+
+export default observer(DirectivesForm)

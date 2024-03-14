@@ -26,6 +26,7 @@ import JobsViewer from "@/components/scanning/jobs/jobsViewer.tsx";
 import AgentsViewer from "@/components/scanning/agents/agentsViewer.tsx";
 import JobViewer from "@/components/scanning/jobs/job/jobViewer.tsx";
 import {createTheme, ThemeProvider} from "@mui/material";
+import ErrorBoundary from "@/components/error/errorBoundary.tsx";
 
 const router = createBrowserRouter([
     {
@@ -39,6 +40,7 @@ const router = createBrowserRouter([
     {
         path: "/",
         element: <Root/>,
+        errorElement: <ErrorBoundary/>,
         children: [
             {
                 path: "/",
@@ -99,7 +101,7 @@ const router = createBrowserRouter([
                         element: <JobsViewer/>,
                     },
                     {
-                        path: "/scanning/job/:uuid",
+                        path: "/scanning/job/:job_uuid",
                         element: <JobViewer/>,
                     },
                     {

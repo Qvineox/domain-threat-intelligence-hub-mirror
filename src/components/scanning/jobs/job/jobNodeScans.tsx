@@ -48,10 +48,7 @@ export default function JobNodeScans(props: IJobNodesProps) {
                     }
                 }
 
-                return <Chip size={"small"}
-                             label={params.row?.RiskScore}
-                             variant={"outlined"}
-                             color={color}/>;
+                return <Chip size={"small"} label={params.row?.RiskScore} variant={"outlined"} color={color}/>;
             },
 
         },

@@ -79,17 +79,19 @@ export default function JobsViewer() {
     }
 
     const handleDelete = (uuid: string) => {
-        setIsLoading(true)
+        if (confirm(`Удалить задачу ${uuid}?`)) {
+            setIsLoading(true)
 
-        JobsService.deleteJobByUUID(uuid).then(() => {
-            toast.info("Задача удалена")
-        }).catch((response) => {
-            console.error(response)
-            toast.error("Ошибка удаления!")
-        }).finally(() => {
-            setIsLoading(false)
-            handleSearch(true)
-        })
+            JobsService.deleteJobByUUID(uuid).then(() => {
+                toast.info("Задача удалена")
+            }).catch((response) => {
+                console.error(response)
+                toast.error("Ошибка удаления!")
+            }).finally(() => {
+                setIsLoading(false)
+                handleSearch(true)
+            })
+        }
     }
 
     const handleReset = () => {
