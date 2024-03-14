@@ -13,6 +13,7 @@ export function IPQualityScoreIPScan(props: INetworkNodeScan) {
         <div className={'scan-item scan-item__ipqs'}>
             <div className="scan-item_metadata">
                 <div className="scan-item_metadata_id">
+                    <h3>Сканирование IP IPQualityScore</h3>
                     <h4>{props.NodeUUID}</h4>
                     <p>{data.host}</p>
                 </div>
@@ -23,7 +24,7 @@ export function IPQualityScoreIPScan(props: INetworkNodeScan) {
             </div>
             <div className="scan-item_content">
                 <Grid container spacing={4}>
-                    <Grid item xs={3}>
+                    <Grid item xs={4}>
                         <p><b>Инфо</b></p>
                         <table>
                             <tbody>
@@ -64,7 +65,7 @@ export function IPQualityScoreIPScan(props: INetworkNodeScan) {
                             </tbody>
                         </table>
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={4}>
                         <p><b>Приватность узла</b></p>
                         <table>
                             <tbody>
@@ -87,7 +88,7 @@ export function IPQualityScoreIPScan(props: INetworkNodeScan) {
                             </tbody>
                         </table>
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={4}>
                         <p><b>Оценка узла</b></p>
                         <table>
                             <tbody>
@@ -115,6 +116,7 @@ export function IPQualityScoreURLScan(props: INetworkNodeScan) {
         <div className={'scan-item scan-item__ipqs'}>
             <div className="scan-item_metadata">
                 <div className="scan-item_metadata_id">
+                    <h3>Сканирование URL IPQualityScore</h3>
                     <h4>{props.NodeUUID}</h4>
                     <p>{data.domain} <i>({data.final_url})</i></p>
                     <br/>
@@ -181,7 +183,7 @@ export function IPQualityScoreURLScan(props: INetworkNodeScan) {
                             </tbody>
                         </table>
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={4}>
                         <p><b>Активность</b></p>
                         <table>
                             <tbody>
@@ -209,7 +211,7 @@ export function IPQualityScoreURLScan(props: INetworkNodeScan) {
                             </tbody>
                         </table>
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={4}>
                         <p><b>Оценка узла</b></p>
                         <table>
                             <tbody>

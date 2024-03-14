@@ -13,6 +13,7 @@ export function VirusTotalIPScan(props: INetworkNodeScan) {
         <div className={'scan-item scan-item__vt'}>
             <div className="scan-item_metadata">
                 <div className="scan-item_metadata_id">
+                    <h3>Сканирование IP VirusTotal</h3>
                     <h4>{props.NodeUUID}</h4>
                     <p>{data.id}</p>
                 </div>
@@ -23,7 +24,7 @@ export function VirusTotalIPScan(props: INetworkNodeScan) {
             </div>
             <div className="scan-item_content">
                 <Grid container spacing={4}>
-                    <Grid item xs={3}>
+                    <Grid item xs={4}>
                         <p><b>Инфо</b></p>
                         <table>
                             <tbody>
@@ -98,7 +99,7 @@ export function VirusTotalIPScan(props: INetworkNodeScan) {
                         </table>
                     </Grid>
                     {
-                        detections.length > 0 ? <Grid item xs={6}>
+                        detections.length > 0 ? <Grid item xs={5}>
                             <p><b>Обнаружения</b></p>
                             <ul className={'detections'}>
                                 {detections.map((value, index) => {
@@ -107,7 +108,7 @@ export function VirusTotalIPScan(props: INetworkNodeScan) {
                                     </li>
                                 })}
                             </ul>
-                        </Grid> : <Grid item xs={6}>
+                        </Grid> : <Grid item xs={5}>
                             <p><b>Обнаружения</b></p>
                             <i>Срабатываний не найдено</i>
                         </Grid>
@@ -132,6 +133,7 @@ export function VirusTotalDomainScan(props: INetworkNodeScan) {
         <div className={'scan-item scan-item__vt'}>
             <div className="scan-item_metadata">
                 <div className="scan-item_metadata_id">
+                    <h3>Сканирование домена VirusTotal</h3>
                     <h4>{props.NodeUUID}</h4>
                     <p>{data.id}</p>
                 </div>
@@ -142,7 +144,7 @@ export function VirusTotalDomainScan(props: INetworkNodeScan) {
             </div>
             <div className="scan-item_content">
                 <Grid container spacing={4}>
-                    <Grid item xs={3}>
+                    <Grid item xs={4}>
                         <p><b>Инфо</b></p>
                         <table>
                             <tbody>

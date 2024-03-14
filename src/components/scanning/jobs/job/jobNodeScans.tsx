@@ -30,7 +30,7 @@ export default function JobNodeScans(props: IJobNodesProps) {
             align: "right",
             valueGetter: (params) => params.row?.RiskScore,
             renderCell: (params) => {
-                let color = "default"
+                let color: "default" | "success" | "error" | "warning" | "primary" | "secondary" | "info" = "default"
 
                 if (params.row.RiskScore == undefined) {
                     return <Fragment/>
@@ -48,7 +48,6 @@ export default function JobNodeScans(props: IJobNodesProps) {
                     }
                 }
 
-                // @ts-ignore
                 return <Chip size={"small"}
                              label={params.row?.RiskScore}
                              variant={"outlined"}

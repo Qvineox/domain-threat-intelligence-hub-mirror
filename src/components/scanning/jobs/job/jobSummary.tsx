@@ -2,16 +2,16 @@ import {getRiskScoreColorClass, INetworkNodeScan} from "@/entities/nodes/network
 
 interface IJobSummaryProps {
     nodes: Array<INetworkNodeScan>
-    setSelectedNodeScanID: (id: number) => void
+    setSelectedNodeUUID: (uuid: string) => void
     isLoading: boolean
 }
 
 export default function JobSummary(props: IJobSummaryProps) {
-    let summaryMap = new Map<string, INetworkNodeScanSummaryCard>();
+    const summaryMap = new Map<string, INetworkNodeScanSummaryCard>();
     // let summary = Array<INetworkNodeScanSummaryCard>;
 
     props.nodes.forEach((value) => {
-        let s = summaryMap.get(value.NodeUUID)
+        const s = summaryMap.get(value.NodeUUID)
         if (s) {
             s.scores.push(value.RiskScore)
             s.scanIDs.push(value.ID)
@@ -20,6 +20,7 @@ export default function JobSummary(props: IJobSummaryProps) {
         } else {
             summaryMap.set(value.NodeUUID, {
                 id: value.ID,
+                uuid: value.NodeUUID,
                 identity: value.Node ? value.Node.Identity : "???",
                 scanIDs: [value.ID],
                 scores: [value.RiskScore]
@@ -31,7 +32,7 @@ export default function JobSummary(props: IJobSummaryProps) {
         <ul>
             {Array.from(summaryMap.values()).map((value, index) => {
                 return <li onClick={() => {
-                    props.setSelectedNodeScanID(value.id)
+                    props.setSelectedNodeUUID(value.uuid)
                 }} key={index} className={'host-summary'}>
                     <p className={'identity'}>{value.identity.slice(0, 25)}</p>
                     <p className={`risk-score risk-score_${getRiskScoreColorClass(Math.max(...value.scores))}`}>
@@ -47,6 +48,7 @@ export default function JobSummary(props: IJobSummaryProps) {
 
 interface INetworkNodeScanSummaryCard {
     id: number
+    uuid: string
     identity: string
     scanIDs: Array<number>
     scores: Array<number>

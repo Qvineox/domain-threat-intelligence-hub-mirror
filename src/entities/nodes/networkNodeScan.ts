@@ -8,11 +8,16 @@ export interface INetworkNodeScan {
     Node?: INetworkNode
     TypeID: NetworkNodeScanType
     JobUUID?: string
-    Data?: any
     RiskScore: number
     CreatedAt: Dayjs
     UpdatedAt: Dayjs
     DeletedAt?: Dayjs
+
+    Data?: unknown
+}
+
+export interface INetworkNodeScanError {
+    error_message: string
 }
 
 export enum NetworkNodeScanType {
@@ -35,10 +40,10 @@ export function getRiskScoreColorClass(score: number) {
     } else if (score > 75) {
         scanScoreClass = 'danger'
     } else {
-        if (score >= 50) {
-            scanScoreClass = 'neutral'
-        } else {
+        if (score >= 40) {
             scanScoreClass = 'warning'
+        } else {
+            scanScoreClass = 'neutral'
         }
     }
 

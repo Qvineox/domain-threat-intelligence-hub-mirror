@@ -19,11 +19,11 @@ export default function JobViewer() {
     const [jobData, setJobData] = useState<IDialerJob>()
     const [isLoading, setIsLoading] = useState<boolean>(false)
     // const [selectedNodeScanUUID, setSelectedNodeScanUUID] = useState<string>()
-    const [selectedNodeScan, setSelectedNodeScan] = useState<INetworkNodeScan>()
+    const [selectedNodeScans, setSelectedNodeScans] = useState<Array<INetworkNodeScan>>([])
 
     useEffect(() => {
         document.title = `${import.meta.env.VITE_TITLE_NAME} | Задача ${uuid}`
-    }, [])
+    }, [uuid])
 
     useEffect(() => {
         if (uuid) {
@@ -48,13 +48,23 @@ export default function JobViewer() {
 
     const handleScanSelect = (id: number) => {
         if (jobData?.NodeScans) {
-            let index = jobData.NodeScans.findIndex((value) => {
+            const index = jobData.NodeScans.findIndex((value) => {
                 return value.ID === id
             })
 
             if (index !== -1) {
-                setSelectedNodeScan(jobData?.NodeScans[index])
+                setSelectedNodeScans([jobData?.NodeScans[index]])
             }
+        }
+    }
+
+    const handleNodeSelect = (uuid: string) => {
+        if (jobData?.NodeScans) {
+            setSelectedNodeScans(jobData.NodeScans.filter((value) => {
+                return value.NodeUUID === uuid && value.IsComplete
+            }).sort((a, b) => {
+                return b.RiskScore - a.RiskScore
+            }))
         }
     }
 
@@ -68,11 +78,11 @@ export default function JobViewer() {
         {jobData ? <Fragment>
             <JobMetadata {...jobData.Meta} />
             <JobSummary nodes={jobData.NodeScans ? jobData.NodeScans : []} isLoading={isLoading}
-                        setSelectedNodeScanID={handleScanSelect}/>
+                        setSelectedNodeUUID={handleNodeSelect}/>
             <div className={'job-viewer_content'}>
                 <JobNodeScans nodes={jobData.NodeScans ? jobData.NodeScans : []} isLoading={isLoading}
                               setSelectedNodeScanID={handleScanSelect}/>
-                <JobNodeScanData scans={selectedNodeScan ? [selectedNodeScan] : []}/>
+                <JobNodeScanData scans={selectedNodeScans}/>
             </div>
         </Fragment> : <Fragment/>}
     </div>

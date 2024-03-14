@@ -3,14 +3,20 @@ import {Grid} from "@mui/material";
 import {VirusTotalDomainScan, VirusTotalIPScan} from "@/components/scanning/jobs/job/scans/virusTotal.tsx";
 import "@/styles/scans.scss"
 import {IPQualityScoreIPScan, IPQualityScoreURLScan} from "@/components/scanning/jobs/job/scans/ipQualityScore.tsx";
+import {CrowdSecIPScan} from "@/components/scanning/jobs/job/scans/crowdSec.tsx";
+import ErrorScan from "@/components/scanning/jobs/job/scans/error.tsx";
+import {ShodanIPScan} from "./scans/shodan";
 
 interface IJobNodeScanData {
     scans?: Array<INetworkNodeScan>
 }
 
 export default function JobNodeScanData(props: IJobNodeScanData) {
+    const cards = props.scans?.map((value) => {
+        if (!value.IsComplete) {
+            return <ErrorScan {...value}/>
+        }
 
-    let cards = props.scans?.map((value) => {
         switch (value.TypeID) {
             case NetworkNodeScanType.SCAN_TYPE_OSS_VT_DOMAIN:
                 return <VirusTotalDomainScan {...value}/>
@@ -25,9 +31,9 @@ export default function JobNodeScanData(props: IJobNodeScanData) {
             case NetworkNodeScanType.SCAN_TYPE_OSS_IPQS_EMAIL:
                 break;
             case NetworkNodeScanType.SCAN_TYPE_OSS_SHODAN_IP:
-                break;
+                return <ShodanIPScan {...value}/>
             case NetworkNodeScanType.SCAN_TYPE_OSS_CS_IP:
-                break;
+                return <CrowdSecIPScan {...value}/>
             case NetworkNodeScanType.SCAN_TYPE_OSS_IPWH_IP:
                 break;
             case NetworkNodeScanType.SCAN_TYPE_OSS_VT_IP:
