@@ -7,6 +7,11 @@ import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 export function CrowdSecIPScan(props: INetworkNodeScan) {
     const data = props.Data as ICrowdSecIPScanData
+    const countries: Array<string> = []
+
+    data.target_countries.forEach(((value, key) => {
+        countries.push(`${key} (${value})`)
+    }))
 
     return <Grid item xs={12}>
         <div className={'scan-item scan-item__vt'}>
@@ -95,6 +100,18 @@ export function CrowdSecIPScan(props: INetworkNodeScan) {
                                             </tr>
                                         })}
                                     </Fragment> : <Fragment/>}
+                                    {data.classifications && data.classifications.classifications.length > 0 ?
+                                        <Fragment>
+                                            <tr>
+                                                <td colSpan={2}><i>классификация</i></td>
+                                            </tr>
+                                            {data.classifications.classifications.map((value, index) => {
+                                                return <tr title={value.description} key={index}>
+                                                    <td>{value.name}</td>
+                                                    <td>{value.label}</td>
+                                                </tr>
+                                            })}
+                                        </Fragment> : <Fragment/>}
                                     </tbody>
                                 </table>
                             </Grid> : <Fragment/>
@@ -162,6 +179,16 @@ export function CrowdSecIPScan(props: INetworkNodeScan) {
                                 <td>Общая оценка</td>
                                 <td>{data.scores.last_month.total}</td>
                             </tr>
+                            <tr>
+                                <td colSpan={2}><i>регион активности</i></td>
+                            </tr>
+                            {
+                                countries.length > 0 ? countries.map((value) => {
+                                    return <tr>
+                                        <td colSpan={2}>{value}</td>
+                                    </tr>
+                                }) : <Fragment/>
+                            }
                             </tbody>
                         </table>
                     </Grid>

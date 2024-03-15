@@ -35,10 +35,11 @@ export interface ICrowdSecIPScanData {
     classifications: Classifications
     background_noise: string
     mitre_techniques: Detail[]
-    target_countries: TargetCountries
     ip_range_24_score: number
     background_noise_score: number
     ip_range_24_reputation: string
+
+    target_countries: Map<string, number>
 }
 
 export interface Detail {
@@ -71,10 +72,6 @@ export interface History {
 }
 
 export interface Classifications {
-    classifications: string[]
-    false_positives: string[]
-}
-
-export interface TargetCountries {
-    US: number
+    classifications: Detail[]
+    false_positives: Detail[]
 }
