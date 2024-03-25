@@ -14,6 +14,8 @@ export function CrowdSecIPScan(props: INetworkNodeScan) {
         data.target_countries?.forEach(((value, key) => {
             countries.push(`${key} (${value})`)
         }))
+    } catch (e) {
+        console.error(e)
     }
 
     return <Grid item xs={12}>
