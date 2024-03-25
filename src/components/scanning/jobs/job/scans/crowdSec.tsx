@@ -9,9 +9,12 @@ export function CrowdSecIPScan(props: INetworkNodeScan) {
     const data = props.Data as ICrowdSecIPScanData
     const countries: Array<string> = []
 
-    data.target_countries.forEach(((value, key) => {
-        countries.push(`${key} (${value})`)
-    }))
+    // todo: remove this
+    try {
+        data.target_countries?.forEach(((value, key) => {
+            countries.push(`${key} (${value})`)
+        }))
+    }
 
     return <Grid item xs={12}>
         <div className={'scan-item scan-item__vt'}>

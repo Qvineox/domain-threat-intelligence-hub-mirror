@@ -39,7 +39,7 @@ export interface ICrowdSecIPScanData {
     background_noise_score: number
     ip_range_24_reputation: string
 
-    target_countries: Map<string, number>
+    target_countries?: Map<string, number>
 }
 
 export interface Detail {
