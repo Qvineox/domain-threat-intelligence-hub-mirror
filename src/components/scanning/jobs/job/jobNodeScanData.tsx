@@ -6,6 +6,8 @@ import {IPQualityScoreIPScan, IPQualityScoreURLScan} from "@/components/scanning
 import {CrowdSecIPScan} from "@/components/scanning/jobs/job/scans/crowdSec.tsx";
 import ErrorScan from "@/components/scanning/jobs/job/scans/error.tsx";
 import {ShodanIPScan} from "./scans/shodan";
+import {CriminalIPScan} from "@/components/scanning/jobs/job/scans/criminalIP.tsx";
+import {IPInfoScan} from "@/components/scanning/jobs/job/scans/ipInfo.tsx";
 
 interface IJobNodeScanData {
     scans?: Array<INetworkNodeScan>
@@ -34,8 +36,12 @@ export default function JobNodeScanData(props: IJobNodeScanData) {
                 return <ShodanIPScan {...value}/>
             case NetworkNodeScanType.SCAN_TYPE_OSS_CS_IP:
                 return <CrowdSecIPScan {...value}/>
+            case NetworkNodeScanType.SCAN_TYPE_OSS_INFO_IP:
+                return <IPInfoScan {...value}/>
             case NetworkNodeScanType.SCAN_TYPE_OSS_IPWH_IP:
                 break;
+            case NetworkNodeScanType.SCAN_TYPE_OSS_CRIMINAL_IP:
+                return <CriminalIPScan {...value}/>;
             case NetworkNodeScanType.SCAN_TYPE_OSS_VT_IP:
                 return <VirusTotalIPScan {...value}/>
         }

@@ -5,7 +5,7 @@ import JobsService from "@/services/jobsService.ts";
 import {AxiosError} from "axios";
 import {ApiError} from "@/http/api.ts";
 import {toast} from "react-toastify";
-import {IDialerJob} from "@/entities/queue/dialerJob.ts";
+import {IJob} from "@/entities/queue/dialerJob.ts";
 import JobMetadata from "@/components/scanning/jobs/job/jobMetadata.tsx";
 import "@/styles/jobs.scss"
 import JobNodeScans from "@/components/scanning/jobs/job/jobNodeScans.tsx";
@@ -17,7 +17,7 @@ export default function JobViewer() {
     const {job_uuid} = useParams();
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const [jobData, setJobData] = useState<IDialerJob>()
+    const [jobData, setJobData] = useState<IJob>()
     const [isLoading, setIsLoading] = useState<boolean>(false)
     // const [selectedNodeScanUUID, setSelectedNodeScanUUID] = useState<string>()
     const [selectedNodeScans, setSelectedNodeScans] = useState<Array<INetworkNodeScan>>([])
@@ -49,7 +49,7 @@ export default function JobViewer() {
 
             JobsService.getJobByUUID(job_uuid).then((response) => {
                 if (response.data) {
-                    setJobData(response.data.Job)
+                    setJobData(response.data)
                 }
             }).catch((error: AxiosError<ApiError>) => {
                 console.error(error)
@@ -87,21 +87,23 @@ export default function JobViewer() {
     }
 
     return <div className={'job-viewer'}>
-        <Backdrop
+        {isLoading ? <Backdrop
             sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
             open={isLoading}
         >
             <CircularProgress color="inherit"/>
-        </Backdrop>
-        {jobData ? <Fragment>
-            <JobMetadata {...jobData.Meta} />
-            <JobSummary nodes={jobData.NodeScans ? jobData.NodeScans : []} isLoading={isLoading}
-                        setSelectedNodeUUID={handleNodeSelect}/>
-            <div className={'job-viewer_content'}>
-                <JobNodeScans nodes={jobData.NodeScans ? jobData.NodeScans : []} isLoading={isLoading}
-                              setSelectedNodeScanID={handleScanSelect}/>
-                <JobNodeScanData scans={selectedNodeScans}/>
-            </div>
-        </Fragment> : <Fragment/>}
+        </Backdrop> : <Fragment>
+            {jobData ? <Fragment>
+                <JobMetadata {...jobData.Meta} />
+                <JobSummary nodes={jobData.NodeScans ? jobData.NodeScans : []} isLoading={isLoading}
+                            setSelectedNodeUUID={handleNodeSelect}/>
+                <div className={'job-viewer_content'}>
+                    <JobNodeScans nodes={jobData.NodeScans ? jobData.NodeScans : []} isLoading={isLoading}
+                                  setSelectedNodeScanID={handleScanSelect}/>
+                    <JobNodeScanData scans={selectedNodeScans}/>
+                </div>
+            </Fragment> : <Fragment/>}
+        </Fragment>}
+
     </div>
 }

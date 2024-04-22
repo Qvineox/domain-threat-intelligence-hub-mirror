@@ -101,6 +101,10 @@ const router = createBrowserRouter([
                         element: <JobsViewer/>,
                     },
                     {
+                        path: "/scanning/job",
+                        element: <Navigate to="/scanning/jobs" replace/>,
+                    },
+                    {
                         path: "/scanning/job/:job_uuid",
                         element: <JobViewer/>,
                     },

@@ -4,10 +4,6 @@ import {Dayjs} from "dayjs";
 import {INetworkNodeScan} from "@/entities/nodes/networkNodeScan.ts";
 
 export interface IJob {
-    Job: IDialerJob
-}
-
-export interface IDialerJob {
     DequeuedTimes: number
     Directives: IDirectives
     Meta: IJobMeta
@@ -16,14 +12,14 @@ export interface IDialerJob {
 }
 
 export interface IQueuedJobs {
-    queued: Array<IDialerJob>
-    sent: Array<IDialerJob>
+    queued: Array<IJob>
+    sent: Array<IJob>
 }
 
 export interface IQueueState {
-    queued: Array<IDialerJob>
-    sent: Array<IDialerJob>
-    latest: Array<IDialerJob>
+    queued: Array<IJob>
+    sent: Array<IJob>
+    latest: Array<IJob>
 }
 
 export interface IDirectives {
