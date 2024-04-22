@@ -1,7 +1,7 @@
 import {AxiosResponse} from "axios";
 import {api} from "@/http/api.ts";
 import {IJobSearchFilter, JobPriority, JobStatus} from "@/entities/queue/job.ts";
-import {IDialerJob} from "@/entities/queue/dialerJob.ts";
+import {IDialerJob, IJob} from "@/entities/queue/dialerJob.ts";
 
 export default class JobsService {
     static async getJobsByFilter(filter: IJobSearchFilter): Promise<AxiosResponse<Array<IDialerJob>>> {
@@ -20,8 +20,8 @@ export default class JobsService {
         })
     }
 
-    static async getJobByUUID(uuid: string): Promise<AxiosResponse<IDialerJob>> {
-        return api.get<IDialerJob>(`jobs/job/${uuid}`)
+    static async getJobByUUID(uuid: string): Promise<AxiosResponse<IJob>> {
+        return api.get<IJob>(`jobs/job/${uuid}`)
     }
 
     static async deleteJobByUUID(uuid: string): Promise<AxiosResponse> {

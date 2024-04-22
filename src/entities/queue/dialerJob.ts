@@ -3,6 +3,10 @@ import {IUser} from "@/entities/users/user.ts";
 import {Dayjs} from "dayjs";
 import {INetworkNodeScan} from "@/entities/nodes/networkNodeScan.ts";
 
+export interface IJob {
+    Job: IDialerJob
+}
+
 export interface IDialerJob {
     DequeuedTimes: number
     Directives: IDirectives

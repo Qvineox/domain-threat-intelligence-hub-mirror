@@ -79,6 +79,14 @@ export default function JobNodeScans(props: IJobNodesProps) {
                         return "CS (IP)"
                     case NetworkNodeScanType.SCAN_TYPE_OSS_SHODAN_IP:
                         return "SHD (IP)"
+                    case NetworkNodeScanType.SCAN_TYPE_OSS_IPWH_IP:
+                        return "IPWHO (IP)"
+                    case NetworkNodeScanType.SCAN_TYPE_OSS_CRIMINAL_IP:
+                        return "CRIM (IP)"
+                    case NetworkNodeScanType.SCAN_TYPE_OSS_CRIMINAL_DOMAIN:
+                        return "CRIM (DOMAIN)"
+                    case NetworkNodeScanType.SCAN_TYPE_OSS_INFO_IP:
+                        return "INFO (IP)"
                     default:
                         return "Неизвестно"
                 }

@@ -15,7 +15,7 @@ import JobSummary from "@/components/scanning/jobs/job/jobSummary.tsx";
 
 export default function JobViewer() {
     const {job_uuid} = useParams();
-    let [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const [jobData, setJobData] = useState<IDialerJob>()
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -49,7 +49,7 @@ export default function JobViewer() {
 
             JobsService.getJobByUUID(job_uuid).then((response) => {
                 if (response.data) {
-                    setJobData(response.data)
+                    setJobData(response.data.Job)
                 }
             }).catch((error: AxiosError<ApiError>) => {
                 console.error(error)
@@ -69,7 +69,7 @@ export default function JobViewer() {
             return
         }
 
-        let params = new URLSearchParams
+        const params = new URLSearchParams
         params.set("scan_id", id.toString())
         setSearchParams(params)
     }
