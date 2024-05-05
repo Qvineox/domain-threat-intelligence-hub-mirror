@@ -5,7 +5,7 @@ import JobsService from "@/services/jobsService.ts";
 import {AxiosError} from "axios";
 import {ApiError} from "@/http/api.ts";
 import {toast} from "react-toastify";
-import {IJob} from "@/entities/queue/dialerJob.ts";
+import {ICompleteJob} from "@/entities/queue/dialerJob.ts";
 import JobMetadata from "@/components/scanning/jobs/job/jobMetadata.tsx";
 import "@/styles/jobs.scss"
 import JobNodeScans from "@/components/scanning/jobs/job/jobNodeScans.tsx";
@@ -17,7 +17,7 @@ export default function JobViewer() {
     const {job_uuid} = useParams();
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const [jobData, setJobData] = useState<IJob>()
+    const [jobData, setJobData] = useState<ICompleteJob>()
     const [isLoading, setIsLoading] = useState<boolean>(false)
     // const [selectedNodeScanUUID, setSelectedNodeScanUUID] = useState<string>()
     const [selectedNodeScans, setSelectedNodeScans] = useState<Array<INetworkNodeScan>>([])
@@ -29,15 +29,15 @@ export default function JobViewer() {
     useEffect(() => {
         if (!isLoading) {
             const scanID = searchParams.get("scan_id")
-            if (scanID != null && jobData?.NodeScans) {
+            if (scanID != null && jobData?.Job.NodeScans) {
                 const id = parseInt(scanID)
 
-                const index = jobData.NodeScans.findIndex((value) => {
+                const index = jobData.Job.NodeScans.findIndex((value) => {
                     return value.ID === id
                 })
 
                 if (index !== -1) {
-                    setSelectedNodeScans([jobData?.NodeScans[index]])
+                    setSelectedNodeScans([jobData?.Job.NodeScans[index]])
                 }
             }
         }
@@ -75,8 +75,8 @@ export default function JobViewer() {
     }
 
     const handleNodeSelect = (uuid: string) => {
-        if (jobData?.NodeScans) {
-            setSelectedNodeScans(jobData.NodeScans.filter((value) => {
+        if (jobData?.Job.NodeScans) {
+            setSelectedNodeScans(jobData.Job.NodeScans.filter((value) => {
                 return value.NodeUUID === uuid && value.IsComplete
             }).sort((a, b) => {
                 return b.RiskScore - a.RiskScore
@@ -94,11 +94,14 @@ export default function JobViewer() {
             <CircularProgress color="inherit"/>
         </Backdrop> : <Fragment>
             {jobData ? <Fragment>
-                <JobMetadata {...jobData.Meta} />
-                <JobSummary nodes={jobData.NodeScans ? jobData.NodeScans : []} isLoading={isLoading}
-                            setSelectedNodeUUID={handleNodeSelect}/>
+                <div className={'job-viewer_header'}>
+                    <JobMetadata {...jobData.Job.Meta} />
+                    <JobSummary nodes={jobData.Job.NodeScans ? jobData.Job.NodeScans : []} isLoading={isLoading}
+                                setSelectedNodeUUID={handleNodeSelect}/>
+                </div>
+
                 <div className={'job-viewer_content'}>
-                    <JobNodeScans nodes={jobData.NodeScans ? jobData.NodeScans : []} isLoading={isLoading}
+                    <JobNodeScans nodes={jobData.Job.NodeScans ? jobData.Job.NodeScans : []} isLoading={isLoading}
                                   setSelectedNodeScanID={handleScanSelect}/>
                     <JobNodeScanData scans={selectedNodeScans}/>
                 </div>

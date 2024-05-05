@@ -6,7 +6,7 @@ import {toast} from "react-toastify";
 import JobsService from "@/services/jobsService.ts";
 import JobsViewerFilter from "@/components/scanning/jobs/jobsViewerFilter.tsx";
 import JobsTable from "@/components/scanning/jobs/jobsTable.tsx";
-import {IDialerJob} from "@/entities/queue/dialerJob.ts";
+import {IJob} from "@/entities/queue/dialerJob.ts";
 
 const defaultFilter: IJobSearchFilter = {
     Limit: 100,
@@ -23,7 +23,7 @@ export default function JobsViewer() {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [filter, setFilter] = useState<IJobSearchFilter>(getFilterFromSearchParams(searchParams))
-    const [rows, setRows] = useState<Array<IDialerJob>>([])
+    const [rows, setRows] = useState<Array<IJob>>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
 
     useEffect(() => {

@@ -34,6 +34,8 @@ export enum NetworkNodeScanType {
     SCAN_TYPE_OSS_CRIMINAL_IP = 601,
     SCAN_TYPE_OSS_CRIMINAL_DOMAIN = 602,
     SCAN_TYPE_OSS_INFO_IP = 701,
+    SCAN_TYPE_OSS_IP_API_IP = 801,
+    SCAN_TYPE_OSS_IP_API_DOMAIN = 802,
 }
 
 export function getRiskScoreColorClass(score: number) {

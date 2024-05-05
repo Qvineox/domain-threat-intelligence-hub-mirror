@@ -4,7 +4,7 @@ import {Grid} from "@mui/material";
 import dayjs from "dayjs";
 
 export default function JobMetadata(props: IJobMeta) {
-    return <div className={'job-viewer_meta'}>
+    return <div className={'job-viewer_header_meta'}>
         <Grid container rowSpacing={2}>
             <Grid item xs={4}>
                 <h2>{props.UUID}</h2>

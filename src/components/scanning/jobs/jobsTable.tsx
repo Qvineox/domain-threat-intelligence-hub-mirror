@@ -1,13 +1,13 @@
 import {JobPriority, JobStatus, JobType} from "@/entities/queue/job.ts";
 import {DataGrid, GridActionsCellItem, GridColDef} from "@mui/x-data-grid";
 import dayjs from "dayjs";
-import {IDialerJob} from "@/entities/queue/dialerJob.ts";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import {useNavigate} from "react-router-dom";
+import {IJob} from "@/entities/queue/dialerJob.ts";
 
 interface IJobsTableProps {
-    rows: Array<IDialerJob>
+    rows: Array<IJob>
     isLoading: boolean
     onDelete: (uuid: string) => void
     onPaginationChange: (size: number, page: number) => void
@@ -170,7 +170,7 @@ export default function JobsTable(props: IJobsTableProps) {
         rowHeight={42}
         loading={props.isLoading}
         columns={columns}
-        getRowId={(row: IDialerJob) => row.Meta.UUID}
+        getRowId={(row: IJob) => row.Meta.UUID}
         initialState={{
             pagination: {
                 paginationModel: {

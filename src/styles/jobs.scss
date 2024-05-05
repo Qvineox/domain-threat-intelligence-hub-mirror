@@ -8,71 +8,102 @@
   flex-direction: column;
   gap: 5px 0;
 
-  &_meta {
-    padding: 2vh 2vw;
-    height: 5vh;
+  &_header {
+    position: fixed;
+    width: 100%;
 
-    white-space: nowrap;
+    display: flex;
+    flex-direction: column;
 
-    border-bottom: 2px solid $border-color;
+    background-color: white;
 
-    h2, p {
-      overflow: hidden;
-    }
+    z-index: 999;
 
-    .info-block {
-      display: flex;
-      flex-direction: row;
-      justify-items: center;
-      align-content: space-evenly;
+    &_meta {
+      width: 100%;
 
-      gap: 1rem;
+      padding: 2vh 2vw;
+      margin-bottom: 10px;
+      height: 5vh;
 
-      flex-wrap: nowrap;
+      white-space: nowrap;
+
+      h2, p {
+        overflow: hidden;
+      }
+
+      .info-block {
+        display: flex;
+        flex-direction: row;
+        justify-items: center;
+        align-content: space-evenly;
+
+        gap: 1rem;
+
+        flex-wrap: nowrap;
+
+        p {
+          font-size: 0.85rem;
+          opacity: 0.75;
+          font-style: italic;
+        }
+      }
 
       p {
-        font-size: 0.85rem;
         opacity: 0.75;
-        font-style: italic;
       }
     }
 
-    p {
-      opacity: 0.75;
-    }
-  }
+    &_summary {
+      height: 10vh;
 
-  &_summary {
-    padding: 10px 20px 15px 20px;
-    border-bottom: 2px solid $border-color;
+      margin: 0 1vw;
+      z-index: 1;
 
-    ul {
-      list-style: none;
+      padding: 10px 0;
 
-      display: flex;
-      flex-direction: column;
+      border-top: 2px solid $border-color;
+      border-bottom: 2px solid $border-color;
 
-      align-content: flex-start;
-      align-items: flex-end;
+      &::-webkit-scrollbar {
+        display: none;
+      }
 
-      flex-wrap: wrap;
+      overflow-y: scroll;
 
-      max-height: 15vh;
-
-      gap: 5px 10px;
-
-      li.host-summary {
-        flex-basis: 25%;
-
+      .host-summary {
         display: flex;
-        flex-direction: row;
-        align-items: center;
+        flex-direction: column;
+        align-items: flex-start;
 
-        gap: 0 5px;
-
-        padding: 2px 2px 2px 6px;
-        border-radius: 5px;
+        background-color: white;
         border: 1px solid $border-color;
+        border-radius: 5px;
+
+        padding: 5px 10px !important;
+
+        &_info {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+
+          width: 100%;
+
+          p.identity {
+            max-width: 75%;
+            overflow: hidden;
+          }
+        }
+
+        &_issues {
+          margin-top: 4px;
+
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          gap: 2px;
+        }
 
         p {
           display: inline-block;
@@ -119,18 +150,27 @@
   }
 
   &_content {
+    margin-top: 22vh;
+
     display: flex;
     flex-direction: row;
 
     &_nodes {
-      flex-basis: 30vw;
+      position: fixed;
+
+      width: 24vw;
       padding: 5px 10px;
+
+      margin-left: 1vh;
 
       //border-right: 2px solid $border-color;
     }
 
     &_node-data {
-      flex-basis: 70vw;
+      position: sticky;
+      left: 26vw;
+
+      flex-basis: 73vw;
       padding: 5px 10px;
 
       display: flex;

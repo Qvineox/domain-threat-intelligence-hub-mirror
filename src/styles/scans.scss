@@ -22,6 +22,9 @@
     flex-direction: row;
     justify-content: space-between;
 
+    padding-bottom: 10px;
+    border-bottom: 1px solid $border-color;
+
     &_id {
       h3 {
         margin-bottom: 10px;

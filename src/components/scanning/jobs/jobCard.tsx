@@ -1,9 +1,9 @@
-import {IDialerJob} from "@/entities/queue/dialerJob.ts";
+import {IJob} from "@/entities/queue/dialerJob.ts";
 import {Fragment} from "react";
 import {JobStatus, JobType} from "@/entities/queue/job.ts";
 
 interface IJobCard {
-    data: IDialerJob
+    data: IJob
 }
 
 export default function JobCard(props: IJobCard) {

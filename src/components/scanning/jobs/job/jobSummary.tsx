@@ -1,4 +1,5 @@
 import {getRiskScoreColorClass, INetworkNodeScan} from "@/entities/nodes/networkNodeScan.ts";
+import {Grid} from "@mui/material";
 
 interface IJobSummaryProps {
     nodes: Array<INetworkNodeScan>
@@ -28,21 +29,23 @@ export default function JobSummary(props: IJobSummaryProps) {
         }
     })
 
-    return <div className={'job-viewer_summary'}>
-        <ul>
+    return <div className={'job-viewer_header_summary'}>
+        <Grid container spacing={1}>
             {Array.from(summaryMap.values()).map((value, index) => {
-                return <li onClick={() => {
+                return <Grid item xs={1} onClick={() => {
                     props.setSelectedNodeUUID(value.uuid)
-                }} key={index} className={'host-summary'}>
-                    <p className={'identity'}>{value.identity.slice(0, 25)}</p>
-                    <p className={`risk-score risk-score_${getRiskScoreColorClass(Math.max(...value.scores))}`}>
-                        {Math.max(...value.scores)}
-                    </p>
-                </li>
+                }} key={index}>
+                    <div className={'host-summary'}>
+                        <div className="host-summary_info">
+                            <p className={'identity'}>{value.identity.slice(0, 25)}</p>
+                            <p className={`risk-score risk-score_${getRiskScoreColorClass(Math.max(...value.scores))}`}>
+                                {Math.max(...value.scores)}
+                            </p>
+                        </div>
+                    </div>
+                </Grid>
             })}
-        </ul>
-        <ul>
-        </ul>
+        </Grid>
     </div>
 }
 

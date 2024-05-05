@@ -200,11 +200,14 @@ function DirectivesForm(props: IDirectivesFormProps) {
                                     }
                                 }}
                                 label="Провайдеры данных">
+                            <MenuItem value={OpenSourceProviders.OSS_PROVIDER_IP_INFO}>IP Info</MenuItem>
                             <MenuItem value={OpenSourceProviders.OSS_PROVIDER_VIRUS_TOTAL}>VirusTotal</MenuItem>
-                            <MenuItem value={OpenSourceProviders.OSS_PROVIDER_IP_QUALITY_SCORE}>IP Quality
-                                Score</MenuItem>
                             <MenuItem value={OpenSourceProviders.OSS_PROVIDER_CROWD_SEC}>CrowdSec CTI</MenuItem>
                             <MenuItem value={OpenSourceProviders.OSS_PROVIDER_SHODAN}>Shodan</MenuItem>
+                            <MenuItem value={OpenSourceProviders.OSS_PROVIDER_CRIMINAL_IP}>CriminalIP</MenuItem>
+                            <MenuItem value={OpenSourceProviders.OSS_PROVIDER_IP_API}>IP API</MenuItem>
+                            <MenuItem value={OpenSourceProviders.OSS_PROVIDER_IP_QUALITY_SCORE}>IP Quality
+                                Score</MenuItem>
                             <MenuItem disabled value={OpenSourceProviders.OSS_PROVIDER_IP_WHO_IS}>IP WhoIS</MenuItem>
                         </Select>
                     </FormControl>

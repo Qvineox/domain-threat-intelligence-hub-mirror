@@ -2,6 +2,12 @@ import {JobPriority, JobStatus, JobType, OpenSourceProviders} from "@/entities/q
 import {IUser} from "@/entities/users/user.ts";
 import {Dayjs} from "dayjs";
 import {INetworkNodeScan} from "@/entities/nodes/networkNodeScan.ts";
+import {IProfile} from "@/entities/nodes/profile.ts";
+
+export interface ICompleteJob {
+    Summary: Array<IProfile>;
+    Job: IJob;
+}
 
 export interface IJob {
     DequeuedTimes: number

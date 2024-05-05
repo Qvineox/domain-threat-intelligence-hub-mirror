@@ -87,6 +87,10 @@ export default function JobNodeScans(props: IJobNodesProps) {
                         return "CRIM (DOMAIN)"
                     case NetworkNodeScanType.SCAN_TYPE_OSS_INFO_IP:
                         return "INFO (IP)"
+                    case NetworkNodeScanType.SCAN_TYPE_OSS_IP_API_IP:
+                        return "IP-API (IP)"
+                    case NetworkNodeScanType.SCAN_TYPE_OSS_IP_API_DOMAIN:
+                        return "IP-API (DOMAIN)"
                     default:
                         return "Неизвестно"
                 }
@@ -99,18 +103,18 @@ export default function JobNodeScans(props: IJobNodesProps) {
             autoHeight
             rows={props.nodes}
             rowCount={props.nodes.length}
-            rowHeight={38}
+            rowHeight={32}
             loading={props.isLoading}
             columns={columns}
             getRowId={(row: INetworkNodeScan) => row.ID}
-            // initialState={{
-            //     pagination: {
-            //         paginationModel: {
-            //             pageSize: 100,
-            //         },
-            //     },
-            // }}
-            pageSizeOptions={[]}
+            initialState={{
+                pagination: {
+                    paginationModel: {
+                        pageSize: 20,
+                    },
+                },
+            }}
+            pageSizeOptions={[20]}
             onRowClick={params => {
                 props.setSelectedNodeScanID(params.row.ID)
             }}
