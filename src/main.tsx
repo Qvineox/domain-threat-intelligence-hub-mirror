@@ -27,6 +27,8 @@ import AgentsViewer from "@/components/scanning/agents/agentsViewer.tsx";
 import JobViewer from "@/components/scanning/jobs/job/jobViewer.tsx";
 import {createTheme, ThemeProvider} from "@mui/material";
 import ErrorBoundary from "@/components/error/errorBoundary.tsx";
+import NodesViewer from "@/components/nodes/nodesViewer.tsx";
+import NodeProfile from "@/components/nodes/nodeProfile/nodeProfile.tsx";
 
 const router = createBrowserRouter([
     {
@@ -111,6 +113,25 @@ const router = createBrowserRouter([
                     {
                         path: "/scanning/agents",
                         element: <AgentsViewer/>,
+                    },
+                ]
+            },
+            {
+                path: "/nodes",
+                children: [
+                    {
+                        path: "/nodes",
+                        element: <Navigate to="/nodes/view" replace/>,
+                    },
+                    {
+                        path: "/nodes/view",
+                        element: <NodesViewer/>,
+                        children: [
+                            {
+                                path: "/nodes/view/:node_uuid",
+                                element: <NodeProfile/>,
+                            },
+                        ]
                     },
                 ]
             },

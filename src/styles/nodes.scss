@@ -1,0 +1,187 @@
+@import "colors";
+
+.node-viewer {
+  display: flex;
+  flex-direction: row;
+
+  width: 98vw;
+
+  &_left-panel {
+    display: flex;
+    flex-direction: column;
+
+    flex-basis: 30vw;
+    height: 96vh;
+
+    border-right: 1px solid $border-color;
+
+    .node-search-filter {
+      display: flex;
+      flex-direction: row;
+
+      padding: 5px 10px;
+    }
+
+    .node-search-list {
+      border-top: 1px solid $border-color;
+      border-bottom: 1px solid $border-color;
+
+      margin-top: 10px;
+
+      overflow-y: scroll;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      .loading {
+        margin: 30px 0 10px 50%;
+      }
+
+      .node-row {
+        &:hover {
+          background-color: lightgray;
+          cursor: pointer;
+        }
+      }
+
+      th.node-identity {
+        text-wrap: nowrap;
+        overflow: hidden;
+        max-width: 17vw;
+      }
+    }
+  }
+
+  &_right-panel {
+    display: flex;
+    flex-direction: column;
+
+    flex-basis: 70vw;
+    flex-grow: 0.5;
+
+    .node-profile {
+      display: flex;
+      flex-direction: column;
+
+      .loading {
+        margin: 50%;
+        height: 10vh;
+      }
+
+      .panel {
+        padding: 10px 10px 5px 15px;
+        min-height: 12vh;
+
+        background-color: whitesmoke;
+        border-radius: 4px;
+
+        display: flex;
+        flex-direction: column;
+
+        h4 {
+          border-bottom: 2px solid $border-color;
+          margin: 0 0 5px 0;
+        }
+
+        &__identity {
+          font-size: 0.9rem;
+
+          .uuid {
+            margin-bottom: 10px;
+            border-bottom: 1px solid $border-color;
+          }
+
+          table {
+            margin: 20px 0 0 0;
+            width: 350px;
+          }
+        }
+
+        &__scoring {
+          align-items: center;
+          justify-content: center;
+
+          h2.verdict {
+            border-bottom: 1px solid $border-color;
+          }
+
+          table.ml-scores {
+            margin: 10px 0;
+            font-size: 0.9rem;
+            width: 45%;
+          }
+        }
+
+        &__geo {
+          .geography-shelf {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 0 20px;
+            padding: 5px 10px;
+
+            &_value {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+            }
+
+            &_map {
+              border-radius: 5px;
+              overflow: hidden;
+            }
+          }
+        }
+
+        &__whois {
+          pre {
+            margin: 10px 0;
+            overflow: hidden;
+          }
+        }
+
+        &__dns {
+          table {
+            font-size: 0.9rem;
+
+            &.dns-info {
+              min-width: 40%;
+
+              margin-bottom: 20px;
+            }
+          }
+        }
+
+        p.source {
+          font-style: italic;
+          opacity: 0.65;
+          font-size: 0.8rem;
+          text-align: end;
+        }
+      }
+    }
+  }
+}
+
+.settings-popover {
+  padding: 5px 10px;
+  border: 1px solid $border-color;
+  border-radius: 4px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 2px 0
+}
+
+table {
+  tbody, thead {
+    tr.break {
+      td {
+        height: 2px;
+        border-bottom: 1px solid $border-color;
+      }
+    }
+  }
+}
