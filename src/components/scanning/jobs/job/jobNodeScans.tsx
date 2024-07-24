@@ -91,6 +91,14 @@ export default function JobNodeScans(props: IJobNodesProps) {
                         return "IP-API (IP)"
                     case NetworkNodeScanType.SCAN_TYPE_OSS_IP_API_DOMAIN:
                         return "IP-API (DOMAIN)"
+                    case NetworkNodeScanType.SCAN_TYPE_DNS_LOOKUP:
+                        return "DNS"
+                    case NetworkNodeScanType.SCAN_TYPE_DNS_REVERSE_LOOKUP:
+                        return "DNS (R)"
+                    case NetworkNodeScanType.SCAN_TYPE_WHOIS_IP:
+                        return "WHOIS (IP)"
+                    case NetworkNodeScanType.SCAN_TYPE_WHOIS_DOMAIN:
+                        return "WHOIS (DOMAIN)"
                     default:
                         return "Неизвестно"
                 }

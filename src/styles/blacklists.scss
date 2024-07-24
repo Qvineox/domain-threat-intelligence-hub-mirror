@@ -284,6 +284,69 @@ table.hosts {
   }
 }
 
+.blacklists_create {
+  height: 100%;
+
+  display: flex;
+  flex-direction: row;
+
+  &_form {
+    width: 20vw;
+    min-width: 250px;
+    max-width: 400px;
+
+    height: 100%;
+
+    padding: 0 15px;
+
+    border-right: 1px solid #1b263b;
+
+    hr {
+      border: 1px solid #1b263b;
+      margin: 10px 0;
+      width: 60%;
+      align-self: center;
+    }
+
+    .search-buttons {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+
+  &_content {
+    padding: 20px 25px;
+    width: 85vw;
+
+    display: flex;
+    flex-direction: column;
+
+    h3 {
+      margin: 20px 0 5px 0;
+    }
+
+    ol {
+      padding: 0 0 0 1rem;
+
+      //max-height: 30vh;
+      //overflow-y: scroll;
+
+      li {
+        margin: 5px 0 10px 0;
+        //padding: 0 0 0 20px;
+
+        &:not(:last-child) {
+          border-bottom: 1px solid $border-color;
+        }
+      }
+
+      p {
+        opacity: 0.6;
+      }
+    }
+  }
+}
+
 @keyframes createBox {
   from {
     transform: scale(0);

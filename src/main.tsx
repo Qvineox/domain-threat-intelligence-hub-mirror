@@ -29,6 +29,7 @@ import {createTheme, ThemeProvider} from "@mui/material";
 import ErrorBoundary from "@/components/error/errorBoundary.tsx";
 import NodesViewer from "@/components/nodes/nodesViewer.tsx";
 import NodeProfile from "@/components/nodes/nodeProfile/nodeProfile.tsx";
+import {BlacklistCreate} from "@/components/blacklists/create/blacklistCreate.tsx";
 
 const router = createBrowserRouter([
     {
@@ -67,6 +68,10 @@ const router = createBrowserRouter([
                     {
                         path: "/blacklists/view",
                         element: <BlacklistsViewer/>
+                    },
+                    {
+                        path: "/blacklists/create",
+                        element: <BlacklistCreate/>
                     },
                     {
                         path: "/blacklists/import",

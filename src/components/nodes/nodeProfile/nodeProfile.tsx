@@ -23,8 +23,6 @@ export default function NodeProfile() {
     useEffect(() => {
         setIsLoading(true)
 
-        console.log(node_uuid)
-
         if (node_uuid) {
             NodesService.getNodeByUUID(node_uuid).then((response) => {
                 if (response.data) {

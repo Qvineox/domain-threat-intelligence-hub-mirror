@@ -47,10 +47,10 @@ function DirectivesForm(props: IDirectivesFormProps) {
                         }}
                         label="Тип задачи">
                     <MenuItem defaultChecked value={JobType.JOB_TYPE_OSS}>Поиск по открытым источникам</MenuItem>
+                    <MenuItem value={JobType.JOB_TYPE_WHOIS}>Поиск WhoIS записей</MenuItem>
+                    <MenuItem value={JobType.JOB_TYPE_DNS}>Ревизия доменных записей</MenuItem>
                     <MenuItem disabled value={JobType.JOB_TYPE_DISCOVERY}>Обнаружение хостов</MenuItem>
-                    <MenuItem disabled value={JobType.JOB_TYPE_DNS}>Ревизия доменных записей</MenuItem>
                     <MenuItem disabled value={JobType.JOB_TYPE_SPIDER}>Сканирование кравлером</MenuItem>
-                    <MenuItem disabled value={JobType.JOB_TYPE_WHOIS}>Поиск WhoIS записей</MenuItem>
                     <MenuItem disabled value={JobType.JOB_TYPE_NMAP}>Сканирование утилитой NMAP</MenuItem>
                 </Select>
             </FormControl>

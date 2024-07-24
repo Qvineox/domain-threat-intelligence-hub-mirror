@@ -25,7 +25,12 @@ export default function BlacklistTable(props: IBlacklistTableProps) {
         {
             field: 'Host',
             headerName: 'Узел',
-            flex: 3,
+            flex: 2,
+        },
+        {
+            field: 'Description',
+            headerName: 'Описание',
+            flex: 2,
         },
         {
             field: 'Status',
@@ -106,16 +111,16 @@ export default function BlacklistTable(props: IBlacklistTableProps) {
             align: "right",
             valueFormatter: (params) => dayjs(params.value).format('DD/MM/YYYY HH:mm')
         },
-        {
-            field: 'CreatedAt',
-            headerName: 'Дата создания',
-            type: 'dayjs',
-            flex: 1,
-            editable: false,
-            headerAlign: "right",
-            align: "right",
-            valueFormatter: (params) => dayjs(params.value).format('DD/MM/YYYY HH:mm')
-        },
+        // {
+        //     field: 'CreatedAt',
+        //     headerName: 'Дата создания',
+        //     type: 'dayjs',
+        //     flex: 1,
+        //     editable: false,
+        //     headerAlign: "right",
+        //     align: "right",
+        //     valueFormatter: (params) => dayjs(params.value).format('DD/MM/YYYY HH:mm')
+        // },
         {
             field: 'actions',
             type: 'actions',

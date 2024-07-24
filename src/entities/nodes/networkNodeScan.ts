@@ -36,6 +36,10 @@ export enum NetworkNodeScanType {
     SCAN_TYPE_OSS_INFO_IP = 701,
     SCAN_TYPE_OSS_IP_API_IP = 801,
     SCAN_TYPE_OSS_IP_API_DOMAIN = 802,
+    SCAN_TYPE_DNS_LOOKUP = 1101,
+    SCAN_TYPE_DNS_REVERSE_LOOKUP = 1102,
+    SCAN_TYPE_WHOIS_IP = 1201,
+    SCAN_TYPE_WHOIS_DOMAIN = 1202,
 }
 
 export function getRiskScoreColorClass(score: number) {

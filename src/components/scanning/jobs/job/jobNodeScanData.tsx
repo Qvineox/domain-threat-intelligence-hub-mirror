@@ -9,6 +9,7 @@ import {ShodanIPScan} from "./scans/shodan";
 import {CriminalIPScan} from "@/components/scanning/jobs/job/scans/criminalIP.tsx";
 import {IPInfoScan} from "@/components/scanning/jobs/job/scans/ipInfo.tsx";
 import {IPAPIScan} from "@/components/scanning/jobs/job/scans/ipApi.tsx";
+import {WhoisScan} from "@/components/scanning/jobs/job/scans/whois/whois.tsx";
 
 interface IJobNodeScanData {
     scans?: Array<INetworkNodeScan>
@@ -47,6 +48,8 @@ export default function JobNodeScanData(props: IJobNodeScanData) {
                 return <VirusTotalIPScan {...value}/>
             case NetworkNodeScanType.SCAN_TYPE_OSS_IP_API_IP || NetworkNodeScanType.SCAN_TYPE_OSS_IP_API_DOMAIN:
                 return <IPAPIScan {...value}/>
+            case NetworkNodeScanType.SCAN_TYPE_WHOIS_DOMAIN:
+                return <WhoisScan {...value}/>
         }
     })
 

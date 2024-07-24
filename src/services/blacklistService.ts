@@ -9,6 +9,7 @@ import {IDatabaseResponse} from "@/http/responses.ts";
 import {IBlacklistStatistics} from "@/entities/blacklists/statistics.ts";
 import {IBlacklistImportEvent} from "@/entities/blacklists/importEvent.ts";
 import {api} from "@/http/api";
+import {IBlacklistedEmail} from "@/entities/blacklists/email.ts";
 
 export default class BlacklistService {
     static async getURLsByFilter(filter: IBlacklistedSearchFilter): Promise<AxiosResponse<Array<IBlacklistedURL>>> {
@@ -192,6 +193,54 @@ export default class BlacklistService {
     static async getStatistics(): Promise<AxiosResponse<IBlacklistStatistics>> {
         return api.get<IBlacklistStatistics>('blacklists/stats')
     }
+
+    static async putDomains(domains: Array<IBlacklistedDomain>): Promise<AxiosResponse<IBlacklistUpdateResponse>> {
+        return api.put<IBlacklistUpdateResponse>('blacklists/domain', {
+            "hosts": domains.map((value) => {
+                return {
+                    "host": value.URN,
+                    "description": value.Description,
+                    "source_id": value.SourceID,
+                }
+            })
+        }, {})
+    }
+
+    static async putIPs(domains: Array<IBlacklistedIP>): Promise<AxiosResponse<IBlacklistUpdateResponse>> {
+        return api.put<IBlacklistUpdateResponse>('blacklists/ip', {
+            "hosts": domains.map((value) => {
+                return {
+                    "host": value.IPAddress,
+                    "description": value.Description,
+                    "source_id": value.SourceID,
+                }
+            })
+        }, {})
+    }
+
+    static async putURLs(domains: Array<IBlacklistedURL>): Promise<AxiosResponse<IBlacklistUpdateResponse>> {
+        return api.put<IBlacklistUpdateResponse>('blacklists/url', {
+            "hosts": domains.map((value) => {
+                return {
+                    "host": value.URL,
+                    "description": value.Description,
+                    "source_id": value.SourceID,
+                }
+            })
+        }, {})
+    }
+
+    static async putEmails(domains: Array<IBlacklistedEmail>): Promise<AxiosResponse<IBlacklistUpdateResponse>> {
+        return api.put<IBlacklistUpdateResponse>('blacklists/email', {
+            "hosts": domains.map((value) => {
+                return {
+                    "host": value.Email,
+                    "description": value.Description,
+                    "source_id": value.SourceID,
+                }
+            })
+        }, {})
+    }
 }
 
 export interface IBlacklistedSearchFilter {
@@ -239,3 +288,9 @@ export const HostTypes: Array<{ label: string, value: number, host: "domain" | "
     {value: 2, label: "URL", host: "url"},
     {value: 3, label: "IP адреса", host: "ip"},
 ]
+
+export interface IBlacklistUpdateResponse {
+    RowsAffected: number
+    StatusCode: number
+    Warnings: Array<string>
+}

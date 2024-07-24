@@ -34,6 +34,7 @@ export default function BlacklistsStats() {
                 <NavLink to={"/blacklists/imports"}> / События</NavLink>
                 <NavLink to={"/blacklists/import"}> / Импорт</NavLink>
                 <NavLink to={"/blacklists/export"}> / Экспорт</NavLink>
+                <NavLink to={"/blacklists/create"}> / Создать</NavLink>
             </nav>
         </div>
         {

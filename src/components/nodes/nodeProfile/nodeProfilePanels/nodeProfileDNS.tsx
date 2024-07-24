@@ -27,7 +27,6 @@ interface INodeProfileDNSPanelProps {
 export function NodeProfileDNSPanel(props: INodeProfileDNSPanelProps) {
     return <div className={'panel panel__dns'}>
         <h4>DNS</h4>
-
         <table className={'dns-info'}>
             <tbody>
             <tr>
@@ -52,7 +51,6 @@ export function NodeProfileDNSPanel(props: INodeProfileDNSPanelProps) {
             </tr>
             </tbody>
         </table>
-
         <table className={'records'}>
             <thead>
             <tr>
