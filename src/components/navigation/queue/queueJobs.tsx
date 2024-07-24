@@ -1,6 +1,6 @@
 import {Fragment} from "react";
 import {JobPriority, JobStatus, JobType} from "@/entities/queue/job.ts";
-import {IDialerJob, IQueueState} from "@/entities/queue/dialerJob.ts";
+import {IJob, IQueueState} from "@/entities/queue/dialerJob.ts";
 import dayjs from "dayjs";
 import {NavLink} from "react-router-dom";
 
@@ -55,7 +55,7 @@ export default function QueueJobs(props: IQueueJobsProps) {
     </div>
 }
 
-function JobCardListItem(props: IDialerJob) {
+function JobCardListItem(props: IJob) {
     let status: string = "неизвестно"
     let message: string = status
 
