@@ -1,5 +1,5 @@
 import {Fragment, useContext, useState} from "react";
-import {IDialerJob} from "@/entities/queue/dialerJob.ts";
+import {IJob} from "@/entities/queue/dialerJob.ts";
 import QueueJobs from "@/components/navigation/queue/queueJobs.tsx";
 import {Context} from "@/context.ts";
 import {observer} from "mobx-react-lite";
@@ -49,7 +49,7 @@ function QueueState() {
     </div>
 }
 
-function statusBubbleColor(jobs: Array<IDialerJob>): string {
+function statusBubbleColor(jobs: Array<IJob>): string {
     if (jobs === undefined || jobs.length === 0) {
         return '#838383'
     }
