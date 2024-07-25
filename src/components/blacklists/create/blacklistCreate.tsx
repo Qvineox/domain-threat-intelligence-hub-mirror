@@ -126,6 +126,66 @@ export function BlacklistCreate() {
         }))
     }
 
+    const addAllFromClipboard = async () => {
+        let clipboardValue = await navigator.clipboard.readText();
+
+        if (clipboardValue.length === 0) {
+            return
+        }
+
+        clipboardValue = clipboardValue.replace("[.]", ".")
+        clipboardValue = clipboardValue.replace(";", "\n")
+        clipboardValue = clipboardValue.replace("\t", "\n")
+
+        let hosts = clipboardValue.split("\n")
+
+        hosts.forEach((value) => {
+            let h = value.trim()
+
+            if (h.includes("//")) {
+                // @ts-ignore
+                setURLsToCreate(prevState => ([
+                    ...prevState,
+                    {
+                        URL: h,
+                        Description: creationParams.Description,
+                        SourceID: creationParams.SourceID ?? 5
+                    }
+                ]))
+            } else if (cidrRegex.test(h)) {
+                // @ts-ignore
+                setIPsToCreate(prevState => ([
+                    ...prevState,
+                    {
+                        IPAddress: h,
+                        Description: creationParams.Description,
+                        SourceID: creationParams.SourceID ?? 5
+                    }
+                ]))
+            } else if (h.includes("@")) {
+                // @ts-ignore
+                setEmailsToCreate(prevState => ([
+                    ...prevState,
+                    {
+                        Email: h,
+                        Description: creationParams.Description,
+                        SourceID: creationParams.SourceID ?? 5
+                    }
+                ]))
+            } else if (h.includes(".")) {
+                // @ts-ignore
+                setDomainsToCreate(prevState => ([
+                    ...prevState,
+                    {
+                        URN: h,
+                        Description: creationParams.Description,
+                        SourceID: creationParams.SourceID ?? 5
+                    }
+                ]))
+            }
+        })
+    }
+
     const saveAll = () => {
         saveDomains()
         saveIPs()
@@ -281,6 +341,7 @@ export function BlacklistCreate() {
                     <hr/>
                     <div className="create-buttons">
                         <Button fullWidth
+                                sx={{marginTop: '10px'}}
                                 disabled={creationParams.Value.length === 0}
                                 onClick={addHostToBlacklist}
                                 variant={"outlined"} color={"info"}>
@@ -288,6 +349,12 @@ export function BlacklistCreate() {
                         </Button>
                         <Button fullWidth
                                 sx={{marginTop: '10px'}}
+                                onClick={addAllFromClipboard}
+                                variant={"outlined"} color={"info"}>
+                            Извлечь все из буфера обмена
+                        </Button>
+                        <Button fullWidth
+                                sx={{marginTop: '20px'}}
                                 onClick={saveAll}
                                 variant={"outlined"} color={"success"}>
                             Сохранить все
@@ -389,3 +456,4 @@ export function BlacklistCreate() {
 
 const ipPortRegex = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
 const urlRegex = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
+const cidrRegex = /^([0-9]{1,3}\.){3}[0-9]{1,3}(\/([0-9]|[1-2][0-9]|3[0-2]))?$/;

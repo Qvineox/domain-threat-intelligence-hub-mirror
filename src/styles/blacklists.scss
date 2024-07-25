@@ -321,6 +321,8 @@ table.hosts {
     display: flex;
     flex-direction: column;
 
+    overflow-y: scroll;
+
     h3 {
       margin: 20px 0 5px 0;
     }
